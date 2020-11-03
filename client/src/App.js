@@ -3,7 +3,13 @@ import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom
 import logo from './logo.svg';
 import './App.css';
 import Home from './Components/Home'
+import Login from './Components/Login'
+import Park from './Components/Park'
+import Trail from './Components/Trail'
+import NewPark from './Components/NewPark';
 import NotFound from './Components/NotFound'
+import NewTrail from './Components/NewTrail'
+import User from './Components/User'
 
 
 
@@ -13,14 +19,12 @@ function App() {
     <Router>
     <Switch>
   <Route path={"/home"} exact render={() =><Home/>}/>
-  {
-    // Login Page
-    // Park Page
-    // Trail Page
-    // User Page
-    // Add/Edit Park page
-    // Add/Edit Trail
-  }
+    <Route path={"/login"} exact render={() => <Login/>} />
+    <Route path={"/park/:parkId"} exact render={() => <Park/>} />
+    <Route path={"/trail/:trailId"} exact render={() => <Trail/>} />
+    <Route path={"/park/new"} exact render={() => <NewPark/>} />
+    <Route path={"/trail/new"} exact render={() => <NewTrail/>} />
+    <Route path={"/user/:userId"} exact render={() => <User/>} />
     <Route path="/:b" render={() =><NotFound/>} />
     <Redirect path="/" exact to="/home"/>
     </Switch>
