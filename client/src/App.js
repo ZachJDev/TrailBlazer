@@ -1,6 +1,5 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
-import logo from './logo.svg';
 import './App.css';
 import Home from './Components/Home'
 import Login from './Components/Login'
@@ -20,10 +19,10 @@ function App() {
     <Switch>
   <Route path={"/home"} exact render={() =><Home/>}/>
     <Route path={"/login"} exact render={() => <Login/>} />
-    <Route path={"/park/:parkId"} exact render={() => <Park/>} />
-    <Route path={"/trail/:trailId"} exact render={() => <Trail/>} />
     <Route path={"/park/new"} exact render={() => <NewPark/>} />
     <Route path={"/trail/new"} exact render={() => <NewTrail/>} />
+    <Route path={"/park/:parkId"} exact render={() => <Park/>} />
+    <Route path={"/trail/:trailId"} exact render={() => <Trail/>} />
     <Route path={"/user/:userId"} exact render={() => <User/>} />
     <Route path="/:b" render={() =><NotFound/>} />
     <Redirect path="/" exact to="/home"/>
