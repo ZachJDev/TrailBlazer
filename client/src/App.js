@@ -9,6 +9,7 @@ import NewPark from './Components/NewPark';
 import NotFound from './Components/NotFound'
 import NewTrail from './Components/NewTrail'
 import User from './Components/User'
+import Search from './Components/Search'
 
 
 
@@ -19,6 +20,7 @@ function App() {
     <Switch>
   <Route path={"/home"} exact render={() =><Home/>}/>
     <Route path={"/login"} exact render={() => <Login/>} />
+    <Route path={"/search"} exact render={() => <Search/>} />
     <Route path={"/park/new"} exact render={() => <NewPark/>} />
     <Route path={"/trail/new"} exact render={() => <NewTrail/>} />
     <Route path={"/park/:parkId"} exact render={() => <Park/>} />
