@@ -1,15 +1,15 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
-import Home from './Components/Home'
-import Login from './Components/Login'
-import Park from './Components/Park'
-import Trail from './Components/Trail'
-import NewPark from './Components/NewPark';
-import NotFound from './Components/NotFound'
-import NewTrail from './Components/NewTrail'
-import User from './Components/User'
-import Search from './Components/Search'
+import Home from './Components/pages/Home'
+import Login from './Components/pages/Login'
+import Park from './Components/pages/Park'
+import Trail from './Components/pages/Trail'
+import NewPark from './Components/pages/NewPark';
+import NotFound from './Components/pages/NotFound'
+import NewTrail from './Components/pages/NewTrail'
+import User from './Components/pages/User'
+import Search from './Components/pages/Search'
 
 
 
