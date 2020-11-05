@@ -10,13 +10,17 @@ import NotFound from './Components/pages/NotFound'
 import NewTrail from './Components/pages/NewTrail'
 import User from './Components/pages/User'
 import Search from './Components/pages/Search'
+import Nav from './Components/Nav'
 
+
+import './Components/Nav.css'
 
 
 function App() {
   return (
     <div className="App">
     <Router>
+    <Nav/>
     <Switch>
   <Route path={"/home"} exact render={() =><Home/>}/>
     <Route path={"/login"} exact render={() => <Login/>} />

@@ -1,0 +1,25 @@
+.nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 4rem;
+    background-color: darksalmon;
+}
+.nav-auth {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-links {
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-selected {
+    color: aliceblue;
+}
+
+
+
