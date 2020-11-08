@@ -1,6 +1,5 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
+// const { Sequelize, Model, DataTypes } = require("sequelize");
 const express = require("express");
-
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -9,17 +8,8 @@ const db = require("./models")
 
 app.use(express.urlencoded({ extended: false }))
 
-app.get('/', (req, res, next) => {
-    res.json({
-        place: 'home'
-    })
-})
-app.get('/store', (req, res, next) => {
-    res.json({
-        place: 'store'
-    })
-})
-
+const parkRoutes = require('./routes/parkRoutes')
+app.use('/park', parkRoutes)
 
 db.sequelize.sync({force: true})
 
@@ -38,6 +28,9 @@ db.sequelize.sync({force: true})
     })
     .then(comment => {
         return db.Reply.create({commentId: comment.id, replyId: 1})
+    })
+    .then(com => {
+        db.Park.create({name: "WibnerLund", zipCode: 43026})
     })
     .then(()=> {
         app.listen(PORT, () => {

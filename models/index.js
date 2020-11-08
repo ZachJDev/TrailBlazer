@@ -15,7 +15,7 @@ db.sequelize = sequelize;
 
 db.User = require("./Users")(sequelize, Sequelize);
 db.Comment = require("./Comments")(sequelize, Sequelize);
-db.Park = require("./Parks")(sequelize, Sequelize);
+db.Park = require("./Park")(sequelize, Sequelize);
 db.Trail = require("./Trails")(sequelize, Sequelize);
 db.Review = require("./Reviews")(sequelize, Sequelize);
 db.Reply = require("./Replies")(sequelize, Sequelize);
