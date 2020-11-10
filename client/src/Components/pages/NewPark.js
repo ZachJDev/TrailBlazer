@@ -16,6 +16,15 @@ export default class NewPark extends Component {
   }
 
   handleSubmit = (event) => {
+      console.log((this.state))
+      console.log('submitting')
+      fetch("/park/new?_method=POST", {
+          method: "POST",
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(this.state)
+      })
     event.preventDefault();
   };
   handleFormUpdate = (event) => {
@@ -88,6 +97,7 @@ export default class NewPark extends Component {
                 ></input>
               </div>
             </div>
+            <input type="submit"></input>
           </form>
         </section>
       </div>

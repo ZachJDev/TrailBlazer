@@ -6,5 +6,8 @@ const parkController =require('../controllers/ParkController')
 
 router.get('/:parkId', parkController.getOne) 
 
+router.post('/new', (req, res, next) => {
+    console.log(req.body)
+})
 
 module.exports = router;

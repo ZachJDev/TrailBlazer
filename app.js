@@ -1,13 +1,16 @@
-// const { Sequelize, Model, DataTypes } = require("sequelize");
 const express = require("express");
+const methodOverride = require("method-override");
+const bodyParser = require("body-parser")
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 const db = require("./models")
-
+app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }))
-
+app.use(methodOverride("_method"));
 const parkRoutes = require('./routes/parkRoutes')
 app.use('/park', parkRoutes)
 
