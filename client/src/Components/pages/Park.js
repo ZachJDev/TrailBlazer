@@ -12,7 +12,8 @@ export default class Park extends Component {
     }
 
     componentDidMount = () => {
-        fetch('/park/1')
+        let parkId = this.props.match.params.parkId
+        fetch(`/park/${parkId}`)
         .then(res => {
             if(res.status !== 200) throw new Error("bad Fetch")
             else return res.json()})
