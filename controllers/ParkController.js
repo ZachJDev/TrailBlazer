@@ -41,6 +41,7 @@ exports.add = (req, res, next) => {
         status = 409;
         throw new Error("Duplicate Park")
       }
+      // 3. add the park
       // Add the park if nothing found
       else {
         return db.Park.create({
@@ -55,15 +56,13 @@ exports.add = (req, res, next) => {
       }
     })
     .then(park => {
-        console.log(park);
+        console.log("Park Added")
         res.status(200).json(body)
     })
     .catch(e => {
         console.log(e.message)
         res.status(status).json(body)
     })
-  // 3. add the park
-  // console.log(req.body)
 };
 
 exports.update = (req, res, next) => {
