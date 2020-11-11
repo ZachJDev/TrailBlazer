@@ -31,13 +31,13 @@ export default class Park extends Component {
         })
     }
     render() {
-        let park = ''
-        if(this.state.fetchFailed) park = 'not Found'
+        let parkName = ''
+        if(this.state.fetchFailed) parkName = 'not Found'
         else parkName = this.state.parkInfo.name
         return (
             <div>
                 <p>Park Page</p>
-                <p>{park}</p>
+                <p>{parkName}</p>
             </div>
         )
     }

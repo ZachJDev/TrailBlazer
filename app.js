@@ -12,7 +12,9 @@ app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(methodOverride("_method"));
 const parkRoutes = require('./routes/parkRoutes')
+const searchRoutes = require('./routes/searchRoutes')
 app.use('/park', parkRoutes)
+app.use('/search', searchRoutes)
 
 // This is mostly just some hardcoded testing data.
 
@@ -36,6 +38,9 @@ db.sequelize.sync({force: true})
     })
     .then(com => {
         db.Park.create({name: "WibnerLund", zipCode: 43026, state: "OH", city: "Columbus"})
+    })
+    .then(pa => {
+        db.Park.create({name:"Zach", zipCode: 43026, state: "OH", city: "Columbus" })
     })
     .then(()=> {
         app.listen(PORT, () => {
