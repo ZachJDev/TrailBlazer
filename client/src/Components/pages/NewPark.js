@@ -1,106 +1,47 @@
 import React, { Component } from "react";
-
+import NewParkForm from '../NewParkForm'
 export default class NewPark extends Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-        newParkName: "",
-        newParkAddress: "",
-        newParkCountry: "",
-        newParkState: "",
-        newParkZipCode: "",
-        newParkCity: "",
-        newParkGeoLoc: {},
-        newParkDescription: "",
-    };
+        formErrors: [],
+    }
+
   }
 
-  handleSubmit = (event) => {
-      console.log((this.state))
-      console.log('submitting')
+  handleFormSubmit = (state) => {
+      let body;
+      let status;
       fetch("/park/new?_method=POST", {
           method: "POST",
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(this.state)
+          body: JSON.stringify(state)
       })
-    event.preventDefault();
+      .then(res => {
+          status = res.status;
+            return res.json();
+      })
+      .then(resBody => {
+        body = resBody;
+        if(status !== 200) throw new Error()  
+      })
+      .catch(e => {
+          if(status === 400) {
+              this.setState({formErrors: body.errors})
+          }
+          if(status === 409) {
+              console.log(body.errors)
+          }
+      })
   };
-  handleFormUpdate = (event) => {
-    this.setState({[event.target.name]: event.target.value });
-  };
+
   render() {
     return (
-      <div>
-        <h1>Add new Park</h1>
-        <section>
-          <form onSubmit={this.handleSubmit}>
-            <div className="new-park-name">
-            <label htmlFor="newParkName">Name: </label>
-              <input
-                onChange={this.handleFormUpdate}
-                value={this.state.newParkName}
-                name="newParkName"
-              ></input>
-            </div>
-            <div className="new-park-description">
-            <div>
-            <label htmlFor="newParkDescription">Description: </label>
-            </div>
-              <textarea
-                onChange={this.handleFormUpdate}
-                value={this.state.newParkDescription}
-                name="newParkDescription"
-              ></textarea>
-            </div>
-            <div className="new-park-loc">
-              <h2>Park Location</h2>
-              <div className="new-park-address">
-              <label htmlFor="newParkAddress">Address: </label>
-                <input
-                  onChange={this.handleFormUpdate}
-                  value={this.state.newParkAddress}
-                  name="newParkAddress"
-                ></input>
-              </div>
-              <div className="new-park-country">
-              <label htmlFor="newParkCountry">Country: </label>
-                <input
-                  onChange={this.handleFormUpdate}
-                  value={this.state.newParkCountry}
-                  name="newParkCountry"
-                ></input>
-              </div>
-              <div className="new-park-state">
-              <label htmlFor="newParkState">State: </label>
-                <input
-                  onChange={this.handleFormUpdate}
-                  value={this.state.newParkState}
-                  name="newParkState"
-                ></input>
-              </div>
-              <div className="new-park-city">
-              <label htmlFor="newParkCity">City: </label>
-                <input
-                  onChange={this.handleFormUpdate}
-                  value={this.state.NewParkCity}
-                  name="NewParkCity"
-                ></input>
-              </div>
-              <div className="new-park-zip-code">
-              <label htmlFor="newParkZipCode">Zip Code: </label>
-                <input
-                  onChange={this.handleFormUpdate}
-                  value={this.state.newParkZipCode}
-                  name="newParkZipCode"
-                ></input>
-              </div>
-            </div>
-            <input type="submit"></input>
-          </form>
-        </section>
-      </div>
+     <div>
+         <NewParkForm handleSubmit={this.handleFormSubmit} missing={this.state.formErrors}/>
+     </div>
     );
   }
 }

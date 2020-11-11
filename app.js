@@ -14,6 +14,8 @@ app.use(methodOverride("_method"));
 const parkRoutes = require('./routes/parkRoutes')
 app.use('/park', parkRoutes)
 
+// This is mostly just some hardcoded testing data.
+
 db.sequelize.sync({force: true})
 
     .then(() => {
@@ -33,7 +35,7 @@ db.sequelize.sync({force: true})
         return db.Reply.create({commentId: comment.id, replyId: 1})
     })
     .then(com => {
-        db.Park.create({name: "WibnerLund", zipCode: 43026})
+        db.Park.create({name: "WibnerLund", zipCode: 43026, state: "OH", city: "Columbus"})
     })
     .then(()=> {
         app.listen(PORT, () => {
