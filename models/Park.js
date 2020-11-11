@@ -25,6 +25,9 @@ module.exports = (sequelize, Sequelize) => {
         state: {
             type: DataTypes.STRING(2),
             allowNull: false
+        },
+        description: {
+            type: DataTypes.TEXT('long')
         }
 
     }, )
