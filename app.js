@@ -14,7 +14,7 @@ const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
 const { dbname, user, pw } = require("./models/dbConfig");
-console.log(dbname)
+
 const sequelize = new Sequelize(dbname, user, pw, {
   dialect: "mysql",
   storage: "./session.mysql",
@@ -25,10 +25,11 @@ const TrailSessionStore = new SequelizeStore({
 
 app.use(
   session({
-    secret: "asdf",
+    secret: JSON.parse(process.env.SECRET),
     store: TrailSessionStore,
     resave: false,
     proxy: true,
+    saveUninitialized: false
   })
 );
 
@@ -41,15 +42,17 @@ app.use(methodOverride("_method"));
 //Routes
 const parkRoutes = require("./routes/parkRoutes");
 const searchRoutes = require("./routes/searchRoutes");
+const authRoutes = require("./routes/authRoutes")
 app.use("/park", parkRoutes);
 app.use("/search", searchRoutes);
+app.use("/auth", authRoutes)
 
 // This is mostly just some hardcoded testing data.
 
 db.sequelize
   .sync({ force: true })
   .then(() => {
-      return TrailSessionStore.sync();
+      return TrailSessionStore.sync({ force: true });
   })
   .then(() => {
     return db.User.create({ name: "Bob" });

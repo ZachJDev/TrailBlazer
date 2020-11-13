@@ -23,13 +23,13 @@ function App() {
     <Nav/>
     <Switch>
   <Route path={"/home"} exact render={(routeProps) => <Home {...routeProps}/>}/>
-    <Route path={"/login"} exact render={(routeProps) => <Login/>} />
-    <Route path={"/search"} exact render={(routeProps) => <Search/>} />
-    <Route path={"/park/new"} exact render={(routeProps) => <NewPark/>} />
-    <Route path={"/trail/new"} exact render={(routeProps) => <NewTrail/>} />
+    <Route path={"/login"} exact render={(routeProps) => <Login {...routeProps}/>} />
+    <Route path={"/search"} exact render={(routeProps) => <Search {...routeProps}/>} />
+    <Route path={"/park/new"} exact render={(routeProps) => <NewPark {...routeProps} />} />
+    <Route path={"/trail/new"} exact render={(routeProps) => <NewTrail {...routeProps}/>} />
     <Route path={"/park/:parkId"} exact render={(routeProps) => <Park {...routeProps}/>} />
-    <Route path={"/trail/:trailId"} exact render={(routeProps) => <Trail/>} />
-    <Route path={"/user/:userId"} exact render={(routeProps) => <User/>} />
+    <Route path={"/trail/:trailId"} exact render={(routeProps) => <Trail {...routeProps}/>} />
+    <Route path={"/user/:userId"} exact render={(routeProps) => <User {...routeProps}/>} />
     <Route path="/:b" render={() =><NotFound/>} />
     <Redirect path="/" exact to="/home"/>
     </Switch>
