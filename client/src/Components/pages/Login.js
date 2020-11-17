@@ -4,9 +4,9 @@ import useInputState from '../../hooks/useInputState'
 export default function Login() {
     const [username, setUsername] = useInputState()
     const [password, setPassword] = useInputState()
-    const obj = {username, password}
-    const post = (e) => {
-        e.preventDefault();
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const obj = {username, password}
         fetch("/auth/login")
 
     }
@@ -26,7 +26,7 @@ export default function Login() {
           name="password"
           value={password}
         ></input>
-        <input type="submit" onClick={post} />
+        <input type="submit" onClick={handleSubmit} />
       </form>
     </div>
   );
