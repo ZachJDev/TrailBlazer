@@ -10,7 +10,6 @@ export default function Search() {
   let [searchResults, setSearchResults] = useState([]);
 
  const handleSearch = () => {
-   console.log(searchType, searchTerm)
     fetch(`/search/${searchType}`)
       .then((res) => {
         return res.json();
