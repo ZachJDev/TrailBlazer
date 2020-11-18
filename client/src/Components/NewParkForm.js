@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FormInputText from "./FormInputText";
 import useInputState from "../hooks/useInputState";
-import FormInputTextArea from "./pages/FormInputTextArea";
+import FormInputTextArea from "./FormInputTextArea";
 
 export default function NewParkForm({ handleSubmit, formErrors }) {
   const [newParkName, setParkName] = useInputState("");
@@ -34,7 +34,7 @@ export default function NewParkForm({ handleSubmit, formErrors }) {
             label="Name:"
             value={newParkName}
             handleChange={setParkName}
-            cssClass="new=park-name"
+            cssClass="new-park-name"
           />
           <FormInputTextArea
             name="description"

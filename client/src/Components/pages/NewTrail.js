@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React from "react";
 
-export default class NewTrail extends Component {
-    render() {
-        return (
-            <div>
-                <p>New Trail</p>
-            </div>
-        )
-    }
+export default function NewTrail() {
+  return (
+    <div>
+      <p>New Trail</p>
+    </div>
+  );
 }
