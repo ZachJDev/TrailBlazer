@@ -14,7 +14,7 @@ exports.getOne = (req, res, next) => {
 };
 
 exports.add = (req, res, next) => {
-    let status = 200;
+  let status = 200;
   const {
     newParkName,
     newParkAddress,
@@ -27,42 +27,51 @@ exports.add = (req, res, next) => {
   // 1. confirm that all the required information is present
   let body = {};
   body.errors = getEmptyProps(req.body);
-  if (body.errors.length > 0) {
-    body.errors = ["Missing required information", ...body.errors];
-    res.status(400).json(body);
-  }
+  // I don't love this double error handling. I should look for a way to maybe turn this check into a promise,
+  // Then chain it with the other stuff.
+  try {
+    if (body.errors.length > 0) {
+      body.errorMessage = "Missing Required Information";
+      status = 400;
+      throw new Error("missing Information")
+    }
 
-  // 2. check if the park already exists -- possible REFACTOR -- use sequelize to add constraints; instead of looking for the entry, just try to add it.
-  db.Park.findOne({ where: { name: newParkName, state: newParkState } })
-    .then((park) => {
-      if (park !== null) {
-        body.errors.push("Park Already Exists");
-        body.errors.push(park);
-        status = 409;
-        throw new Error("Duplicate Park")
-      }
-      // 3. add the park
-      // Add the park if nothing found
-      else {
-        return db.Park.create({
-          name: newParkName,
-          address: newParkAddress,
-          country: newParkCountry,
-          state: newParkState,
-          city: newParkCity,
-          zipCode: newParkZipCode,
-          description: newParkDescription,
-        });
-      }
-    })
-    .then(park => {
-        console.log("Park Added")
-        res.status(200).json(body)
-    })
-    .catch(e => {
-        console.log(e.message)
-        res.status(status).json(body)
-    })
+    // 2. check if the park already exists -- possible REFACTOR -- use sequelize to add constraints; instead of looking for the entry, just try to add it.
+    db.Park.findOne({ where: { name: newParkName, state: newParkState } })
+      .then((park) => {
+        if (park !== null) {
+          body.errors.push("Park Already Exists");
+          body.errors.push(park);
+          status = 409;
+          throw new Error("Duplicate Park");
+        }
+        // 3. add the park
+        // Add the park if nothing found
+        else {
+          return db.Park.create({
+            name: newParkName,
+            address: newParkAddress,
+            country: newParkCountry,
+            state: newParkState,
+            city: newParkCity,
+            zipCode: newParkZipCode,
+            description: newParkDescription,
+          });
+        }
+      })
+      .then((park) => {
+        console.log("Park Added");
+        res.status(200).type('json').json(body);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        res.status(status).type('json').json(body);
+      });
+  } catch (e) {
+    console.log(body)
+    console.log(e.message);
+    res.status(status).json(body);
+  }
 };
 
 exports.update = (req, res, next) => {

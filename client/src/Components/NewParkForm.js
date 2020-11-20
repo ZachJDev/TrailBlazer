@@ -3,7 +3,7 @@ import FormInputText from "./FormInputText";
 import useInputState from "../hooks/useInputState";
 import FormInputTextArea from "./pages/FormInputTextArea";
 
-export default function NewParkForm({ handleSubmit, formErrors }) {
+export default function NewParkForm({ handleSubmit, missing }) {
   const [newParkName, setParkName] = useInputState("");
   const [newParkAddress, setParkAddress] = useInputState("");
   const [newParkCountry, setParkCountry] = useInputState("");
@@ -24,59 +24,68 @@ export default function NewParkForm({ handleSubmit, formErrors }) {
       newParkCountry,
     });
   };
+// I REALLY dislike hardcoding the input name in the hasError prop, like below. 
+// refactoring that to be more responsive to change would be great.
   return (
     <div>
       <h1>Add new Park</h1>
       <section>
         <form onSubmit={startSubmit}>
           <FormInputText
-            name="name"
+            name="newParkName"
             label="Name:"
             value={newParkName}
             handleChange={setParkName}
-            cssClass="new=park-name"
+            cssClass="new-park-name"
+            hasError = {missing.includes("newParkName")}
           />
           <FormInputTextArea
-            name="description"
+            name="newParkDescription"
             label="Description:"
             value={newParkDescription}
             handleChange={setParkDescription}
             cssClass="new-park-description"
+            hasError = {missing.includes("newParkDescription")}
           />
           <FormInputText
-            name="address"
+            name="newParkAddress"
             cssClass="new-park-loc"
             label="Address:"
             value={newParkAddress}
             handleChange={setParkAddress}
+            hasError = {missing.includes("newParkAddress")}
           />
           <FormInputText
-            name="city"
+            name="newParkCity"
             cssClass="new-park-city"
             label="City:"
             value={newParkCity}
             handleChange={setParkCity}
+            hasError = {missing.includes("newParkCity")}
           />
           <FormInputText
-            name="state"
+            name="newParkState"
             cssClass="new-park-state"
             label="State:"
             value={newParkState}
             handleChange={setParkState}
+            hasError = {missing.includes("newParkState")}
           />
           <FormInputText
-            name="country"
+            name="newParkCountry"
             cssClass="new-park-country"
             label="Country:"
             value={newParkCountry}
             handleChange={setParkCountry}
+            hasError = {missing.includes("newParkCountry")}
           />
           <FormInputText
-            name="zipCode"
+            name="newParkZipCode"
             cssClass="new-park-zip-code"
             label="Zip Code:"
             value={newParkZipCode}
             handleChange={setParkZipCode}
+            hasError = {missing.includes("newParkZipCode")}
           />
           <input type="submit"></input>
         </form>
