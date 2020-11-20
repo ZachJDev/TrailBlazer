@@ -7,6 +7,7 @@ export default function Park({ match }) {
   const [parkInfo, resComplete, fetchFailed] = useGetPayload(`/park/${match.params.parkId}`)
 
   let parkName = "";
+  // This will eventually be a more robust 'notFound' component.
   if (fetchFailed) parkName = "not Found";
   else parkName = parkInfo?.name;
   return (
