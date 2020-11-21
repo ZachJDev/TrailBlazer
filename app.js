@@ -43,9 +43,11 @@ app.use(methodOverride("_method"));
 const parkRoutes = require("./routes/parkRoutes");
 const searchRoutes = require("./routes/searchRoutes");
 const authRoutes = require("./routes/authRoutes")
+const trailRoutes = require("./routes/trailRoutes")
 app.use("/park", parkRoutes);
 app.use("/search", searchRoutes);
 app.use("/auth", authRoutes)
+app.use("/trail", trailRoutes)
 
 // This is mostly just some hardcoded testing data.
 
