@@ -4,7 +4,7 @@ import usePostBody from '../../hooks/usePostBody'
 export default function NewPark() {
   const [formErrors, setFormErrors] = useState([]);
 
-const [payload, isLoaded, isFailed, setBody] = usePostBody("/park/new?_method=POST")
+const [payload,setBody] = usePostBody("/park/new?_method=POST")
 
 useEffect(() => {
   console.log(payload)

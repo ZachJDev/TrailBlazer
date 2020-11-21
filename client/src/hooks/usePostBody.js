@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import useBool from "./useBool";
 
 export default function usePostBody(endpoint) {
+  // I can't help but feel like this pattern of setting the body but returning the payload from the 
+  // API call may not be clear...
   const [isFirstRender, updateFirstRender] = useBool(true);
-  const [fetchFailed, updateFetchFail] = useBool(false);
-  const [loaded, updateLoaded] = useBool(false);
   const [body, setBody] = useState({});
   const [payload, setPayload] = useState({});
   useEffect(() => {
     if (isFirstRender) {
+      // This 'first render' thing feels hacky to me -- Maybe I shouldn't even be using hooks.
       updateFirstRender();
     } else {
       async function fetchData() {
@@ -20,17 +21,11 @@ export default function usePostBody(endpoint) {
           },
           body: JSON.stringify(body),
         });
-
         payload = await res.json();
-        // I'm not convinced that I actually need these two bool flags,
-        // especially for the post parts... I'll leave them for now, 
-        // But I should come back and evaluate.
-        updateFetchFail();
-        updateLoaded();
         setPayload({ ...payload, status: res.status });
       }
       fetchData();
     }
   }, [body]);
-  return [payload, loaded, fetchFailed, setBody];
+  return [payload, setBody];
 }

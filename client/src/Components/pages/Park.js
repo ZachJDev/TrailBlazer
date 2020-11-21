@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
+import {Link} from 'react-router-dom'
 import useGetPayload from '../../hooks/useGetPayload'
+import InfoContainer from "../InfoContainer";
 
 export default function Park({ match }) {
-  // I imagine that using something like this is better for React
-  // than just storing values in the function block.
   const [parkInfo, resComplete, fetchFailed] = useGetPayload(`/park/${match.params.parkId}`)
-
-  let parkName = "";
-  // This will eventually be a more robust 'notFound' component.
-  if (fetchFailed) parkName = "not Found";
-  else parkName = parkInfo?.name;
+  // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
+  // {name, description, address, city, state}
+  console.log(parkInfo)
   return (
-    <div>
-      <p>Park Page</p>
-      <p>{parkName}</p>
+    <div className="park-info">
+     <InfoContainer {...parkInfo} />
+     <div>
+       <Link to={`/trail/new?park=${match.params.parkId}`}>Add New Trail</Link>
+     </div>
     </div>
   );
 }
