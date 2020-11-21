@@ -12,9 +12,17 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        description: {
+            type: DataTypes.TEXT('long'),
+            allowNull: false
+        },
         parkId: {
             type: DataTypes.INTEGER,
             allowNull: false,
+        },
+        length: {
+            // I'm going to need to double check MySQL floats, but I think this will be sufficient.
+            type: DataTypes.FLOAT(5, 2)
         }
     }, )
     return Trail
