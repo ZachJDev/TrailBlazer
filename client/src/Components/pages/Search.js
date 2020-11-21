@@ -40,6 +40,7 @@ export default function Search() {
                   city={park.city}
                   state={park.state}
                   pictureUrl={""}
+                  id={park.parkId}
                 />
               );
             })

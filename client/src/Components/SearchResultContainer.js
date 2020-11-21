@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import {Link} from 'react-router-dom'
 export default class SearchResultContainer extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ export default class SearchResultContainer extends Component {
         let picUrl = this.state.picUrl
         return (
             <div>
-                <h2>{this.props.name}</h2>
+                <Link to={`/park/${this.props.id}`}><h2>{this.props.name}</h2></Link>
                 <img width={"250px"} src={picUrl}></img>
                 <div><p>{this.props.city} {this.props.state}</p></div>
             </div>
