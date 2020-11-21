@@ -72,9 +72,11 @@ db.sequelize
   .then((com) => {
     db.Park.create({
       name: "WibnerLund",
+      address: "302 Kerzy Street",
       zipCode: 43026,
       state: "OH",
       city: "Columbus",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eu tincidunt tortor aliquam nulla facilisi cras fermentum. Eget lorem dolor sed viverra ipsum. Sagittis orci a scelerisque purus. Aliquet nibh praesent tristique magna sit amet purus gravida. Facilisi nullam vehicula ipsum a arcu cursus. Quis blandit turpis cursus in hac habitasse platea dictumst. Tellus in hac habitasse platea dictumst vestibulum rhoncus est. Venenatis cras sed felis eget velit. Nibh sit amet commodo nulla facilisi. Dui vivamus arcu felis bibendum ut tristique et egestas. Risus at ultrices mi tempus imperdiet nulla malesuada pellentesque elit. Varius sit amet mattis vulputate enim nulla aliquet porttitor. Leo vel fringilla est ullamcorper eget nulla facilisi etiam. Orci ac auctor augue mauris augue neque gravida. Lacus laoreet non curabitur gravida arcu ac tortor dignissim convallis. Hendrerit dolor magna eget est lorem ipsum dolor. Adipiscing enim eu turpis egestas pretium. Nibh nisl condimentum id venenatis a. Turpis massa sed elementum tempus egestas sed sed risus."
     });
   })
   .then((pa) => {
