@@ -12,7 +12,7 @@ export default function Park({ match }) {
     <div className="park-info">
      <InfoContainer {...parkInfo} />
      <div>
-       <Link to={`/trail/new?park=${match.params.parkId}`}>Add New Trail</Link>
+       <Link to={`/trail/new?parkId=${match.params.parkId}&park=${parkInfo.name}`}>Add New Trail</Link>
      </div>
     </div>
   );
