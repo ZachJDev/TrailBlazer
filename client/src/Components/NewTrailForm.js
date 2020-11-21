@@ -2,7 +2,7 @@ import React from 'react'
 import FormInputText from './FormInputText'
 import FormInputTextArea from './FormInputTextArea'
 import useInputState from '../hooks/useInputState'
-export default function NewTrailForm({handleSubmit}) {
+export default function NewTrailForm({handleSubmit, park}) {
     const [newTrailName, setTrailName] = useInputState("")
     const [newTrailDescription, setTrailDescription] = useInputState("")
 
@@ -11,6 +11,7 @@ export default function NewTrailForm({handleSubmit}) {
         handleSubmit({
           newTrailName,
           newTrailDescription,
+          newTrailPark: park
         });
     }
     return (
@@ -29,6 +30,7 @@ export default function NewTrailForm({handleSubmit}) {
             handleChange={setTrailDescription}
             cssClass="new-park-description"
           />
+          <input type="submit"/>
         </form>
     )
 }
