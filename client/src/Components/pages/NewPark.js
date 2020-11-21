@@ -1,19 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import NewParkForm from "../NewParkForm";
-import usePostBody from '../../hooks/usePostBody'
+import usePostBody from "../../hooks/usePostBody";
+
 export default function NewPark() {
   const [formErrors, setFormErrors] = useState([]);
+  const [payload, setBody] = usePostBody("/park/new?_method=POST");
 
-const [payload,setBody] = usePostBody("/park/new?_method=POST")
+  useEffect(() => {
+    console.log(payload);
+    setFormErrors(payload.errors);
+  }, [payload]);
 
-useEffect(() => {
-  console.log(payload)
-  setFormErrors(payload.errors)
-}, [payload])
-
-
-const handleFormSubmit = (form) => {
-    setBody(form)
+  const handleFormSubmit = (form) => {
+    setBody(form);
   };
 
   return (
