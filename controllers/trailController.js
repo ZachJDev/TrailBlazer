@@ -4,7 +4,9 @@ exports.new = (req, res, next) => {
     const {
         newTrailName,
         newTrailDescription,
-        newTrailPark
+        newTrailPark,
+        newTrailLength,
+        lengthUnit
     } = req.body
     console.log(req.body)
     db.Trail.findOne({ where: { name: newTrailName, parkId: newTrailPark } })
@@ -15,7 +17,9 @@ exports.new = (req, res, next) => {
     return db.Trail.create({
         name: newTrailName,
         description: newTrailDescription,
-        parkId: newTrailPark
+        parkId: newTrailPark,
+        // This automatically handles converting between miles and Km, and we will only store the length in miles.
+        length: Number(lengthUnit === 'm' ? newTrailLength : (newTrailLength / 1.609344))
     })
     .then(createdTrail => {
         console.log(createdTrail)
