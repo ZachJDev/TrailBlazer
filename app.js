@@ -97,7 +97,7 @@ db.sequelize
       name: "Bob's Trail",
       parkId: 1,
       length: 12,
-      description: "A Great palce for Greg to Hike!",
+      description: "A Great palce for Bob to Hike!",
     });
   })
   .then((pa) => {
