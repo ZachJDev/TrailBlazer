@@ -2,10 +2,11 @@ const db = require("../models/index");
 
 exports.getOne = (req, res, next) => {
   let parkId = req.params.parkId;
-  db.Park.findOne({ where: { parkId: parkId } }).then((park) => {
+  db.Park.findOne({ where: { parkId: parkId }, include:[db.Trail] }).then((park) => {
     if (park !== null) {
+
       res.json(park.dataValues);
-      console.log("good");
+      console.log("Park Found");
     } else {
       res.status(404).send("");
       console.log(`Could not find Park with id ${parkId}`);
