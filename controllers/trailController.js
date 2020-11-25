@@ -32,7 +32,7 @@ exports.new = (req, res, next) => {
 exports.getOne = (req, res, next) => {
     
     let trailId = req.params.id
-    db.Trail.findOne(({where: {trailId: trailId}}))
+    db.Trail.findOne(({where: {trailId: trailId}, include:[db.Park]}))
     .then((trail) => {
         if(trail) res.status(200).send(trail)
         else res.status(404).send(trail)

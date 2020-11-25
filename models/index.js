@@ -30,7 +30,7 @@ db.Review.belongsTo(db.User);
 
 // Park has many Trails
 db.Park.hasMany(db.Trail, {foreignKey: 'parkId'});
-db.Trail.belongsTo(db.Park);
+db.Trail.belongsTo(db.Park, {foreignKey: 'parkId'});
 
 // Trail has many Reviews
 db.Trail.hasMany(db.Review, {foreignKey: 'trailId'});
