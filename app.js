@@ -62,7 +62,7 @@ db.sequelize
   })
   .then((user) => {
      user1 = user
-    return db.User.create({ name: "Greg", password: '123', email: 'A' });
+    return db.User.create({ name: "Greg", password: '123', email: 'B' });
   })
   .then((user) => {
      user2 = user
