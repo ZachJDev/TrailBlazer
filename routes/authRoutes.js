@@ -4,6 +4,7 @@ const router = express.Router({mergeParams: true})
 
 const authController = require('../controllers/authController')
 
-router.get("/login", authController.postLogin)
+router.post("/login", authController.postLogin)
+router.post("/signup", authController.signUp)
 
 module.exports = router
