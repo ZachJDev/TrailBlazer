@@ -12,6 +12,7 @@ export default function Nav() {
         </NavLink>
       </div>
       <div className="nav-auth">
+      <Link to='/signup'>Sign up</Link>
         <Link to="/login">Login</Link>
         <Link to="/logout">Logout</Link>
         <Link to="/user">USER_NAME</Link>

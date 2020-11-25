@@ -10,6 +10,7 @@ import NotFound from './Components/pages/NotFound'
 import NewTrail from './Components/pages/NewTrail'
 import User from './Components/pages/User'
 import Search from './Components/pages/Search'
+import SignUp from './Components/pages/SignUp'
 import Nav from './Components/Nav'
 
 
@@ -24,6 +25,7 @@ function App() {
     <Switch>
   <Route path={"/home"} exact render={(routeProps) => <Home {...routeProps}/>}/>
     <Route path={"/login"} exact render={(routeProps) => <Login {...routeProps}/>} />
+    <Route path={"/Signup"} exact render={(routeProps) => <SignUp {...routeProps}/>} />
     <Route path={"/search"} exact render={(routeProps) => <Search {...routeProps}/>} />
     <Route path={"/park/new"} exact render={(routeProps) => <NewPark {...routeProps} />} />
     <Route path={"/trail/new"} exact render={(routeProps) => <NewTrail {...routeProps}/>} />
