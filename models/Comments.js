@@ -3,7 +3,7 @@ const {DataTypes} = require('sequelize')
 module.exports = (sequelize, Sequelize) => {
     const Comment = sequelize.define("comment", {
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false
         },
         text: {

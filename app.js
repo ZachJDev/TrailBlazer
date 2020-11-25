@@ -51,22 +51,25 @@ app.use("/trail", trailRoutes);
 
 // This is mostly just some hardcoded testing data.
 
+let user1, user2;
 db.sequelize
   .sync({ force: true })
   .then(() => {
     return TrailSessionStore.sync({ force: true });
   })
   .then(() => {
-    return db.User.create({ name: "Bob" });
+    return db.User.create({ name: "Bob", password: '123', email: 'A' });
   })
   .then((user) => {
-    return db.User.create({ name: "Greg" });
+     user1 = user
+    return db.User.create({ name: "Greg", password: '123', email: 'A' });
   })
   .then((user) => {
-    return db.Comment.create({ userId: 1, text: "I Like Ham" });
+     user2 = user
+    return db.Comment.create({ userId: user1.userId, text: "I Like Ham" });
   })
   .then((comment) => {
-    return db.Comment.create({ userId: 2, text: "I Like Bread" });
+    return db.Comment.create({ userId: user2.userId, text: "I Like Bread" });
   })
   .then((comment) => {
     return db.Reply.create({ commentId: comment.id, replyId: 1 });

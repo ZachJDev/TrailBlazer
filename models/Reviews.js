@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.TEXT
         },
         userId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
         },
         ReviewId: {

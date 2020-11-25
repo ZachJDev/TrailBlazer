@@ -7,10 +7,18 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         userId: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true,
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }, )
     return User
