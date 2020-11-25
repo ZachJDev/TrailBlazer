@@ -8,7 +8,6 @@ exports.new = (req, res, next) => {
         newTrailLength,
         lengthUnit
     } = req.body
-    console.log(req.body)
     db.Trail.findOne({ where: { name: newTrailName, parkId: newTrailPark } })
     .then(trail => {
     if(trail) {
@@ -22,12 +21,20 @@ exports.new = (req, res, next) => {
         length: Number(lengthUnit === 'm' ? newTrailLength : (newTrailLength / 1.609344))
     })
     .then(createdTrail => {
-        console.log(createdTrail)
         res.status(200).json(createdTrail)
     })
     })
     .catch(e => {
         console.log(e);
         res.status(409).json({errorMessage: e.message})
+    })
+}
+exports.getOne = (req, res, next) => {
+    
+    let trailId = req.params.id
+    db.Trail.findOne(({where: {trailId: trailId}}))
+    .then((trail) => {
+        if(trail) res.status(200).send(trail)
+        else res.status(404).send(trail)
     })
 }
