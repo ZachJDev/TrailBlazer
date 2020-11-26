@@ -12,6 +12,7 @@ export default function usePostBody(endpoint) {
       // This 'first render' thing feels hacky to me -- Maybe I shouldn't even be using hooks.
       updateFirstRender();
     } else {
+      // make an IIFE?
       async function fetchData() {
         let payload = {};
         const res = await fetch(endpoint, {

@@ -1,42 +1,88 @@
 const db = require("../models/index");
-const { uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
+const {
+  AuthenticationError,
+  InputError,
+  NotFoundError,
+} = require("../classes/Errors");
 
-const SALT_ROUNDS = 10;
+// This stackExchange question: https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt
+// has an interesting idea about benchmarking the system to determine the # of salt rounds based on the amount of time it takes.
+// Actual implementation of that is not something I'm concerned with, however, at this point.
+
+const SALT_ROUNDS = 12;
+
+// The error handling in the postLogin is a bit different than what I did with my new Park controller:
+// That would set the status and body where the error was thrown, then only have one res statement.
+// That does seem like it would be a bit cleaner, but I like the readability of the below more.
 
 exports.postLogin = (req, res, next) => {
-  req.session.isLoggedIn = true;
-  console.log("Here");
-  res.json({
-    login: true,
-  });
+    let user;
+  const { username, password } = req.body;
+  db.User.findOne({ where: { username } })
+    .then((foundUser) => {
+      if (!foundUser) throw new NotFoundError("No user with that username found");
+      user = foundUser
+      const hashedPassword = user.password;
+      return bcrypt.compare(password, hashedPassword);
+    })
+    .then((isSame) => {
+      if (!isSame) throw new InputError("Password Incorrect");
+      req.session.isLoggedIn = true;
+      // My plan right now is to store only the userId on the cookie
+      // and pull from the db whenever I need info (probably with middleware).
+      // My other idea would be to store essential info directly on the session cookie
+      // (like pref. units and username), but that may be 1. less efficient, space-wise, and not secure.
+      req.session.userId = user.userId;
+      return req.session.save();
+    })
+    .then(() => {
+        console.log("logged in:", user.username)
+        res.status(200).json({success: true})
+    })
+    .catch((e) => {
+        console.log(e)
+      if (e instanceof NotFoundError)
+        res.status(404).json({ errorMessage: e.message });
+      else if (e instanceof InputError) // Poor error handling here from a security experience perspective.
+        res.status(400).json({ errorMessage: e.message, errors: ['password'] });
+    });
+  //   req.session.isLoggedIn = true;
+  //   console.log("Here");
+  //   res.json({
+  //     login: true,
+  //   });
 };
 
 exports.signUp = (req, res, next) => {
   const { username, password, emailAddress } = req.body;
 
   db.User.findOne({
-    where: { [Op.or]: [{ email: emailAddress }, { name: username }] },
+    where: { [Op.or]: [{ email: emailAddress }, { username }] },
   })
     .then((user) => {
       if (!user) {
         // keep up signing up
         return bcrypt.hash(password, SALT_ROUNDS);
-      } else throw new Error("An Account exists with that email address or username");
+      } else
+        throw new Error(
+          "An Account exists with that email address or username"
+        );
     })
     .then((hash, e) => {
+      console.log("password Hashed");
       return db.User.create({
-        name: username,
+        username,
         password: hash,
         email: emailAddress,
       });
     })
     .then((user) => {
-      res.status(200).json({operation: 'success'})
+      res.status(200).json({ operation: "success" });
     })
     .catch((e) => {
-      console.log("error when registering user.");
+      console.log(e.message);
       res.status(409).json({ errorMessage: e.message });
     });
 };

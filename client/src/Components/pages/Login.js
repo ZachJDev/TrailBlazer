@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 import useInputState from '../../hooks/useInputState'
+import usePostBody from '../../hooks/usePostBody'
 import FormInputText from '../FormInputText'
 import FormInputPassword from '../FormInputPassword'
 
 export default function Login() {
     const [username, setUsername] = useInputState('')
     const [password, setPassword] = useInputState('')
+    const [payload, setBody] =  usePostBody("/auth/login")
 
     const handleSubmit = (e) => {
       e.preventDefault();
       const obj = {username, password}
-        fetch("/auth/login", {
-          method: "POST"
-        })
+        setBody(obj)
 
     }
   return (

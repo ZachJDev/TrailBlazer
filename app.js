@@ -23,6 +23,15 @@ const TrailSessionStore = new SequelizeStore({
   db: sequelize,
 });
 
+// sequelize.define("Session", {
+//   sid: {
+//     type: Sequelize.STRING,
+//     primaryKey: true,
+//   },
+//   userId: Sequelize.UUID,
+//   expires: Sequelize.DATE,
+// })
+
 app.use(
   session({
     secret: JSON.parse(process.env.SECRET),
@@ -38,6 +47,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
+
+app.use('/', (req, res, next) => {
+  console.log(req.session.userId);
+  next();
+})
 
 //Routes
 const parkRoutes = require("./routes/parkRoutes");
