@@ -58,11 +58,11 @@ db.sequelize
     return TrailSessionStore.sync({ force: true });
   })
   .then(() => {
-    return db.User.create({ name: "Bob", password: '123', email: 'A' });
+    return db.User.create({ username: "Bob", password: '123', email: 'A' });
   })
   .then((user) => {
      user1 = user
-    return db.User.create({ name: "Greg", password: '123', email: 'B' });
+    return db.User.create({ username: "Greg", password: '123', email: 'B' });
   })
   .then((user) => {
      user2 = user
