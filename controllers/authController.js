@@ -39,20 +39,16 @@ exports.postLogin = (req, res, next) => {
     })
     .then(() => {
         console.log("logged in:", user.username)
-        res.status(200).json({success: true})
+        res.status(200).json(user)
     })
     .catch((e) => {
         console.log(e)
       if (e instanceof NotFoundError)
         res.status(404).json({ errorMessage: e.message });
-      else if (e instanceof InputError) // Poor error handling here from a security experience perspective.
+      else if (e instanceof InputError) // Poor error handling here from a security experience perspective -- probably shouldn't
+      // Tell exactly what's the problem.
         res.status(400).json({ errorMessage: e.message, errors: ['password'] });
     });
-  //   req.session.isLoggedIn = true;
-  //   console.log("Here");
-  //   res.json({
-  //     login: true,
-  //   });
 };
 
 exports.signUp = (req, res, next) => {

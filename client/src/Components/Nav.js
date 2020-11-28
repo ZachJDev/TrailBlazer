@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link, NavLink } from "react-router-dom";
+
+import {UserContext} from '../contexts/UserContext'
+
+
 export default function Nav() {
+const {user} = useContext(UserContext)
   return (
     <nav className="nav">
       <div className="nav-links">
@@ -15,7 +20,7 @@ export default function Nav() {
       <Link to='/signup'>Sign up</Link>
         <Link to="/login">Login</Link>
         <Link to="/logout">Logout</Link>
-        <Link to="/user">USER_NAME</Link>
+        <Link to="/user">{user.username ? user.username : "USER"}</Link>
       </div>
     </nav>
   );

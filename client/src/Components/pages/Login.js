@@ -1,19 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import useInputState from '../../hooks/useInputState'
-import usePostBody from '../../hooks/usePostBody'
 import FormInputText from '../FormInputText'
 import FormInputPassword from '../FormInputPassword'
+
+import {UserContext} from '../../contexts/UserContext'
 
 export default function Login() {
     const [username, setUsername] = useInputState('')
     const [password, setPassword] = useInputState('')
-    const [payload, setBody] =  usePostBody("/auth/login")
+    const {user, updateUser} = useContext(UserContext)
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      const obj = {username, password}
-        setBody(obj)
-
+        updateUser({username, password})
     }
   return (
     <div>

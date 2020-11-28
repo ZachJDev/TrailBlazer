@@ -7,7 +7,6 @@ export default function NewPark() {
   const [payload, setBody] = usePostBody("/park/new?_method=POST");
 
   useEffect(() => {
-    console.log(payload);
     setFormErrors(payload.errors);
   }, [payload]);
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createContext, useState} from 'react';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 import './App.css';
 import Home from './Components/pages/Home'
@@ -13,18 +13,23 @@ import Search from './Components/pages/Search'
 import SignUp from './Components/pages/SignUp'
 import Nav from './Components/Nav'
 
+import {UserProvider, setUser} from './contexts/UserContext'
 
 import './Components/Nav.css'
 
 
 function App() {
+
+  
+
   return (
     <div className="App">
+    <UserProvider>
     <Router>
     <Nav/>
     <Switch>
   <Route path={"/home"} exact render={(routeProps) => <Home {...routeProps}/>}/>
-    <Route path={"/login"} exact render={(routeProps) => <Login {...routeProps}/>} />
+    <Route path={"/login"} exact render={(routeProps) => <Login {...routeProps } />} />
     <Route path={"/Signup"} exact render={(routeProps) => <SignUp {...routeProps}/>} />
     <Route path={"/search"} exact render={(routeProps) => <Search {...routeProps}/>} />
     <Route path={"/park/new"} exact render={(routeProps) => <NewPark {...routeProps} />} />
@@ -36,6 +41,7 @@ function App() {
     <Redirect path="/" exact to="/home"/>
     </Switch>
     </Router>
+    </UserProvider>
     </div>
   );
 }
