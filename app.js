@@ -44,10 +44,12 @@ const parkRoutes = require("./routes/parkRoutes");
 const searchRoutes = require("./routes/searchRoutes");
 const authRoutes = require("./routes/authRoutes");
 const trailRoutes = require("./routes/trailRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 app.use("/park", parkRoutes);
 app.use("/search", searchRoutes);
 app.use("/auth", authRoutes);
 app.use("/trail", trailRoutes);
+app.use("/reviews", reviewRoutes);
 
 
 let user1, user2;
