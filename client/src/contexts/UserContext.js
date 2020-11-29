@@ -4,17 +4,24 @@ export const UserContext = createContext()
 
 export function UserProvider({children}) {
 const [user, setUser] = useState({})
+const [errors, setErrors] = useState({})
 const [payload, postLogin] = usePostBody("/auth/login")
 
 const updateUser = (form) => {
     postLogin(form)
 }
 useEffect(()=> {
-    setUser(payload)
+    if(payload.status === 200) {
+        setUser(payload)
+        setErrors({})
+    }
+    else {
+        setErrors(payload)
+    }
 }, [payload])
 
     return (
-        <UserContext.Provider value={{user, updateUser}}>
+        <UserContext.Provider value={{user, updateUser, errors}}>
             {children}
         </UserContext.Provider>
     )

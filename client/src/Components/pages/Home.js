@@ -4,6 +4,9 @@ import React from 'react'
 export default function Home() {
 
     return (
-        <h1>{"he;;p"}</h1>
+        <div>
+        <h1>Trail Blazer</h1>
+        <h3>Hike Your Way</h3>
+        </div>
     )
 }
