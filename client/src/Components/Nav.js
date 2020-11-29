@@ -1,11 +1,10 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import {UserContext} from '../contexts/UserContext'
-
+import { UserContext } from "../contexts/UserContext";
 
 export default function Nav() {
-const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   return (
     <nav className="nav">
       <div className="nav-links">
@@ -17,10 +16,17 @@ const {user} = useContext(UserContext)
         </NavLink>
       </div>
       <div className="nav-auth">
-      <Link to='/signup'>Sign up</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/logout">Logout</Link>
-        <Link to="/user">{user.username ? user.username : "USER"}</Link>
+        {user.status === 200 ? (
+          <React.Fragment>
+            <Link to="/user">{user.username}</Link>
+            <Link to="/logout">Logout</Link>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Link to="/signup">Sign up</Link>
+            <Link to="/login">Login</Link>
+          </React.Fragment>
+        )}
       </div>
     </nav>
   );
