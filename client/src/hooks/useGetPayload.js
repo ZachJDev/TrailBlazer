@@ -3,7 +3,7 @@ import useBool from "./useBool";
 
 export default function useGetPayload(endpoint, setOuterState) {
   const [fetchFailed, updateFetchFail] = useBool(false);
-  const [loaded, updateLoaded] = useBool(false)
+  const [sw, callAgain] = useBool(false)
   const [payload, setPayload] = useState({});
   useEffect(() => {
     async function fetchData() {
@@ -17,11 +17,10 @@ export default function useGetPayload(endpoint, setOuterState) {
         payload = await res.json();
       }
        else updateFetchFail()
-      updateLoaded()
       setPayload({ ...payload, status: res.status });
       if(setOuterState) setOuterState({ ...payload, status: res.status })
     }
     fetchData();
-  }, []);
-  return [payload, loaded, fetchFailed];
+  }, [sw]);
+  return [payload, callAgain, fetchFailed];
 }
