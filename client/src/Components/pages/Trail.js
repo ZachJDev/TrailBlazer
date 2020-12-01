@@ -10,6 +10,7 @@ export default function Trail({ match, history }) {
   const { user } = useContext(UserContext);
   const [reviewText, setReviewText, clearText] = useInputState("");
   const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
+  const [parking, setParking, clearParking] = useInputState("On Trailhead");
   const [trailReviews, setTrailReviews] = useState([]);
   const [trailInfo] = useGetPayload(`/trail/${trailId}`);
   const [reviewPayload, getReviewsAgain] = useGetPayload(
@@ -34,7 +35,7 @@ export default function Trail({ match, history }) {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // shouldn't be anything here -- not submitting a form
-    setReviewBody({ reviewText, reviewTitle });
+    setReviewBody({ reviewText, reviewTitle, parking });
   };
 
   const { length, name, description, parkId } = trailInfo;
@@ -67,6 +68,12 @@ export default function Trail({ match, history }) {
                   placeholder="add your review..."
                 ></textarea>
                 <input onClick={handleSubmit} type="submit" />
+                <select onChange={setParking} value={parking}>
+                  <option value ='On Trailhead'>On Trailhead</option>
+                  <option value ='Close'>Close</option>
+                  <option value ='Far'>Far</option>
+                  <option value ='No Marked Parking'>No Marked Parking</option>
+                </select>
               </section>
             )}
             {trailReviews.map((review, idx) => (
