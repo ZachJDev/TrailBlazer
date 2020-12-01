@@ -4,7 +4,7 @@ import useGetPayload from '../../hooks/useGetPayload'
 import InfoContainer from "../InfoContainer";
 
 export default function Park({ match }) {
-  const [parkInfo, resComplete, fetchFailed] = useGetPayload(`/park/${match.params.parkId}`)
+  const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`)
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
 

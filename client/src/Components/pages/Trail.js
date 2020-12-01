@@ -1,35 +1,86 @@
-import React, {useEffect, useState} from "react";
-import useGetPayload from '../../hooks/useGetPayload'
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState, useContext } from "react";
+import useGetPayload from "../../hooks/useGetPayload";
+import useInputState from "../../hooks/useInputState";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext";
+import usePostBody from "../../hooks/usePostBody";
 
-export default function Trail({match, history}) {
-    const [trailReviews, setTrailReviews] = useState([])
-    const [trailInfo] = useGetPayload(`/trail/${match.params.trailId}`)
-    const [reviewPayload] = useGetPayload(`/reviews/trails/${match.params.trailId}`)
-    //I'll need to handle any 404 errors here, I think.
-    const {length, name, description, parkId} = trailInfo
-    useEffect(() => {
-      if(reviewPayload.reviews)  setTrailReviews(reviewPayload.reviews)
-    }, [reviewPayload])
+export default function Trail({ match, history }) {
+  const { trailId } = match.params;
+  const { user } = useContext(UserContext);
+  const [reviewText, setReviewText, clearText] = useInputState("");
+  const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
+  const [trailReviews, setTrailReviews] = useState([]);
+  const [trailInfo] = useGetPayload(`/trail/${trailId}`);
+  const [reviewPayload, getReviewsAgain] = useGetPayload(
+    `/reviews/trails/${trailId}`
+  );
+  const [postPayload, setReviewBody] = usePostBody(
+    `/reviews/new?trailId=${trailId}`
+  );
+
+  useEffect(() => {
+    if (reviewPayload.reviews) setTrailReviews(reviewPayload.reviews);
+  }, [reviewPayload]);
+
+  useEffect(() => {
+    if (postPayload.success) {
+      // Clears and refreshes reviews only after we know the review was successfully posted
+      clearText();
+      clearTitle();
+      getReviewsAgain();
+    }
+  }, [postPayload]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault(); // shouldn't be anything here -- not submitting a form
+    setReviewBody({ reviewText, reviewTitle });
+  };
+
+  const { length, name, description, parkId } = trailInfo;
+  //I'll need to handle any 404 errors here, I think.
   return (
     <div>
-
-    <div>
-      <h1>{name}: {length} miles</h1>
-      <p>{description}</p>
-    <Link to={`/park/${parkId}`}>Go to {trailInfo.park ? trailInfo.park.name : ''}</Link>
-    </div>
-    <section className="reviews">
-    {
-      trailReviews.map((review, idx) => (
-        <div key={idx}>
-          <h2>{review.title}</h2>
-          <h3>Review by: {review.user.username}</h3>
-          <p>{review.text}</p>
-        </div>
-      ))
-    }
-    </section>
+      {trailInfo.park ? (
+        <section>
+          <div>
+            <h1>
+              {name}: {length} miles
+            </h1>
+            <p>{description}</p>
+            <Link to={`/park/${parkId}`}>
+              Go to {trailInfo.park ? trailInfo.park.name : ""}
+            </Link>
+          </div>
+          <section className="reviews">
+            {user.isLoggedIn && (
+              <section className="add-review">
+                <input
+                  type="text"
+                  value={reviewTitle}
+                  onChange={setReviewTitle}
+                  placeholder="Title..."
+                />
+                <textarea
+                  value={reviewText}
+                  onChange={setReviewText}
+                  placeholder="add your review..."
+                ></textarea>
+                <input onClick={handleSubmit} type="submit" />
+              </section>
+            )}
+            {trailReviews.map((review, idx) => (
+              <div key={idx}>
+                <h2>{review.title}</h2>
+                <h3>Review by: {review.user.username}</h3>
+                <p>{review.text}</p>
+              </div>
+            ))}
+          </section>
+        </section>
+      ) : (
+        <h1>Loading...</h1>
+      )}
     </div>
   );
 }
