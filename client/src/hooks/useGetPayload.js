@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import useBool from "./useBool";
 
-export default function useGetPayload(endpoint, setOuterState) {
+export default function useGetPayload(endpoint, setOuterState = () => {}) {
   const [fetchFailed, updateFetchFail] = useBool(false);
   const [sw, callAgain] = useBool(false)
   const [payload, setPayload] = useState({});
@@ -18,7 +18,7 @@ export default function useGetPayload(endpoint, setOuterState) {
       }
        else updateFetchFail()
       setPayload({ ...payload, status: res.status });
-      if(setOuterState) setOuterState({ ...payload, status: res.status })
+       setOuterState({ ...payload, status: res.status })
     }
     fetchData();
   }, [sw]);
