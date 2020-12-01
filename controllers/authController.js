@@ -39,7 +39,7 @@ exports.postLogin = (req, res, next) => {
     })
     .then(() => {
         console.log("logged in:", user.username)
-        res.status(200).json({username: user.username})
+        res.status(200).json({username: user.username, isLoggedIn: true})
     })
     .catch((e) => {
         console.log(e)
@@ -88,7 +88,7 @@ exports.getUserData =  (req, res, next) => {
       console.log( 'looking for: ', req.session.userId)
       db.User.findOne({where: {userId: req.session.userId}})
       .then(user => {
-        res.status(200).json({username: user.username})
+        res.status(200).json({username: user.username, isLoggedIn: true})
       })
   }
 }
