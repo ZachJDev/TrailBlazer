@@ -19,7 +19,7 @@ db.Park = require("./Park")(sequelize, Sequelize);
 db.Trail = require("./Trails")(sequelize, Sequelize);
 db.Review = require("./Reviews")(sequelize, Sequelize);
 db.Reply = require("./Replies")(sequelize, Sequelize);
-
+db.TrailRating = require("./TrailRatings")(sequelize, Sequelize);
 
 // Before 11/24, I had onl had FKs fon the 'hasMany' relationship, which seems okay from the Squelize Docs
 // However, that didn't seem to work correctly with trails/Parks, so I just added them all to both.
@@ -47,5 +47,11 @@ db.Comment.belongsTo(db.Review, {foreignKey: 'reviewId'});
 //Comment has Many Replies
 db.Comment.hasMany(db.Reply, {foreignKey: 'parentId'});
 db.Reply.belongsTo(db.Comment, {foreignKey: 'parentId'});
+
+// Trail Ratings have many users
+db.Trail.belongsTo(db.User, {through: db.TrailRating, constraints: false})
+db.User.belongsTo(db.Trail, {through: db.TrailRating})
+
+
 
 module.exports = db;
