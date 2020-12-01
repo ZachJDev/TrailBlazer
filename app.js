@@ -1,6 +1,7 @@
 const express = require("express");
 const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
+const path = require('path')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,6 +40,14 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 
+
+// For serving the build.
+// app.use(express.static(path.join(__dirname, '/client/build')))
+
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/client/build', 'index.html'))
+// })
+
 //Routes
 const parkRoutes = require("./routes/parkRoutes");
 const searchRoutes = require("./routes/searchRoutes");
@@ -52,7 +61,6 @@ app.use("/trail", trailRoutes);
 app.use("/reviews", reviewRoutes);
 
 
-let user1, user2;
 db.sequelize
   .sync()
   .then(() => {
