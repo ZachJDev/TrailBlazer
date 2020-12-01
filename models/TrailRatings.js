@@ -7,18 +7,12 @@ module.exports = (sequelize, Sequelize) => {
         userId: {
             type: DataTypes.UUID,
             allowNull: false,
-            references: {
-                model: User,
-                key: 'userId'
-            }
+            primaryKey: true
         },
         trailId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Trail,
-                key: 'trailId'
-            }
+            primaryKey: true
         },
         startRating: {
             type: DataTypes.INTEGER(1)
@@ -39,7 +33,7 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.BOOLEAN
         }
 
-
     }, )
+    TrailRating.removeAttribute('id')
     return TrailRating
 }

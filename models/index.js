@@ -49,9 +49,11 @@ db.Comment.hasMany(db.Reply, {foreignKey: 'parentId'});
 db.Reply.belongsTo(db.Comment, {foreignKey: 'parentId'});
 
 // Trail Ratings have many users
-db.Trail.belongsTo(db.User, {through: db.TrailRating, constraints: false})
-db.User.belongsTo(db.Trail, {through: db.TrailRating})
+db.TrailRating.hasMany(db.User, {foreignKey: 'userId'})
+db.User.belongsTo(db.TrailRating, {foreignKey: 'userId'})
 
-
+// Trail Ratings have many trails
+db.TrailRating.hasMany(db.Trail, {foreignKey: 'trailId'})
+db.Trail.belongsTo(db.TrailRating, {foreignKey: 'trailId'})
 
 module.exports = db;
