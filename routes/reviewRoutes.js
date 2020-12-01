@@ -6,4 +6,6 @@ const reviewController = require('../controllers/reviewController')
 
 router.get('/trails/:id', reviewController.getTrailReviews)
 
+router.post('/new', reviewController.postNewTrailReview)
+
 module.exports = router
