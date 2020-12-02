@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
 
 import useInputState from '../hooks/useInputState'
 export default function HomeSearch({history}) {
@@ -18,10 +19,12 @@ const handleSearch = (e) => {
         <h3 style={{
             color: 'white'
         }}>Hike Your Way</h3>
-         <Form.Control value={searchState} onChange={setSearchState}  style={{width: '70%', margin: 'auto', marginTop: '10rem'}} type="text" placeholder="Find your Trail" /> 
-         <Button style={{
-             marginTop: '1rem'
-         }} onClick={handleSearch}>Search!</Button>
+        <InputGroup style={{width: '70%', margin: 'auto', marginTop: '10rem'}}>
+         <Form.Control value={searchState} onChange={setSearchState}   type="text" placeholder="Find your Trail" /> 
+         <InputGroup.Append>
+         <Button onClick={handleSearch}>Search!</Button>
+         </InputGroup.Append>
+         </InputGroup>
       </div>
         
     )
