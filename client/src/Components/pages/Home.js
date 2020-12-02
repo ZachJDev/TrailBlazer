@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import HomeSearch from '../HomeSearch'
 import AboutCards from '../AboutCards'
 
-export default function Home() {
+export default function Home({history}) {
   return (
     <Container fluid>
         <div style={{
@@ -18,10 +18,10 @@ export default function Home() {
           marginTop: '1rem'
         }}
       >
-    <HomeSearch/>
-    </div>
+    <HomeSearch history={history}/>
+    </div> 
     <AboutCards/>
-        
+
     </Container>
   );
 }
