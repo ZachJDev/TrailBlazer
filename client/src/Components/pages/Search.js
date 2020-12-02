@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SearchResultContainer from "../SearchResultContainer";
 import FormInputText from "../FormInputText";
+import FormInputSelect from '../FormInputSelect'
 
 import useInputState from "../../hooks/useInputState";
 
@@ -23,10 +24,7 @@ export default function Search() {
     <div>
       <p>Search page</p>
       <div className="search-div">
-        <select name="searchType" onChange={setSearchType}>
-          <option value="Park">Park</option>
-          <option value="Trail">Trail</option>
-        </select>
+        <FormInputSelect name="searchType" handleChange={setSearchType} options={['Park', 'Trail']} label="For" value={searchType}/>
         <FormInputText value={searchTerm} handleChange={setSearchTerm} label="search" name="search" cssClass="search-input" />
         <button onClick={handleSearch}>submit!</button>
       </div>

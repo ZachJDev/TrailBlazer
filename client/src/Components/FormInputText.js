@@ -1,15 +1,16 @@
 import React from 'react'
+import Form from 'react-bootstrap/Form'
 
 export default function FormInputText({name, label, handleChange, value, cssClass}) {
     return (
-        <div className={cssClass || ""}>
-              <label htmlFor={name}>{label}</label>
-              <input
+        <Form.Group className={cssClass || ""}>
+              <Form.Label htmlFor={name}>{label}</Form.Label>
+              <Form.Control
                 type="text"
                 onChange={handleChange}
                 value={value}
                 name={name}
-              ></input>
-            </div>
+              ></Form.Control>
+            </Form.Group>
     )
 }
