@@ -5,6 +5,7 @@ export default function FormInputText({name, label, handleChange, value, cssClas
     return (
 
               <Form.Control
+              placeholder={label}
                 type="text"
                 onChange={handleChange}
                 value={value}
