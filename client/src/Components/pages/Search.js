@@ -38,31 +38,34 @@ export default function Search() {
           margin: "0 auto",
         }}
       >
-        <InputGroup className="">
-          <DropdownButton
-            as={InputGroup.Prepend}
-            title={searchType}
-            variant="outline-primary"
-            
-          >
-            <Dropdown.Item eventKey="park" onSelect={handleDropdown}>
-              Park
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="Trail" onSelect={handleDropdown}>
-              Trail
-            </Dropdown.Item>
-          </DropdownButton>
-          <FormInputText
-            value={searchTerm}
-            handleChange={setSearchTerm}
-            label="search"
-            name="search"
-            cssClass="search-input"
-          /><InputGroup.Append>
-
-            <Button onClick={handleSearch}>submit!</Button>
-          </InputGroup.Append>
-        </InputGroup>
+        <FormInputText
+          value={searchTerm}
+          handleChange={setSearchTerm}
+          label="search"
+          name="search"
+          cssClass="search-input"
+          prepend={
+            <React.Fragment>
+              <DropdownButton
+                as={InputGroup.Prepend}
+                title={searchType}
+                variant="outline-primary"
+              >
+                <Dropdown.Item eventKey="park" onSelect={handleDropdown}>
+                  Park
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="Trail" onSelect={handleDropdown}>
+                  Trail
+                </Dropdown.Item>
+              </DropdownButton>
+            </React.Fragment>
+          }
+          append={
+            <InputGroup.Append>
+              <Button onClick={handleSearch}>submit!</Button>
+            </InputGroup.Append>
+          }
+        />
       </Form>
       <section className="results">
         {searchResults.length > 0

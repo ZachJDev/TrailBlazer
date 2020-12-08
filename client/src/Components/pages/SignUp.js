@@ -4,6 +4,9 @@ import FormInputText from '../FormInputText'
 import FormInputPassword from '../FormInputPassword'
 import usePostBody from '../../hooks/usePostBody'
 
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+
 export default function Login() {
     const [username, setUsername] = useInputState('')
     const [password, setPassword] = useInputState('')
@@ -17,14 +20,18 @@ export default function Login() {
       setBodyAndPost(obj)
     }
   return (
-    <div>
+    <div style={{
+      maxWidth: "20vw",
+      margin: 'auto'
+    }}>
       <h1>Sign Up</h1>
-      <form>
+      <Form>
         <FormInputText value={username} handleChange={setUsername} label="username: " cssClass="input-username" name="username"/>
         <FormInputText value={emailAddress} handleChange={setEmailAddress} label="email: " cssClass="input-email" name="email"/>
         <FormInputPassword value={password} handleChange={setPassword} label="password: " cssClass="input-password" name="password"/>
-        <input type="submit" onClick={handleSubmit} />
-      </form>
+        <FormInputPassword value={password} handleChange={setPassword} label="confirm password: " cssClass="input-password" name="password"/>
+        <Button type="submit">Sign up</Button>
+              </Form>
     </div>
   );
 }
