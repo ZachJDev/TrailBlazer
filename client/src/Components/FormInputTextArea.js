@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 
 export default function FormInputTextArea ({name, label, value, handleChange, cssClass}) {
     return (
-
+<Form.Group className={` ${cssClass} form-item`}>
               <Form.Control
               placeholder={label}
               as='textarea'
@@ -11,6 +11,7 @@ export default function FormInputTextArea ({name, label, value, handleChange, cs
                 value={value}
                 name={name}
               ></Form.Control>
+              </Form.Group>
 
     )
 }
