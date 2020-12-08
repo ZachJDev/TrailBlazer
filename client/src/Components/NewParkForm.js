@@ -1,7 +1,13 @@
 import React, { Component } from "react";
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import InputGroup from 'react-bootstrap/InputGroup'
+
 import FormInputText from "./FormInputText";
 import useInputState from "../hooks/useInputState";
 import FormInputTextArea from "./FormInputTextArea";
+
+
 
 export default function NewParkForm({ handleSubmit, missing }) {
   const [newParkName, setParkName] = useInputState("");
@@ -30,7 +36,9 @@ export default function NewParkForm({ handleSubmit, missing }) {
     <div>
       <h1>Add new Park</h1>
       <section>
-        <form onSubmit={startSubmit}>
+        <Form onSubmit={startSubmit} style={{
+          margin: '0 20%'
+        }}>
           <FormInputText
             name="newParkName"
             label="Name:"
@@ -55,6 +63,7 @@ export default function NewParkForm({ handleSubmit, missing }) {
             handleChange={setParkAddress}
             hasError = {missing.includes("newParkAddress")}
           />
+          <InputGroup>
           <FormInputText
             name="newParkCity"
             cssClass="new-park-city"
@@ -71,6 +80,8 @@ export default function NewParkForm({ handleSubmit, missing }) {
             handleChange={setParkState}
             hasError = {missing.includes("newParkState")}
           />
+          </InputGroup>
+          <InputGroup>
           <FormInputText
             name="newParkCountry"
             cssClass="new-park-country"
@@ -87,8 +98,9 @@ export default function NewParkForm({ handleSubmit, missing }) {
             handleChange={setParkZipCode}
             hasError = {missing.includes("newParkZipCode")}
           />
-          <input type="submit"></input>
-        </form>
+          </InputGroup>
+          <Button type="submit">Add new Park</Button>
+        </Form>
       </section>
     </div>
   );
