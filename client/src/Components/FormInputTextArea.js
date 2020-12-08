@@ -1,14 +1,17 @@
 import React from 'react'
+import Form from 'react-bootstrap/Form'
 
 export default function FormInputTextArea ({name, label, value, handleChange, cssClass}) {
     return (
-        <div className={cssClass}>  
-                <label htmlFor={name}>{label}</label>
-              <textarea
+<Form.Group className={` ${cssClass} form-item`}>
+              <Form.Control
+              placeholder={label}
+              as='textarea'
                 onChange={handleChange}
                 value={value}
                 name={name}
-              ></textarea>
-            </div>
+              ></Form.Control>
+              </Form.Group>
+
     )
 }

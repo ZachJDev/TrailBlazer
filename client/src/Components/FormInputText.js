@@ -1,15 +1,29 @@
-import React from 'react'
+import React from "react";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 
-export default function FormInputText({name, label, handleChange, value, cssClass}) {
-    return (
-        <div className={cssClass || ""}>
-              <label htmlFor={name}>{label}</label>
-              <input
-                type="text"
-                onChange={handleChange}
-                value={value}
-                name={name}
-              ></input>
-            </div>
-    )
+export default function FormInputText({
+  name,
+  label,
+  handleChange,
+  value,
+  cssClass,
+  prepend,
+  append
+}) {
+  return (
+    <Form.Group className={`form-item ${cssClass || ""} `}>
+      <InputGroup>
+        {prepend}
+        <Form.Control
+          placeholder={label}
+          type="text"
+          onChange={handleChange}
+          value={value}
+          name={name}
+        ></Form.Control>
+        {append}
+      </InputGroup>
+    </Form.Group>
+  );
 }
