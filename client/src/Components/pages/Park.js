@@ -9,8 +9,8 @@ export default function Park({ match }) {
   // {name, description, address, city, state}
 
   return (
-    <div className="park-info">
-     <InfoContainer {...parkInfo} />
+    <div  className="park-info">
+     <InfoContainer {...parkInfo}>
      {parkInfo.trails ?
        parkInfo.trails.map((trail, idx) => (
          <div key={idx}>
@@ -22,6 +22,7 @@ export default function Park({ match }) {
      <div>
        <Link to={`/trail/new?parkId=${match.params.parkId}&park=${parkInfo.name}`}>Add New Trail</Link>
      </div>
+     </InfoContainer>
     </div>
   );
 }
