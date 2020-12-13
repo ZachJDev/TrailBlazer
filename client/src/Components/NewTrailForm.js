@@ -5,8 +5,8 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 
-import FormInputText from "./FormInputText";
-import FormInputTextArea from "./FormInputTextArea";
+import FormInputText from "./FormInputs/FormInputText";
+import FormInputTextArea from "./FormInputs/FormInputTextArea";
 
 import useInputState from "../hooks/useInputState";
 

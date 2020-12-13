@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import useInputState from '../../hooks/useInputState'
-import FormInputText from '../FormInputText'
-import FormInputPassword from '../FormInputPassword'
-import usePostBody from '../../hooks/usePostBody'
-
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+
+import useInputState from '../../hooks/useInputState'
+import usePostBody from '../../hooks/usePostBody'
+
+import FormInputText from '../FormInputs/FormInputText'
+import FormInputPassword from '../FormInputs/FormInputPassword'
+
+
 
 export default function Login() {
     const [username, setUsername] = useInputState('')

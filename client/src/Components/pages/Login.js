@@ -2,8 +2,8 @@ import React, {  useContext, useEffect } from "react";
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import useInputState from '../../hooks/useInputState'
-import FormInputText from '../FormInputText'
-import FormInputPassword from '../FormInputPassword'
+import FormInputText from '../FormInputs/FormInputText'
+import FormInputPassword from '../FormInputs/FormInputPassword'
 
 import {UserContext} from '../../contexts/UserContext'
 
