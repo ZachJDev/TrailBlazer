@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import {Link} from 'react-router-dom'
 import useGetPayload from '../../hooks/useGetPayload'
+import Description from "../Description";
 import InfoContainer from "../InfoContainer";
+import MainInfo from "../MainInfo";
+
+import ParkTrails from '../ParkTrails'
 
 export default function Park({ match }) {
   const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`)
@@ -9,19 +13,12 @@ export default function Park({ match }) {
   // {name, description, address, city, state}
 
   return (
-    <div className="park-info">
-     <InfoContainer {...parkInfo} />
-     {parkInfo.trails ?
-       parkInfo.trails.map((trail, idx) => (
-         <div key={idx}>
-           <Link to={`/trail/${trail.trailId}`}>{trail.name}</Link>
-         </div>
-       ))
-       : null
-     }
-     <div>
-       <Link to={`/trail/new?parkId=${match.params.parkId}&park=${parkInfo.name}`}>Add New Trail</Link>
-     </div>
+    <div  className="park-info">
+     <InfoContainer {...parkInfo}>
+     <MainInfo {...parkInfo}/>
+     <Description description={parkInfo.description} name={parkInfo.name}/>
+     <ParkTrails {...match.params.parkId} {...parkInfo}/> 
+     </InfoContainer>
     </div>
   );
 }

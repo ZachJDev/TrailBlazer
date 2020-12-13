@@ -1,23 +1,6 @@
 import React from "react";
+import Container from "react-bootstrap/Container";
 
-export default function InfoContainer({
-  name,
-  description,
-  address,
-  zipcode,
-  city,
-  state,
-}) {
-  return (
-    <div>
-      <h1>{name}</h1>
-      <div>
-        <p>{address}</p>
-        <p>
-          {city}, {state}
-        </p>
-      </div>
-      <p>{description}</p>
-    </div>
-  );
+export default function InfoContainer({ children }) {
+  return <Container>{children}</Container>;
 }
