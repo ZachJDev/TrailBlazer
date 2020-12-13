@@ -16,10 +16,15 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        lengthMeasurement: {
+            type: DataTypes.ENUM('Miles', 'Kilometers'),
+            allowNull: false
+        },
         email: {
             type: DataTypes.STRING,
             allowNull: false
         }
     }, )
+    User.sync({alter: true})
     return User
 }
