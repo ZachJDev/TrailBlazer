@@ -7,7 +7,6 @@ import Button from "react-bootstrap/Button";
 
 import SearchResultContainer from "../SearchResultContainer";
 import FormInputText from "../FormInputs/FormInputText";
-import FormInputSelect from "../FormInputs/FormInputSelect";
 
 import useInputState from "../../hooks/useInputState";
 
