@@ -26,27 +26,9 @@ export default function Login({history, match}) {
       margin: 'auto'
     }}>
       <h1>Login</h1>
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-      <form>
-        <FormInputText value={username} handleChange={setUsername} label="username: " cssClass="input-username" name="username"/>
-=======
->>>>>>> Stashed changes
-      {errors.errorMessage ? 
-        <div>
-          <h3>{errors.errorMessage}</h3>
-        </div>
-        : null
-      }
-<<<<<<< Updated upstream
-      <Form>
-        <FormInputText value={username} handleChange={setUsername} label="username: "  name="username"/>
-=======
       <Form onSubmit={handleSubmit}>
         <FormInputText value={username} handleChange={setUsername} label="username: "  name="username"/>
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
         <FormInputPassword value={password} handleChange={setPassword} label="password: " cssClass="input-password" name="password"/>
         <Button type="submit">Login</Button>
               </Form>

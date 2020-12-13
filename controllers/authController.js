@@ -39,15 +39,7 @@ exports.postLogin = (req, res, next) => {
     })
     .then(() => {
         console.log("logged in:", user.username)
-<<<<<<< Updated upstream
-        res.status(200).json({username: user.username, isLoggedIn: true})
-=======
-<<<<<<< Updated upstream
-        res.status(200).json({success: true})
-=======
         res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     })
     .catch((e) => {
         console.log(e)
@@ -91,26 +83,15 @@ exports.signUp = (req, res, next) => {
       res.status(409).json({ errorMessage: e.message });
     });
 };
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
+
 
 exports.getUserData =  (req, res, next) => {
   if(req.session.isLoggedIn) {
       console.log( 'looking for: ', req.session.userId)
       db.User.findOne({where: {userId: req.session.userId}})
       .then(user => {
-<<<<<<< Updated upstream
-        res.status(200).json({username: user.username, isLoggedIn: true})
-      })
-  }
-}
-=======
         res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
       })
   }
 }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
