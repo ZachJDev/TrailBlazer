@@ -1,14 +1,14 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
+import TrailCard from './TrailCard'
+
 export default function ParkTrails({trails, parkId, name}) {
     return (
         <div>
 {trails ?
        trails.map((trail, idx) => (
-         <div key={idx}>
-           <Link to={`/trail/${trail.trailId}`}>{trail.name}</Link>
-         </div>
+         <TrailCard key={idx} {...trail}/>
        ))
        : null
      }
