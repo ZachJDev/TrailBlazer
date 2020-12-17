@@ -1,40 +1,75 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import useBool from "../hooks/useBool";
 
-import useGetPayload from '../hooks/useGetPayload'
+import useGetPayload from "../hooks/useGetPayload";
+import Difficulty from "./TrailAccessibility/Difficulty";
+import GoodForGroups from "./TrailAccessibility/GoodForGroups";
+import Parking from "./TrailAccessibility/Parking";
+import PetFriendly from "./TrailAccessibility/PetFriendly";
+import WheelCharAccessible from "./TrailAccessibility/WheelCharAccessible";
 
 // Not in love with the '=== "true"' stuff in the actual display. I may play around with that later.
 
-export default function TrailAccessibility({trailId }) {
-    const [ratings] = useGetPayload(`/ratings/trail/${trailId}`)
-    const [averages, setAverages] = useState({loaded: false})
-useEffect(() => {
-    if(ratings.status === 200){
-        setAverages({
-            difficultyMode : getMode(ratings.difficulty),
-            parkingMode : getMode(ratings.parking),
-            petFriendlyMode : getMode(ratings.petFriendly),
-            goodForGroupsMode : getMode(ratings.goodForGroups),
-            wheelchairAccMode : getMode(ratings.wheelchairAcc),
-            loaded: true
-        })
-        console.log(averages)
+export default function TrailAccessibility({ trailId }) {
+  const MINIMUM_RATINGS = 1;
+  const [ratings] = useGetPayload(`/ratings/trail/${trailId}`);
+  const [ratingsLoaded, updateLoaded] = useBool(false);
+  const [difficultyMode, setDifficultyMode] = useState({});
+  const [parkingMode, setParkingMode] = useState({});
+  const [petFriendlyMode, setPetFriendlyMode] = useState({});
+  const [goodForGroupsMode, setGoodForGroupsMode] = useState({});
+  const [wheelchairAccMode, setWheelchairAccMode] = useState({});
+  useEffect(() => {
+    if (ratings.status === 200) {
+      const {
+        difficulty,
+        parking,
+        petFriendly,
+        goodForGroups,
+        wheelchairAcc,
+      } = ratings;
+      setDifficultyMode({
+        ...getMode(difficulty),
+        length: difficulty.length,
+      });
+      setParkingMode({
+        ...getMode(parking),
+        length: parking.length,
+      });
+      setPetFriendlyMode({
+        ...getMode(petFriendly),
+        length: petFriendly.length,
+      });
+      setGoodForGroupsMode({
+        ...getMode(goodForGroups),
+        length: goodForGroups.length,
+      });
+      setWheelchairAccMode({
+        ...getMode(wheelchairAcc),
+        length: wheelchairAcc.length,
+      });
+      updateLoaded();
     }
-}, [ratings])
-console.log(averages)
+    if(ratings.status === 204) {
+        updateLoaded();
+    }
+  }, [ratings]);
+
   return (
     <div
       style={{ display: "flex", justifyContent: "space-around" }}
       className="Trail-card-accessibility"
     >
-    {averages.loaded ?
+    {
+        ratingsLoaded ?
         <React.Fragment>
-      <p>Difficulty: {averages.difficultyMode.name}</p>
-      <p> Parking: {averages.parkingMode.name}</p>
-      <p>{averages.goodForGroupsMode.name === 'true' ? 'Good for Groups': 'Not good for Groups'}</p>
-      <p>{averages.wheelchairAccMode.name === 'true' ? "Wheelchair friendly" : 'Not wheelchair Friendly'}</p>
-      <p>{averages.petFriendlyMode.name  === 'true' ? 'Good for Pets': 'Not good for Pets'}</p>
-      </React.Fragment>
-      : null
+            <Difficulty {...difficultyMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
+            <WheelCharAccessible  {...wheelchairAccMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
+            <Parking  {...parkingMode} MINIMUM_RATINGS={MINIMUM_RATINGS} />
+            <GoodForGroups  {...goodForGroupsMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
+            <PetFriendly  {...petFriendlyMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
+        </React.Fragment>
+        : "Ratings Loading..."
     }
     </div>
   );
@@ -48,14 +83,16 @@ const getMode = (arr) => {
       freqs[el.toString()] = ++freqs[el.toString()] || 1;
     });
 
-    return Object.keys(freqs)
     // Building the objects for each key is a little dubious, as I will only return one.
-      .map((el) => {
-        return {
-          name: el,
-          freq: freqs[el],
-        };
-      })
-      .sort((a, b) => b.freq - a.freq)[0] || 0;
+    return (
+      Object.keys(freqs)
+        .map((el) => {
+          return {
+            name: el,
+            freq: freqs[el],
+          };
+        })
+        .sort((a, b) => b.freq - a.freq)[0] || 0
+    );
   }
 };
