@@ -8,6 +8,7 @@ import {
 import "./App.css";
 import Home from "./Components/pages/Home";
 import Login from "./Components/pages/Login";
+import Logout from "./Components/pages/Logout";
 import Park from "./Components/pages/Park";
 import Trail from "./Components/pages/Trail";
 import NewPark from "./Components/pages/NewPark";
@@ -38,6 +39,11 @@ function App() {
               path={"/login"}
               exact
               render={(routeProps) => <Login {...routeProps} />}
+            />
+            <Route
+              path={"/logout"}
+              exact
+              render={(routeProps) => <Logout {...routeProps} />}
             />
             <Route
               path={"/Signup"}
