@@ -12,6 +12,8 @@ const  [pl] = useGetPayload('/auth/userData')
 const updateUser = (form) => {
     postLogin(form)
 }
+const clearUser = () => setUser({})
+
 useEffect(()=> {
     if(payload.status === 200) {
         setUser(payload)
@@ -23,6 +25,7 @@ useEffect(()=> {
 }, [payload])
 
 useEffect(() => {
+    console.log('attempting to grab user info')
     // Check if the user object is empty
     if(Object.keys(user).length === 0 && user.constructor === Object) {
         setUser(pl)
@@ -30,7 +33,7 @@ useEffect(() => {
 }, [pl])
 
     return (
-        <UserContext.Provider value={{user, updateUser, errors}}>
+        <UserContext.Provider value={{user, updateUser, errors, clearUser}}>
             {children}
         </UserContext.Provider>
     )

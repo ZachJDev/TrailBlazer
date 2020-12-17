@@ -25,13 +25,19 @@ export default function Login({history, match}) {
       maxWidth: "20vw",
       margin: 'auto'
     }}>
+
       <h1>Login</h1>
+      {errors.errorMessage ? 
+        <div>
+          <h3>{errors.errorMessage}</h3>
+        </div>
+        : null
+      }
       <Form onSubmit={handleSubmit}>
         <FormInputText value={username} handleChange={setUsername} label="username: "  name="username"/>
-
         <FormInputPassword value={password} handleChange={setPassword} label="password: " cssClass="input-password" name="password"/>
         <Button type="submit">Login</Button>
-              </Form>
+            </Form>
     </div>
   );
 }

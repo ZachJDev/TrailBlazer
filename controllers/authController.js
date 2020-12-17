@@ -42,7 +42,7 @@ exports.postLogin = (req, res, next) => {
         res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
     })
     .catch((e) => {
-        console.log(e)
+        console.log("LOGIN FAILED")
       if (e instanceof NotFoundError)
         res.status(404).json({ errorMessage: e.message });
       else if (e instanceof InputError) // Poor error handling here from a security experience perspective -- probably shouldn't
@@ -83,15 +83,26 @@ exports.signUp = (req, res, next) => {
       res.status(409).json({ errorMessage: e.message });
     });
 };
+exports.logout = (req, res, next) => {
+  req.session.destroy((err, ses) => {
+    console.log(err)
+    res.status(200).json({success: true})
+  });
+}
 
 
 exports.getUserData =  (req, res, next) => {
+  console.log("user session:",req.session)
   if(req.session.isLoggedIn) {
       console.log( 'looking for: ', req.session.userId)
       db.User.findOne({where: {userId: req.session.userId}})
       .then(user => {
         res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
       })
+      .catch(e => {
+        console.log("USER NOT FOUND")
+        res.status(404).json({})
+      })
+
   }
 }
-
