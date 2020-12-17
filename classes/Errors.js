@@ -22,5 +22,13 @@ class NotFoundError extends (
       Object.setPrototypeOf(this, NotFoundError.prototype)
   }
 };
+class NoContentError extends (
+  Error
+) {
+  constructor(message) {
+      super(message);
+      Object.setPrototypeOf(this, NoContentError.prototype)
+  }
+};
 
-module.exports = {AuthenticationError, InputError, NotFoundError}
+module.exports = {AuthenticationError, InputError, NotFoundError, NoContentError}

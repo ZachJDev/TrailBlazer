@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
             primaryKey: true
         },
-        startRating: {
+        starRating: {
             type: DataTypes.INTEGER(1)
         },
         petFriendly : {
@@ -37,13 +37,14 @@ module.exports = (sequelize, Sequelize) => {
         }
 
     }, )
+    // TrailRating.sync({force: true})
     TrailRating.removeAttribute('id')
 
     //    for(let i = 0; i < 100; i++) {
     //         TrailRating.create({
     //         trailId: 1, 
     //         userId: uuidv4(),
-    //         startRating: (Math.floor((Math.random() * 5) + 1)),
+    //         starRating: (Math.floor((Math.random() * 5) + 1)),
     //         petFriendly: Math.random() > .5,
     //         parking: (['On Trailhead', 'Close', 'Far', 'No Marked Parking'][Math.floor(Math.random() * 4)]),
     //         wheelchairAcc: Math.random() > .5,

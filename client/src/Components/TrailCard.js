@@ -4,7 +4,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+
+import TrailAccessibility from './TrailAccessibility'
+
 import useGetPicture from "../hooks/useGetPicture";
+import useGetPayload from '../hooks/useGetPayload'
 
 import { UserContext } from "../contexts/UserContext";
 
@@ -48,7 +52,7 @@ export default function TrailCard({trailId, name, description, length}) {
               }
             </p>
           </div>
-          <div className="Trail-card-acc"></div>
+         <TrailAccessibility trailId={trailId}/>
           <div className="Trail-card-desc"></div>
         </Col>
       </Row>
