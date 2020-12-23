@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -15,6 +15,7 @@ export default function Search() {
   const [searchType, setSearchType] = useState("Park");
   const [searchTerm, setSearchTerm] = useInputState("");
   let [searchResults, setSearchResults] = useState([]);
+  let [resultsList, setResultsList] = useState([]);
 
   const handleSearch = () => {
     fetch(`/search/${searchType}`)
@@ -28,15 +29,39 @@ export default function Search() {
   const handleDropdown = (type) => {
     setSearchType(type);
   };
-  console.log(searchResults)
-  if( searchResults.length > 0) {
-    if(searchType === 'Trail') {
+  useEffect(() => {
+    if( searchResults.length > 0) {
+      if(searchType === 'Trail') {
+        console.log(searchResults)
+      setResultsList(searchResults.map(trail => (
+        <TrailCard
+        key={trail.trailId}
+        park={trail.park}
+        trailId={trail.trailId}
+        name={trail.name}
+        description={trail.description}
+        length={trail.length}
+        />
+      )))
+      }
+      else if(searchType === 'Park') {
+        setResultsList(searchResults.map((park) => {
+          return (
+            <SearchResultContainer
+              key={park.parkId}
+              name={park.name}
+              city={park.city}
+              state={park.state}
+              pictureUrl={""}
+              id={park.parkId}
+            />
+          );
+        }))
+      }
     }
-    else if(searchType === 'Park') {
-
-    }
-  }
-
+  
+  }, [searchResults])
+  
   return (
     <div>
       <p>Search page</p>
@@ -77,18 +102,7 @@ export default function Search() {
       </Form>
       <section className="results">
         {searchResults.length > 0
-          ? searchResults.map((park) => {
-              return (
-                <SearchResultContainer
-                  key={park.parkId}
-                  name={park.name}
-                  city={park.city}
-                  state={park.state}
-                  pictureUrl={""}
-                  id={park.parkId}
-                />
-              );
-            })
+          ? resultsList
           : "There's nothing to show!"}
       </section>
     </div>
