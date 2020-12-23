@@ -14,6 +14,12 @@ export default function Nav() {
         <NavLink to="/search" activeClassName="nav-selected">
           Find a Trail
         </NavLink>
+        {
+          user.isAdmin &&
+        (<NavLink to="/park/new" activeClassName="nav-selected">
+          Add new Park
+        </NavLink>)
+        }
       </div>
       <div className="nav-auth">
         {user.status === 200 ? (
