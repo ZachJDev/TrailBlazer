@@ -39,7 +39,7 @@ exports.postLogin = (req, res, next) => {
     })
     .then(() => {
         console.log("logged in:", user.username)
-        res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
+        res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true,  isAdmin: user.admin})
     })
     .catch((e) => {
         console.log("LOGIN FAILED")
@@ -52,8 +52,8 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.signUp = (req, res, next) => {
-  const { username, password, emailAddress, measure } = req.body;
-
+  const { username, password, emailAddress, measure, isAdmin } = req.body;
+  console.log(isAdmin)
   db.User.findOne({
     where: { [Op.or]: [{ email: emailAddress }, { username }] },
   })
@@ -72,7 +72,8 @@ exports.signUp = (req, res, next) => {
         username,
         password: hash,
         email: emailAddress,
-        lengthMeasurement: measure
+        lengthMeasurement: measure,
+        admin: isAdmin
       });
     })
     .then((user) => {
@@ -97,7 +98,7 @@ exports.getUserData =  (req, res, next) => {
       console.log( 'looking for: ', req.session.userId)
       db.User.findOne({where: {userId: req.session.userId}})
       .then(user => {
-        res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true})
+        res.status(200).json({username: user.username, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true, isAdmin: user.admin})
       })
       .catch(e => {
         console.log("USER NOT FOUND")

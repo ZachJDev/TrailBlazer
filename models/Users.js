@@ -16,6 +16,11 @@ module.exports = (sequelize, Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        admin: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
+        },
         lengthMeasurement: {
             type: DataTypes.ENUM('Miles', 'Kilometers'),
             allowNull: false
