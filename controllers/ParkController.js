@@ -1,3 +1,4 @@
+const {AuthenticationError} = require('../classes/Errors')
 const db = require("../models/index");
 
 exports.getOne = (req, res, next) => {
@@ -33,6 +34,10 @@ exports.add = (req, res, next) => {
   // I don't love this double error handling. I should look for a way to maybe turn this check into a promise,
   // Then chain it with the other stuff.
   try {
+    if( !req.user) {
+      status = 401;
+      throw new AuthenticationError('User Not Authorized')
+    }
     if (body.errors.length > 0) {
       body.errorMessage = "Missing Required Information";
       status = 400;

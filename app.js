@@ -37,7 +37,6 @@ app.use(
 // Express Config
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 
 
