@@ -9,6 +9,8 @@ import PetFriendly from "./TrailAccessibility/PetFriendly";
 import WheelCharAccessible from "./TrailAccessibility/WheelCharAccessible";
 
 // Not in love with the '=== "true"' stuff in the actual display. I may play around with that later.
+// Also thinking that doing all this work on the client side is a waste of time and effort. I should try to move 
+// These calculations to the server.
 
 export default function TrailAccessibility({ trailId }) {
   const MINIMUM_RATINGS = 1;

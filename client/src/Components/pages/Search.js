@@ -6,6 +6,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 
 import SearchResultContainer from "../SearchResultContainer";
+import TrailCard from '../TrailCard'
 import FormInputText from "../FormInputs/FormInputText";
 
 import useInputState from "../../hooks/useInputState";
@@ -27,6 +28,14 @@ export default function Search() {
   const handleDropdown = (type) => {
     setSearchType(type);
   };
+  console.log(searchResults)
+  if( searchResults.length > 0) {
+    if(searchType === 'Trail') {
+    }
+    else if(searchType === 'Park') {
+
+    }
+  }
 
   return (
     <div>
@@ -50,7 +59,7 @@ export default function Search() {
                 title={searchType}
                 variant="outline-primary"
               >
-                <Dropdown.Item eventKey="park" onSelect={handleDropdown}>
+                <Dropdown.Item eventKey="Park" onSelect={handleDropdown}>
                   Park
                 </Dropdown.Item>
                 <Dropdown.Item eventKey="Trail" onSelect={handleDropdown}>

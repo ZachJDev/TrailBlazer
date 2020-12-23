@@ -1,9 +1,32 @@
 const db = require("../models/index");
 
 exports.search = (req, res, next) => {
-    let type = req.params.type
-    db[type].findAll()
+  let type = req.params.type;
+
+  if (type === "Park") {
+    db.Park.findAll().then((results) => {
+      res.json(results);
+    });
+  }
+  // I imagine there's a better way of doing this...
+  else if (type === 'Trail') {
+      let trails = {}
+    db.Trail.findAll()
     .then(results => {
-       res.json(results)
+        results.forEach(trail => {
+            trails[trail.dataValues.trailId] = {...trail.dataValues, ratings: []}
+        })
+        const promises = results.map(res => {
+            return db.TrailRating.findAll({where: {trailId: res.dataValues.trailId}})  
+        })
+        return Promise.all(promises)
     })
-}
+    .then(info => {
+        // This just pushes each rating into the array.
+        info[0].forEach(trailRating => {
+            trails[trailRating.dataValues.trailId].ratings.push(trailRating.dataValues)
+        })
+        res.json(Object.keys(trails).map(tr => trails[tr]))
+    })
+  }
+};

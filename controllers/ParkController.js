@@ -11,6 +11,8 @@ exports.getOne = (req, res, next) => {
       res.status(404).send("");
       console.log(`Could not find Park with id ${parkId}`);
     }
+  }).catch(e => {
+    console.log("Error When Looking for Park")
   });
 };
 
