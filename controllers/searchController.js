@@ -9,6 +9,8 @@ exports.search = (req, res, next) => {
     });
   }
   // I imagine there's a better way of doing this...
+  // As stated elsewhere, my current pattern of sending all the rating data
+  // to the client and handling the averaging there NEEDS to STOP.
   else if (type === 'Trail') {
       let trails = {}
     db.Trail.findAll()
@@ -26,7 +28,7 @@ exports.search = (req, res, next) => {
         info[0].forEach(trailRating => {
             trails[trailRating.dataValues.trailId].ratings.push(trailRating.dataValues)
         })
-        res.json(Object.keys(trails).map(tr => trails[tr]))
+        res.json(Object.keys(trails).map(tr => trails[tr])) // The Search component only works with arrays
     })
   }
 };
