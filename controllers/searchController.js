@@ -13,7 +13,7 @@ exports.search = (req, res, next) => {
   // to the client and handling the averaging there NEEDS to STOP.
   else if (type === 'Trail') {
       let trails = {}
-    db.Trail.findAll()
+    db.Trail.findAll({include: [db.Park]})
     .then(results => {
         results.forEach(trail => {
             trails[trail.dataValues.trailId] = {...trail.dataValues, ratings: []}
