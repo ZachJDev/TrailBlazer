@@ -29,7 +29,7 @@ exports.add = (req, res, next) => {
     newParkDescription,
   } = req.body;
   // 1. confirm that all the required information is present
-  let body = {};
+  let body = {foo:'bar'};
   body.errors = getEmptyProps(req.body);
   // I don't love this double error handling. I should look for a way to maybe turn this check into a promise,
   // Then chain it with the other stuff.
@@ -69,11 +69,12 @@ exports.add = (req, res, next) => {
       })
       .then((park) => {
         console.log("Park Added");
-        res.status(200).type('json').json(body);
+        res.status(200).type('json').json({parkId: payload.parkId});
       })
       .catch((e) => {
+        console.log('This should really be caught on the frontend...')
         console.log(e.message);
-        res.status(status).type('json').json(body);
+        res.status(400).type('json').json(body);
       });
   } catch (e) {
     console.log(body)
