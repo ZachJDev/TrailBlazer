@@ -53,7 +53,6 @@ exports.postLogin = (req, res, next) => {
 
 exports.signUp = (req, res, next) => {
   const { username, password, emailAddress, measure, isAdmin } = req.body;
-  console.log(isAdmin)
   db.User.findOne({
     where: { [Op.or]: [{ email: emailAddress }, { username }] },
   })

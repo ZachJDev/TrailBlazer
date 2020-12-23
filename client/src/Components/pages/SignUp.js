@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -9,23 +9,25 @@ import FormInputText from "../FormInputs/FormInputText";
 import FormInputPassword from "../FormInputs/FormInputPassword";
 import FormInputSelect from "../FormInputs/FormInputSelect";
 
-export default function Login() {
+export default function SignUp({history}) {
   const [username, setUsername] = useInputState("");
   const [password, setPassword] = useInputState("");
   const [confirmPassword, setConfirmPassword] = useInputState("");
   const [emailAddress, setEmailAddress] = useInputState("");
   const [isAdmin, switchAdmin] = useBool(false);
   const [measure, setMeasure] = useInputState("Miles");
-  const [payload, setBodyAndPost] = usePostBody("/auth/signup?_method=POST");
+  const [payload, setBodyAndPost] = usePostBody("/auth/signup");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const obj = { username, password, emailAddress, measure, isAdmin };
     setBodyAndPost(obj);
   };
-  const h = (e) => {
-    console.log("lkajhsdla;skjh")
-  }
+
+  useEffect(() => {
+    if(payload.status === 200) history.push('/Login')
+  })
+
   return (
     <div
       style={{
