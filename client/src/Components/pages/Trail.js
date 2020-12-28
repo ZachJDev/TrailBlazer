@@ -4,13 +4,11 @@ import useInputState from "../../hooks/useInputState";
 import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import usePostBody from "../../hooks/usePostBody";
+import NewTrailReview from "../NewTrailReview";
 
 export default function Trail({ match, history }) {
   const { trailId } = match.params;
   const { user } = useContext(UserContext);
-  const [reviewText, setReviewText, clearText] = useInputState("");
-  const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
-  const [parking, setParking, clearParking] = useInputState("On Trailhead");
   const [trailReviews, setTrailReviews] = useState([]);
   const [trailInfo] = useGetPayload(`/trail/${trailId}`);
   const [reviewPayload, getReviewsAgain] = useGetPayload(
@@ -26,16 +24,12 @@ export default function Trail({ match, history }) {
 
   useEffect(() => {
     if (postPayload.success) {
-      // Clears and refreshes reviews only after we know the review was successfully posted
-      clearText();
-      clearTitle();
       getReviewsAgain();
     }
   }, [postPayload]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // shouldn't be anything here -- not submitting a form
-    setReviewBody({ reviewText, reviewTitle, parking });
+  const handleSubmit = (formBody) => {
+    setReviewBody(formBody);
   };
 
   const { length, name, description, parkId } = trailInfo;
@@ -55,26 +49,7 @@ export default function Trail({ match, history }) {
           </div>
           <section className="reviews">
             {user.isLoggedIn && (
-              <section className="add-review">
-                <input
-                  type="text"
-                  value={reviewTitle}
-                  onChange={setReviewTitle}
-                  placeholder="Title..."
-                />
-                <textarea
-                  value={reviewText}
-                  onChange={setReviewText}
-                  placeholder="add your review..."
-                ></textarea>
-                <input onClick={handleSubmit} type="submit" />
-                <select onChange={setParking} value={parking}>
-                  <option value ='On Trailhead'>On Trailhead</option>
-                  <option value ='Close'>Close</option>
-                  <option value ='Far'>Far</option>
-                  <option value ='No Marked Parking'>No Marked Parking</option>
-                </select>
-              </section>
+              <NewTrailReview submitForm={handleSubmit} isSubmitted={postPayload.success}/>
             )}
             {trailReviews.map((review, idx) => (
               <div key={idx}>
