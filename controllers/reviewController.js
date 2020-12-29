@@ -1,5 +1,5 @@
 const db = require("../models/index");
-const {EntryExistsError} = require('../classes/Errors')
+const { EntryExistsError } = require("../classes/Errors");
 
 exports.getTrailReviews = (req, res, next) => {
   const trailId = req.params.id;
@@ -7,9 +7,30 @@ exports.getTrailReviews = (req, res, next) => {
 
   db.Review.findAll({ where: { trailId }, include: [db.User] }).then(
     (reviews) => {
-      res.json({ reviews });
+      res.json({
+        reviews: reviews.map((rev) => {
+          return {
+            title: rev.title,
+            username: rev.user.username,
+            text: rev.text,
+            isEditable: rev.userId === req.session.userId,
+          };
+        }),
+      });
     }
   );
+};
+exports.checkUserForReview = (req, res, next) => {
+  console.log("searching reviews for: ", req.session);
+  console.log(req.params.id);
+  if (req.session.isLoggedIn) {
+    db.Review.count({
+      where: { userId: req.session.userId, trailId: req.params.id },
+    }).then((count) => (req.userInfo = { hasReview: count > 0 }));
+  } else {
+    req.userInfo = null;
+  }
+  next();
 };
 
 exports.postNewTrailReview = (req, res, next) => {
@@ -19,9 +40,9 @@ exports.postNewTrailReview = (req, res, next) => {
 
   db.Review.count({ where: { userId: req.session.userId } })
     .then((count) => {
-        if(count > 0) {
-            throw new EntryExistsError("Review already exists with that username")
-        }
+      if (count > 0) {
+        throw new EntryExistsError("Review already exists with that username");
+      }
     })
     .then(() => {
       db.Review.create({
@@ -42,9 +63,9 @@ exports.postNewTrailReview = (req, res, next) => {
       console.log(rating);
       res.status(200).json({ success: true });
     })
-    .catch(e => {
-        if(typeof e === EntryExistsError) {
-            res.status(409).json({errors:["review already exists"]})
-        }
-    })
+    .catch((e) => {
+      if (typeof e === EntryExistsError) {
+        res.status(409).json({ errors: ["review already exists"] });
+      }
+    });
 };

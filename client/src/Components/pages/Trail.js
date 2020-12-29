@@ -19,6 +19,7 @@ export default function Trail({ match, history }) {
   );
 
   useEffect(() => {
+    console.log(reviewPayload)
     if (reviewPayload.reviews) setTrailReviews(reviewPayload.reviews);
   }, [reviewPayload]);
 
@@ -54,7 +55,7 @@ export default function Trail({ match, history }) {
             {trailReviews.map((review, idx) => (
               <div key={idx}>
                 <h2>{review.title}</h2>
-                <h3>Review by: {review.user.username}</h3>
+                <h3>Review by: {review.username}</h3>
                 <p>{review.text}</p>
               </div>
             ))}

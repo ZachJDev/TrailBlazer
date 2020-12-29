@@ -5,7 +5,7 @@ const router = express.Router({mergeParams: true})
 const middleware = require('../middleware/middleware')
 const reviewController = require('../controllers/reviewController')
 
-router.get('/trails/:id', reviewController.getTrailReviews)
+router.get('/trails/:id', middleware.getUser, reviewController.checkUserForReview, reviewController.getTrailReviews)
 
 router.post('/new', middleware.getUser, middleware.userMatches, reviewController.postNewTrailReview)
 
