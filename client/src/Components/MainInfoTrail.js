@@ -1,15 +1,13 @@
-import React from "react";
+import React from 'react'
+import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Image from "react-bootstrap/Image";
-import Button from "react-bootstrap/Button";
-import PictureContainer from "./PictureContainer";
 
-import Title from "./InfoContainers/Title";
-import Address from "./InfoContainers/Address";
-import ButtonActionRow from "./InfoContainers/ButtonActionRow";
+import Title from './InfoContainers/Title'
+import PictureContainer from './PictureContainer'
+import Length from './InfoContainers/Length';
 
-export default function MainInfo({ name, address, city, state, children }) {
+export default function MainInfoTrail({name, length, parkId, parkName, children }) {
   return (
     <Row fluid style={{ marginTop: "1rem" }}>
       <Col fluid md={12} lg={6}>
@@ -19,11 +17,15 @@ export default function MainInfo({ name, address, city, state, children }) {
               margin: "auto",
             }}
           >
+            {" "}
             <Title>{name}</Title>
-            <Address address={address} city={city} state={state} />
+            <Link to={`/park/${parkId}`}>
+              Go to {parkName}
+            </Link>
+            <Length miles={length}/>
           </div>
         </Row>
-        {children}
+            {children}
       </Col>
       <Col
         style={{

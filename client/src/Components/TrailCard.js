@@ -11,6 +11,7 @@ import useGetPicture from "../hooks/useGetPicture";
 import useGetPayload from "../hooks/useGetPayload";
 
 import { UserContext } from "../contexts/UserContext";
+import Length from "./InfoContainers/Length";
 
 export default function TrailCard({
   trailId,
@@ -55,11 +56,7 @@ export default function TrailCard({
                 <h6>{park.name}</h6>
               </Link>
             )}
-            <p>
-              {user.lengthMeasurement === "Kilometers"
-                ? `${(length * 1.609344).toFixed(2)} Km`
-                : `${length} miles`}
-            </p>
+            <Length miles={length}/>
           </div>
           <TrailAccessibility trailId={trailId} />
           <div className="Trail-card-desc"></div>

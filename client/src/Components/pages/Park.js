@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from "react";
-import {Link} from 'react-router-dom'
-import useGetPayload from '../../hooks/useGetPayload'
-import Description from "../Description";
+import { Link } from "react-router-dom";
+import useGetPayload from "../../hooks/useGetPayload";
+import Description from "../InfoContainers/Description";
 import InfoContainer from "../InfoContainer";
+import ButtonActionRow from "../InfoContainers/ButtonActionRow";
 import MainInfo from "../MainInfo";
 
-import ParkTrails from '../ParkTrails'
+import ParkTrails from "../ParkTrails";
 
 export default function Park({ match }) {
-  const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`)
+  const alertComingSoon = () => alert("Functionality Coming Soon!");
+
+  const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`);
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
 
   return (
-    <div  className="park-info">
-     <InfoContainer {...parkInfo}>
-     <MainInfo {...parkInfo}/>
-     <Description description={parkInfo.description} name={parkInfo.name}/>
-     <ParkTrails {...match.params.parkId} {...parkInfo}/> 
-     </InfoContainer>
+    <div className="park-info">
+      <InfoContainer>
+        <MainInfo {...parkInfo}>
+          <ButtonActionRow
+            handleReview={alertComingSoon}
+            handleMap={alertComingSoon}
+            handleShare={alertComingSoon}
+          />
+        </MainInfo>
+        <Description description={parkInfo.description} name={parkInfo.name} />
+        <ParkTrails {...match.params.parkId} {...parkInfo} />
+      </InfoContainer>
     </div>
   );
 }
