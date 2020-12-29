@@ -19,7 +19,6 @@ export default function Trail({ match, history }) {
   );
 
   useEffect(() => {
-    console.log(reviewPayload)
     if (reviewPayload.reviews) setTrailReviews(reviewPayload.reviews);
   }, [reviewPayload]);
 
