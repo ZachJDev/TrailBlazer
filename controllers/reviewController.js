@@ -16,21 +16,19 @@ exports.getTrailReviews = (req, res, next) => {
             isEditable: rev.userId === req.session.userId,
           };
         }),
+        userHasReviewed: req.userHasReviewed
       });
     }
   );
 };
 exports.checkUserForReview = (req, res, next) => {
-  console.log("searching reviews for: ", req.session);
-  console.log(req.params.id);
-  if (req.session.isLoggedIn) {
     db.Review.count({
       where: { userId: req.session.userId, trailId: req.params.id },
-    }).then((count) => (req.userInfo = { hasReview: count > 0 }));
-  } else {
-    req.userInfo = null;
-  }
-  next();
+    }).then((count) => {
+        req.userHasReviewed = count > 0;
+        next()
+    });
+
 };
 
 exports.postNewTrailReview = (req, res, next) => {

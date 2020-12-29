@@ -49,7 +49,7 @@ export default function Trail({ match, history }) {
             </Link>
           </div>
           <section className="reviews">
-            {user.isLoggedIn && (
+            {user.isLoggedIn && !reviewPayload.userHasReviewed && (
               <NewTrailReview submitForm={handleSubmit} isSubmitted={postPayload.success}/>
             )}
             {trailReviews.map((review, idx) => (
