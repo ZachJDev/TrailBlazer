@@ -44,7 +44,6 @@ export default function Trail({ match, history }) {
       {trailInfo.park ? (
         <InfoContainer>
         <MainInfoTrail name={name} length={length} parkId={trailInfo.park.parkId} parkName={trailInfo.park.name}> 
-        
         <ButtonActionRow
           handleReview={alertComingSoon}
           handleMap={alertComingSoon}

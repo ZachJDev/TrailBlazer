@@ -14,9 +14,11 @@ export default function Park({ match }) {
   const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`);
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
-
   return (
     <div className="park-info">
+    {
+      parkInfo.status === 200 ? (
+
       <InfoContainer>
         <MainInfo {...parkInfo}>
           <ButtonActionRow
@@ -28,6 +30,12 @@ export default function Park({ match }) {
         <Description description={parkInfo.description} name={parkInfo.name} />
         <ParkTrails {...match.params.parkId} {...parkInfo} />
       </InfoContainer>
+      ) :(
+        <h1>
+        Loading...
+        </h1>
+      ) 
+    }
     </div>
   );
 }

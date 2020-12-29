@@ -11,9 +11,9 @@ import ButtonActionRow from "./InfoContainers/ButtonActionRow";
 
 export default function MainInfo({ name, address, city, state, children }) {
   return (
-    <Row fluid style={{ marginTop: "1rem" }}>
-      <Col fluid md={12} lg={6}>
-        <Row xs={10} fluid style={{ marginBottom: "9rem" }}>
+    <Row  style={{ marginTop: "1rem" }}>
+      <Col  md={12} lg={6}>
+        <Row xs={10}  style={{ marginBottom: "9rem" }}>
           <div
             style={{
               margin: "auto",
