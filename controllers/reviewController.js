@@ -23,10 +23,10 @@ exports.getTrailReviews = (req, res, next) => {
 };
 exports.checkUserForReview = (req, res, next) => {
     db.Review.count({
-      where: { userId: req.session.userId, trailId: req.params.id },
+      where: { userId: req.session.userId || '', trailId: req.params.id }, // empty string if user is not authenticated
     }).then((count) => {
         req.userHasReviewed = count > 0;
-        next()
+        next();
     });
 
 };
