@@ -1,4 +1,5 @@
 const db = require("../models/index");
+const {EntryExistsError} = require('../classes/Errors')
 
 exports.getTrailReviews = (req, res, next) => {
   const trailId = req.params.id;
@@ -16,12 +17,20 @@ exports.postNewTrailReview = (req, res, next) => {
   const { reviewTitle, reviewText, parking } = req.body;
   const { trailId } = req.query;
 
-  db.Review.create({
-    title: reviewTitle,
-    text: reviewText,
-    userId: req.session.userId,
-    trailId,
-  })
+  db.Review.count({ where: { userId: req.session.userId } })
+    .then((count) => {
+        if(count > 0) {
+            throw new EntryExistsError("Review already exists with that username")
+        }
+    })
+    .then(() => {
+      db.Review.create({
+        title: reviewTitle,
+        text: reviewText,
+        userId: req.session.userId,
+        trailId,
+      });
+    })
     .then((review) => {
       return db.TrailRating.upsert({
         userId: req.session.userId,
@@ -32,5 +41,10 @@ exports.postNewTrailReview = (req, res, next) => {
     .then((rating) => {
       console.log(rating);
       res.status(200).json({ success: true });
-    });
+    })
+    .catch(e => {
+        if(typeof e === EntryExistsError) {
+            res.status(409).json({errors:["review already exists"]})
+        }
+    })
 };

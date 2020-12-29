@@ -31,4 +31,13 @@ class NoContentError extends (
   }
 };
 
+class EntryExistsError extends (
+  Error
+) {
+  constructor(message) {
+      super(message);
+      Object.setPrototypeOf(this, EntryExistsError.prototype)
+  }
+};
+
 module.exports = {AuthenticationError, InputError, NotFoundError, NoContentError}
