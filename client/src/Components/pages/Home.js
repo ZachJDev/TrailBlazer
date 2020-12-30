@@ -1,12 +1,11 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
 
 import HomeSearch from '../HomeSearch'
 import AboutCards from '../AboutCards'
 
 export default function Home({history}) {
   return (
-    <Container fluid style={{margin: '0'}}>
+    <React.Fragment>
         <div style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1541296604437-8cb5efd2da96?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1991&q=80)",
@@ -20,7 +19,6 @@ export default function Home({history}) {
     <HomeSearch history={history}/>
     </div> 
     <AboutCards/>
-
-    </Container>
+    </React.Fragment>
   );
 }
