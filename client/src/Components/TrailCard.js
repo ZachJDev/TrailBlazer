@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -8,9 +8,7 @@ import Image from "react-bootstrap/Image";
 import TrailAccessibility from "./TrailAccessibility";
 
 import useGetPicture from "../hooks/useGetPicture";
-import useGetPayload from "../hooks/useGetPayload";
 
-import { UserContext } from "../contexts/UserContext";
 import Length from "./InfoContainers/Length";
 
 export default function TrailCard({
@@ -20,7 +18,6 @@ export default function TrailCard({
   length,
   park,
 }) {
-  const { user } = useContext(UserContext);
   const [picUrl] = useGetPicture();
 
   return (

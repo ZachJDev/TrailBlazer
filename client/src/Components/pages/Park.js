@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import useGetPayload from "../../hooks/useGetPayload";
 import Description from "../InfoContainers/Description";
 import InfoContainer from "../InfoContainer";
@@ -10,10 +9,16 @@ import ParkTrails from "../ParkTrails";
 
 export default function Park({ match }) {
   const alertComingSoon = () => alert("Functionality Coming Soon!");
-
-  const [parkInfo] = useGetPayload(`/park/${match.params.parkId}`);
+  const [parkInfo, setParkInfo] = useState({})
+  const [getParkInfo] = useGetPayload(`/park/${match.params.parkId}`);
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
+
+  useEffect(() => {
+    getParkInfo().then(info => {
+      setParkInfo(info)
+    })
+  }, [])
   return (
     <div className="park-info">
     {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import useGetPayload from "../../hooks/useGetPayload";
-import useInputState from "../../hooks/useInputState";
+import useBool from "../../hooks/useBool";
 import { UserContext } from "../../contexts/UserContext";
 import usePostBody from "../../hooks/usePostBody";
 import NewTrailReview from "../NewTrailReview";
@@ -14,26 +14,38 @@ export default function Trail({ match, history }) {
   const { trailId } = match.params;
   const { user } = useContext(UserContext);
   const [trailReviews, setTrailReviews] = useState([]);
-  const [trailInfo] = useGetPayload(`/trail/${trailId}`);
-  const [reviewPayload, getReviewsAgain] = useGetPayload(
+  const [trailInfo, setTrailInfo] = useState({})
+  const [reviewPayload, setReviews] = useState({})
+  const [isSubmitted, flipSubmitted] = useBool(false)
+  const [hasReviewed, setHasReviewed] = useState(true)
+  const [getTrailInfo] = useGetPayload(`/trail/${trailId}`);
+  const [getReviewPayload] = useGetPayload(
     `/reviews/trails/${trailId}`
   );
-  const [postPayload, setReviewBody] = usePostBody(
+  const [setReviewBody] = usePostBody(
     `/reviews/new?trailId=${trailId}`
   );
 
-  useEffect(() => {
-    if (reviewPayload.reviews) setTrailReviews(reviewPayload.reviews);
-  }, [reviewPayload]);
-
-  useEffect(() => {
-    if (postPayload.success) {
-      getReviewsAgain();
-    }
-  }, [postPayload]);
+  useEffect(()=> {
+   getTrailInfo().then(trail => {
+     setTrailInfo(trail)
+   })
+   getReviewPayload().then(reviewsRes => {
+     console.log(reviewsRes)
+     setHasReviewed(reviewsRes.userHasReviewed)
+     setTrailReviews(reviewsRes.reviews)
+   })
+  }, [])
 
   const handleSubmit = (formBody) => {
-    setReviewBody(formBody);
+    setReviewBody(formBody).then(res => {
+      if (res.success) {
+        flipSubmitted();
+        getReviewPayload().then(reviews => {
+          setTrailReviews(reviews)
+        })
+      }
+    })
   };
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
@@ -53,8 +65,8 @@ export default function Trail({ match, history }) {
         <Description name={name} description={description}/>
         <section>
           <section className="reviews">
-            {user.isLoggedIn && !reviewPayload.userHasReviewed && (
-              <NewTrailReview submitForm={handleSubmit} isSubmitted={postPayload.success}/>
+            {user.isLoggedIn && !hasReviewed && (
+              <NewTrailReview isSubmitted={isSubmitted} submitForm={handleSubmit} />
             )}
             {trailReviews.map((review, idx) => (
               <div key={idx}>

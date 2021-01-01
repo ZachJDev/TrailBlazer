@@ -5,6 +5,7 @@ const {
   AuthenticationError,
   InputError,
   NotFoundError,
+  ConflictError
 } = require("../classes/Errors");
 
 // This stackExchange question: https://security.stackexchange.com/questions/17207/recommended-of-rounds-for-bcrypt
@@ -52,16 +53,17 @@ exports.postLogin = (req, res, next) => {
 };
 
 exports.signUp = (req, res, next) => {
-  const { username, password, emailAddress, measure, isAdmin } = req.body;
+  const { username, password, confirmPassword, emailAddress, measure, isAdmin } = req.body;
   db.User.findOne({
     where: { [Op.or]: [{ email: emailAddress }, { username }] },
   })
     .then((user) => {
       if (!user) {
         // keep up signing up
+        if(password !== confirmPassword) throw new InputError("Confirm Password field must match Password field.")
         return bcrypt.hash(password, SALT_ROUNDS);
       } else
-        throw new Error(
+        throw new ConflictError(
           "An Account exists with that email address or username"
         );
     })
@@ -76,11 +78,12 @@ exports.signUp = (req, res, next) => {
       });
     })
     .then((user) => {
-      res.status(200).json({ operation: "success" });
+      res.status(200).json({ success: true });
     })
     .catch((e) => {
-      console.log(e.message);
-      res.status(409).json({ errorMessage: e.message });
+      console.log("Error on Signup: ", e.message, typeof e);
+      if(e instanceof InputError) res.status(400).json({ errorType: "PASSWORD_INPUT" });
+      if(e instanceof ConflictError) res.status(409).json({ errorType: "CONFLICT" });
     });
 };
 exports.logout = (req, res, next) => {

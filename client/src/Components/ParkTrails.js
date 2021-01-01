@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 import TrailCard from './TrailCard'
-import useGetPayload from '../hooks/useGetPayload'
+
 
 export default function ParkTrails({trails, parkId, name}) {
   

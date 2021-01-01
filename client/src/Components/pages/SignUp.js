@@ -1,33 +1,52 @@
-import React, { useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-
-import useInputState from "../../hooks/useInputState";
-import useBool from "../../hooks/useBool";
+import React from "react";
 import usePostBody from "../../hooks/usePostBody";
-import FormInputText from "../FormInputs/FormInputText";
-import FormInputPassword from "../FormInputs/FormInputPassword";
-import FormInputSelect from "../FormInputs/FormInputSelect";
+import SignUpForm from '../SignUpForm'
+import FormWrapper from "../FormWrapper";
+import useSetAsArray from "../../hooks/useSetAsArray";
 
-export default function SignUp({history}) {
-  const [username, setUsername] = useInputState("");
-  const [password, setPassword] = useInputState("");
-  const [confirmPassword, setConfirmPassword] = useInputState("");
-  const [emailAddress, setEmailAddress] = useInputState("");
-  const [isAdmin, switchAdmin] = useBool(false);
-  const [measure, setMeasure] = useInputState("Miles");
-  const [payload, setBodyAndPost] = usePostBody("/auth/signup");
+// From https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
+// eslint-disable-next-line
+const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const obj = { username, password, emailAddress, measure, isAdmin };
-    setBodyAndPost(obj);
+const errorMessages = {
+  PASSWORD_INPUT: "Confirm Password field must match Password field.",
+  INVALID_EMAIL: "Invalid Email Address",
+  CONFLICT: "A user already exists with that Username or Email",
+};
+
+export default function SignUp({ history }) {
+
+  const [errors, addError, removeError] = useSetAsArray([]);
+  const [setBodyAndPost] = usePostBody("/auth/signup");
+
+  const isValidSubmittal = ({password, confirmPassword, emailAddress}) => {
+    return password === confirmPassword && emailRegex.test(emailAddress);
+  };
+  const handleEmailError = ({emailAddress}) => {
+    if (!emailRegex.test(emailAddress)) addError(errorMessages.INVALID_EMAIL);
+    else removeError(errorMessages.INVALID_EMAIL);
+  };
+  const handlePasswordError = ({confirmPassword, password}) => {
+    if (confirmPassword !== password) addError(errorMessages.PASSWORD_INPUT);
+    else removeError(errorMessages.PASSWORD_INPUT);
   };
 
-  useEffect(() => {
-    if(payload.status === 200) history.push('/Login')
-  })
+  const handleSubmit =  async function (obj) { 
+    handleEmailError(obj);
+    handlePasswordError(obj);
+    if (isValidSubmittal(obj)){
+      setBodyAndPost(obj).then(postResponse => {
+        if (postResponse.status === 200) history.push("/Login");
+          else if (postResponse.errorType) {
+            addError(errorMessages[postResponse.errorType]);
+          }
+      })
+      
+    }
+  };
 
+
+  /* THE ACTUAL MARKUP */
   return (
     <div
       style={{
@@ -36,45 +55,9 @@ export default function SignUp({history}) {
       }}
     >
       <h1>Sign Up</h1>
-      <Form onSubmit={handleSubmit}>
-        <FormInputText
-          value={username}
-          handleChange={setUsername}
-          label="username: "
-          cssClass="input-username"
-          name="username"
-        />
-        <FormInputText
-          value={emailAddress}
-          handleChange={setEmailAddress}
-          label="email: "
-          cssClass="input-email"
-          name="email"
-        />
-        <FormInputPassword
-          value={password}
-          handleChange={setPassword}
-          label="password: "
-          cssClass="input-password"
-          name="password"
-        />
-        <FormInputPassword
-          value={confirmPassword}
-          handleChange={setConfirmPassword}
-          label="confirm password: "
-          cssClass="input-password"
-          name="password"
-        />
-        <FormInputSelect
-          value={measure}
-          options={["Miles", "Kilometers"]}
-          label="Preferred Length Measurement:"
-          name="length"
-          handleChange={setMeasure}
-        />
-        <Form.Check id={"AdminCheck"} tile={"Admin?"} label={"Admin?"} onClick={switchAdmin} />
-        <Button type="submit">Sign up</Button>
-      </Form>
+      <FormWrapper errors={errors}>
+        <SignUpForm handleSubmit={handleSubmit} />
+      </FormWrapper>
     </div>
   );
 }

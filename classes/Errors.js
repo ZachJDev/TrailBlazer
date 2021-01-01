@@ -1,43 +1,46 @@
-class AuthenticationError extends (
-  Error
-) {
+class AuthenticationError extends Error {
   constructor(message) {
     super(message);
-    Object.setPrototypeOf(this, AuthenticationError.prototype)
+    Object.setPrototypeOf(this, AuthenticationError.prototype);
   }
-};
-class InputError extends (
-  Error
-) {
+}
+class InputError extends Error {
   constructor(message) {
     super(message);
-    Object.setPrototypeOf(this, InputError.prototype)
+    Object.setPrototypeOf(this, InputError.prototype);
   }
-};
-class NotFoundError extends (
-  Error
-) {
+}
+class NotFoundError extends Error {
   constructor(message) {
-      super(message);
-      Object.setPrototypeOf(this, NotFoundError.prototype)
+    super(message);
+    Object.setPrototypeOf(this, NotFoundError.prototype);
   }
-};
-class NoContentError extends (
-  Error
-) {
+}
+class NoContentError extends Error {
   constructor(message) {
-      super(message);
-      Object.setPrototypeOf(this, NoContentError.prototype)
+    super(message);
+    Object.setPrototypeOf(this, NoContentError.prototype);
   }
-};
+}
 
-class EntryExistsError extends (
-  Error
-) {
+class EntryExistsError extends Error {
   constructor(message) {
-      super(message);
-      Object.setPrototypeOf(this, EntryExistsError.prototype)
+    super(message);
+    Object.setPrototypeOf(this, EntryExistsError.prototype);
   }
-};
+}
+class ConflictError extends Error {
+  constructor(message) {
+    super(message);
+    Object.setPrototypeOf(this, ConflictError.prototype);
+  }
+}
 
-module.exports = {AuthenticationError, InputError, NotFoundError, NoContentError}
+module.exports = {
+  AuthenticationError,
+  InputError,
+  NotFoundError,
+  NoContentError,
+  EntryExistsError,
+  ConflictError,
+};

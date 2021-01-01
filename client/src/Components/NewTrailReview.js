@@ -7,7 +7,7 @@ export default function NewTrailReview({ isSubmitted, submitForm }) {
   const [reviewText, setReviewText, clearText] = useInputState("");
   const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
 
-  const [parking, setParking, clearParking] = useInputState("On Trailhead");
+  const [parking, setParking] = useInputState("On Trailhead");
 
   const { user } = useContext(UserContext);
   const username = user.username

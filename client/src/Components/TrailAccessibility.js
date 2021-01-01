@@ -14,7 +14,7 @@ import WheelCharAccessible from "./TrailAccessibilityCards/WheelCharAccessible";
 
 export default function TrailAccessibility({ trailId }) {
   const MINIMUM_RATINGS = 4;
-  const [ratings] = useGetPayload(`/ratings/trail/${trailId}`);
+  const [getRatings] = useGetPayload(`/ratings/trail/${trailId}`);
   const [ratingsLoaded, updateLoaded] = useBool(false);
   const [difficultyMode, setDifficultyMode] = useState({});
   const [parkingMode, setParkingMode] = useState({});
@@ -22,14 +22,15 @@ export default function TrailAccessibility({ trailId }) {
   const [goodForGroupsMode, setGoodForGroupsMode] = useState({});
   const [wheelchairAccMode, setWheelchairAccMode] = useState({});
   useEffect(() => {
-    if (ratings.status === 200) {
-      const {
-        difficulty,
-        parking,
-        petFriendly,
-        goodForGroups,
-        wheelchairAcc,
-      } = ratings;
+    getRatings().then(ratings => {
+      if (ratings.status === 200) {
+        const {
+          difficulty,
+          parking,
+          petFriendly,
+          goodForGroups,
+          wheelchairAcc,
+        } = ratings;
       setDifficultyMode({
         ...getMode(difficulty),
         length: difficulty.length,
@@ -53,10 +54,11 @@ export default function TrailAccessibility({ trailId }) {
       updateLoaded();
     }
     if(ratings.status === 204) {
-        updateLoaded();
+      updateLoaded();
     }
-  }, [ratings]);
-
+  })
+  }, []);
+  
   return (
     <div
       style={{ display: "flex", justifyContent: "space-around" }}

@@ -6,31 +6,31 @@ export const UserContext = createContext()
 export function UserProvider({children}) {
 const [user, setUser] = useState({})
 const [errors, setErrors] = useState({})
-const [payload, postLogin] = usePostBody("/auth/login")
+const [postLogin] = usePostBody("/auth/login")
 const  [pl] = useGetPayload('/auth/userData')
 
 const updateUser = (form) => {
-    postLogin(form)
+    postLogin(form).then(payload => {
+        if(payload.status === 200) {
+            setUser(payload)
+            setErrors({})
+        }
+        else {
+            setErrors(payload)
+        }
+    })
 }
 const clearUser = () => setUser({})
-
-useEffect(()=> {
-    if(payload.status === 200) {
-        setUser(payload)
-        setErrors({})
-    }
-    else {
-        setErrors(payload)
-    }
-}, [payload])
 
 useEffect(() => {
     console.log('attempting to grab user info')
     // Check if the user object is empty
     if(Object.keys(user).length === 0 && user.constructor === Object) {
-        setUser(pl)
+        pl().then(user => {
+            setUser(user)
+        })
     }
-}, [pl])
+}, [])
 
     return (
         <UserContext.Provider value={{user, updateUser, errors, clearUser}}>
