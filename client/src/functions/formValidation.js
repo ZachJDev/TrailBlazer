@@ -16,11 +16,19 @@ const errorMessages = {
   PASSWORD_MATCH: "Confirm Password field must match Password field",
   INVALID_PASSWORD: "Password must be at least 3 characters long",
   INVALID_EMAIL: "Invalid Email Address",
-  INVALID_USERNAME: "Username too short",
+  INVALID_USERNAME: "Username is too short",
+  REVIEW_TITLE: "Review Title is too short",
+  REVIEW_TEXT: "Review Text is too short",
+  RATING_PARKING: "Invalid 'Parking' choice",
+  RATING_PETS: "Invalid 'Pets' choice",
+  RATING_GROUPS: "Invalid 'Groups' choice",
+  RATING_WHEELCHAIR: "Invalid 'Wheelchair Accessible' choice",
+  RATING_DIFF: "Invalid 'Difficulty' choice",
+
 };
 
-const validateNotEmpty = (text) => text.length > 0;
-
+const isNotEmpty = (text) => text.length > 0;
+const isYesNo = (text) => ["Yes", "No"].includes(text);
 const validateFormEntry = (entry, errorCode, validation) => {
   if (!validation(entry)) {
     throw new Error(errorCode);
@@ -41,11 +49,11 @@ export const validateNewParkForm = (
   errorHandler
 ) => {
   try {
-    validateFormEntry(newParkName, "PARK_NAME", validateNotEmpty);
-    validateFormEntry(newParkDescription, "PARK_DESC", validateNotEmpty);
-    validateFormEntry(newParkAddress, "PARK_ADDRESS", validateNotEmpty);
-    validateFormEntry(newParkCity, "PARK_ CITY", validateNotEmpty);
-    validateFormEntry(newParkCountry, "PARK_COUNTRY", validateNotEmpty);
+    validateFormEntry(newParkName, "PARK_NAME", isNotEmpty);
+    validateFormEntry(newParkDescription, "PARK_DESC", isNotEmpty);
+    validateFormEntry(newParkAddress, "PARK_ADDRESS", isNotEmpty);
+    validateFormEntry(newParkCity, "PARK_ CITY", isNotEmpty);
+    validateFormEntry(newParkCountry, "PARK_COUNTRY", isNotEmpty);
     validateFormEntry(newParkState, "PARK_ST", (val) => val.length === 2);
     validateFormEntry(newParkZipCode, "PARK_ZIP", (val) => val.length === 5);
     return true;
@@ -60,8 +68,8 @@ export const validateNewTrailForm = (
   errorHandler
 ) => {
   try {
-    validateFormEntry(newTrailName, "TRAIL_NAME", validateNotEmpty);
-    validateFormEntry(newTrailDescription, "TRAIL_DESC", validateNotEmpty);
+    validateFormEntry(newTrailName, "TRAIL_NAME", isNotEmpty);
+    validateFormEntry(newTrailDescription, "TRAIL_DESC", isNotEmpty);
     validateFormEntry(newTrailLength, "TRAIL_LENGTH", (val) => val > 0);
     return true;
   } catch (e) {
@@ -71,23 +79,54 @@ export const validateNewTrailForm = (
 };
 
 export const validateSignUpForm = (
+  { password, confirmPassword, emailAddress, username },
+  errorHandler
+) => {
+  try {
+    validateFormEntry(username, "INVALID_USERNAME", isNotEmpty);
+    validateFormEntry(password, "INVALID_PASSWORD", (val) => val.length > 3);
+    validateFormEntry(emailAddress, "INVALID_EMAIL", (val) =>
+      emailRegex.test(val)
+    );
+    validateFormEntry(
+      confirmPassword,
+      "PASSWORD_MATCH",
+      (val) => val === password
+    );
+    return true;
+  } catch (e) {
+    errorHandler(errorMessages[e.message]);
+    return false;
+  }
+};
+
+export const validateTrailReviewForm = (
   {
-    password,
-    confirmPassword,
-    emailAddress,
-    username,
+    reviewTitle,
+      reviewText,
+      parking,
+      petFriendly,
+      goodForGroups,
+      difficulty,
+      wheelchairAcc,
   },
   errorHandler
 ) => {
   try {
-    validateFormEntry(username, 'INVALID_USERNAME', validateNotEmpty);
-    validateFormEntry(password, 'INVALID_PASSWORD', (val) => val.length > 3);
-    validateFormEntry(emailAddress, 'INVALID_EMAIL', (val) => emailRegex.test(val));
-    validateFormEntry(confirmPassword, 'PASSWORD_MATCH', (val) => val === password);
-    return true
+    validateFormEntry(reviewTitle, "REVIEW_TITLE", isNotEmpty);
+    validateFormEntry(reviewText, "REVIEW_TEXT", isNotEmpty);
+    validateFormEntry(parking, "RATING_PARKING", (val) =>
+      ["On Trailhead", "Close", "Far", "No Marked Parking"].includes(val)
+    );
+    validateFormEntry(petFriendly, "RATING_PETS", isYesNo);
+    validateFormEntry(goodForGroups, "RATING_GROUPS", isYesNo);
+    validateFormEntry(difficulty, "RATING_DIFF", (val) =>
+      ["Easy", "Medium", "Difficult", "Strenuous"].includes(val)
+    );
+    validateFormEntry(wheelchairAcc, "RATING_WHEELCHAIR", isYesNo);
+    return true;
   } catch (e) {
     errorHandler(errorMessages[e.message]);
-    return false
+    return false;
   }
-
-}
+};
