@@ -22,6 +22,7 @@ import Nav from "./Components/Nav";
 import { UserProvider } from "./contexts/UserContext";
 
 import "./Components/Nav.css";
+import NewTrailReview from "./Components/pages/NewTrailReview";
 
 function App() {
   return (
@@ -74,6 +75,11 @@ function App() {
               path={"/trail/:trailId"}
               exact
               render={(routeProps) => <Trail {...routeProps} />}
+            />
+            <Route
+              path={"/trail/:trailId/reviews/new"}
+              exact
+              render={(routeProps) => <NewTrailReview {...routeProps} />}
             />
             <Route
               path={"/user/:userId"}

@@ -3,7 +3,7 @@ import useGetPayload from "../../hooks/useGetPayload";
 import useBool from "../../hooks/useBool";
 import { UserContext } from "../../contexts/UserContext";
 import usePostBody from "../../hooks/usePostBody";
-import NewTrailReview from "../NewTrailReview";
+import NewTrailReviewForm from "../NewTrailReviewForm";
 import InfoContainer from "../InfoContainer";
 import MainInfoTrail from "../MainInfoTrail";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
@@ -21,31 +21,21 @@ export default function Trail({ match, history }) {
   const [getReviewPayload] = useGetPayload(
     `/reviews/trails/${trailId}`
   );
-  const [setReviewBody] = usePostBody(
-    `/reviews/new?trailId=${trailId}`
-  );
+  
 
   useEffect(()=> {
    getTrailInfo().then(trail => {
      setTrailInfo(trail)
    })
    getReviewPayload().then(reviewsRes => {
-     console.log(reviewsRes)
      setHasReviewed(reviewsRes.userHasReviewed)
      setTrailReviews(reviewsRes.reviews)
    })
   }, [])
 
-  const handleSubmit = (formBody) => {
-    setReviewBody(formBody).then(res => {
-      if (res.success) {
-        flipSubmitted();
-        getReviewPayload().then(reviews => {
-          setTrailReviews(reviews)
-        })
-      }
-    })
-  };
+  const handleReviewRedirect = () => {
+    history.push(`/trail/${trailId}/reviews/new`)
+  }
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
   const { length, name, description } = trailInfo;
@@ -56,7 +46,7 @@ export default function Trail({ match, history }) {
         <InfoContainer>
         <MainInfoTrail name={name} length={length} parkId={trailInfo.park.parkId} parkName={trailInfo.park.name}> 
         <ButtonActionRow
-          handleReview={alertComingSoon}
+          handleReview={handleReviewRedirect}
           handleMap={alertComingSoon}
           handleShare={alertComingSoon}
         />
@@ -64,9 +54,6 @@ export default function Trail({ match, history }) {
         <Description name={name} description={description}/>
         <section>
           <section className="reviews">
-            {user.isLoggedIn && !hasReviewed && (
-              <NewTrailReview isSubmitted={isSubmitted} submitForm={handleSubmit} />
-            )}
             {trailReviews.map((review, idx) => (
               <div key={idx}>
                 <h2>{review.title}</h2>
