@@ -15,7 +15,6 @@ export default function Trail({ match, history }) {
   const { user } = useContext(UserContext);
   const [trailReviews, setTrailReviews] = useState([]);
   const [trailInfo, setTrailInfo] = useState({})
-  const [reviewPayload, setReviews] = useState({})
   const [isSubmitted, flipSubmitted] = useBool(false)
   const [hasReviewed, setHasReviewed] = useState(true)
   const [getTrailInfo] = useGetPayload(`/trail/${trailId}`);
@@ -49,7 +48,7 @@ export default function Trail({ match, history }) {
   };
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
-  const { length, name, description, parkId } = trailInfo;
+  const { length, name, description } = trailInfo;
   //I'll need to handle any 404 errors here, I think.
   return (
     <div>
