@@ -5,11 +5,7 @@ import FormWrapper from "../FormWrapper";
 import usePostBody from "../../hooks/usePostBody";
 import useSetAsArray from "../../hooks/useSetAsArray";
 
-const errorMessages = {
-  NAME: "Trail Name is Too Short",
-  DESC: "Trail Description is Too Short",
-  LENGTH: "Trail Length must be greater than 0",
-};
+import {validateNewTrailForm} from '../../functions/formValidation'
 
 export default function NewTrail({ location, history }) {
   //Deconstruct url query
@@ -23,34 +19,14 @@ export default function NewTrail({ location, history }) {
   // Lots of side effects here and pretty cluttered -- def in need
   // of some refactoring TLC
 
-  const validateLengthAndSetError = (length) => {
-    if (length <= 0) {
-      addError(errorMessages.LENGTH);
-      return false;
-    }
-    return true;
-  };
-  const validateTextAndSetError = (text, errorMessage) => {
-    if (text.length <= 0) {
-      addError(errorMessage);
-      return false;
-    }
-    return true;
-  };
-  const validateNewTrail = ({ newTrailName, newTrailDescription, newTrailLength }) => {
-    return (
-      validateLengthAndSetError(newTrailLength) &&
-      validateTextAndSetError(newTrailName, errorMessages.NAME) &&
-      validateTextAndSetError(newTrailDescription, errorMessages.DESC)
-    );
-  };
+ 
 
   const [errors, addError, removeError] = useSetAsArray([]);
   const [formErrors, setFormErrors] = useState([]);
   const [setBodyAndPost] = usePostBody("/trail/new?_method=POST");
 
   const handleFormSubmit = (form) => {
-    if (validateNewTrail(form)) {
+    if (validateNewTrailForm(form, addError)) {
       setBodyAndPost(form).then((payload) => {
         if (payload.status !== 200) setFormErrors(payload.errors);
         else {
