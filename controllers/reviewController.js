@@ -16,27 +16,35 @@ exports.getTrailReviews = (req, res, next) => {
             isEditable: rev.userId === req.session.userId,
           };
         }),
-        userHasReviewed: req.userHasReviewed
+        userHasReviewed: req.userHasReviewed,
       });
     }
   );
 };
 exports.checkUserForReview = (req, res, next) => {
-    db.Review.count({
-      where: { userId: req.session.userId || '', trailId: req.params.id }, // empty string if user is not authenticated
-    }).then((count) => {
-        req.userHasReviewed = count > 0;
-        next();
-    });
-
+  db.Review.count({
+    where: { userId: req.session.userId || "", trailId: req.params.id }, // empty string if user is not authenticated
+  }).then((count) => {
+    req.userHasReviewed = count > 0;
+    next();
+  });
 };
 
 exports.postNewTrailReview = (req, res, next) => {
   // with the addition of the userMatches middleware, no longer need to ensure they are logged in here.
-  const { reviewTitle, reviewText, parking } = req.body;
+  const {
+    reviewTitle,
+    reviewText,
+    parking,
+    difficulty,
+  } = req.body;
   const { trailId } = req.query;
-
-  db.Review.count({ where: { userId: req.session.userId } })
+  console.log("Posting New Reivew...");
+  const petFriendly = req.query.petFriendly === 'Yes'
+  const goodForGroups = req.query.goodForGroups === 'Yes'
+  const wheelchairAcc = req.query.wheelchairAcc === 'Yes'
+  
+  db.Review.count({ where: { userId: req.session.userId, trailId } })
     .then((count) => {
       if (count > 0) {
         throw new EntryExistsError("Review already exists with that username");
@@ -55,6 +63,10 @@ exports.postNewTrailReview = (req, res, next) => {
         userId: req.session.userId,
         trailId,
         parking,
+        petFriendly,
+        goodForGroups,
+        difficulty,
+        wheelchairAcc,
       });
     })
     .then((rating) => {
@@ -62,8 +74,13 @@ exports.postNewTrailReview = (req, res, next) => {
       res.status(200).json({ success: true });
     })
     .catch((e) => {
-      if (typeof e === EntryExistsError) {
-        res.status(409).json({ errors: ["review already exists"] });
+      console.log(e)
+      if (e instanceof EntryExistsError) {
+        res
+          .status(409)
+          .json({
+            errorMessage: `review already exists for user '${req.user.username}'`,
+          });
       }
     });
 };
