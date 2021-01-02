@@ -82,8 +82,8 @@ exports.signUp = (req, res, next) => {
     })
     .catch((e) => {
       console.log("Error on Signup: ", e.message, typeof e);
-      if(e instanceof InputError) res.status(400).json({ errorType: "PASSWORD_INPUT" });
-      if(e instanceof ConflictError) res.status(409).json({ errorType: "CONFLICT" });
+      if(e instanceof InputError) res.status(400).json({ errorMessage: e.message });
+      if(e instanceof ConflictError) res.status(409).json({ errorMessage: e.message});
     });
 };
 exports.logout = (req, res, next) => {
