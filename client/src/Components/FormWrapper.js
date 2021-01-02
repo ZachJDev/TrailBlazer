@@ -6,7 +6,7 @@ export default function FormWrapper({errors = [], children}) {
         <React.Fragment>
         {errors.length > 0 && (
         <section style={{
-            border: '1px solid black'
+            width: '100%'
         }}>
             {errors.map((err, idx) => (
                 <p key={idx}>{err}</p>
