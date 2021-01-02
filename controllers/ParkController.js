@@ -34,7 +34,8 @@ exports.add = (req, res, next) => {
   // I don't love this double error handling. I should look for a way to maybe turn this check into a promise,
   // Then chain it with the other stuff.
   try {
-    if( !req.user) {
+    console.log(req.user)
+    if( !req.user || !req.user.isAdmin) {
       status = 401;
       throw new AuthenticationError('User Not Authorized')
     }
@@ -68,13 +69,14 @@ exports.add = (req, res, next) => {
         }
       })
       .then((park) => {
-        console.log("Park Added");
-        res.status(200).type('json').json({parkId: payload.parkId});
+        console.log(park)
+        console.log("Park Added", park.parkId);
+        res.status(200).json({parkId: park.parkId});
       })
       .catch((e) => {
         console.log('This should really be caught on the frontend...')
         console.log(e.message);
-        res.status(400).type('json').json(body);
+        res.status(400).json(body);
       });
   } catch (e) {
     console.log(body)

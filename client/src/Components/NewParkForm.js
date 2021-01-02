@@ -34,7 +34,6 @@ export default function NewParkForm({ handleSubmit, missing }) {
 // refactoring that to be more responsive to change would be great.
   return (
     <div>
-      <h1>Add new Park</h1>
       <section>
         <Form onSubmit={startSubmit} style={{
           margin: '0 20%'
