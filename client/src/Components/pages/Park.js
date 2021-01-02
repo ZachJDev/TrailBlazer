@@ -18,6 +18,9 @@ export default function Park({ match }) {
     getParkInfo().then(info => {
       setParkInfo(info)
     })
+    .catch((e) => {
+      console.log(e)
+    })
   }, [])
   return (
     <div className="park-info">

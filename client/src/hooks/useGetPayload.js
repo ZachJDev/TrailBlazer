@@ -11,6 +11,7 @@ export default function useGetPayload(endpoint) {
     let status;
      const res = await fetch(endpoint);
     status = res.status;
+    if(status === 204) return {status}
     const payload = await res.json();
     return { status, ...payload };
   }
