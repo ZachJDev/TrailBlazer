@@ -14,3 +14,24 @@
     position: static;
     padding-left: 1rem;
 }
+
+.review-ratings {
+    display: flex;
+    justify-content: space-around;
+}
+
+.rating-icon {
+    font-size: 2rem;
+}
+
+.rating-icon.good {
+    color: green
+}
+
+.rating-icon.bad {
+
+}
+
+.rating-icon.neutral {
+
+}
