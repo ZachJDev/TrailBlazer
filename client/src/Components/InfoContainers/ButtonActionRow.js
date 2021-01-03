@@ -7,6 +7,8 @@ export default function ButtonActionRow({
   handleReview,
   handleShare,
   handleMap,
+  user,
+  hasReviewed
 }) {
   return (
     <Row
@@ -20,9 +22,9 @@ export default function ButtonActionRow({
           style={{
             margin: "auto .5rem",
           }}
-          onClick={handleReview}
+          onClick={user.isLoggedIn ? handleReview : ()=> alert("Please Log In")}
         >
-          Add Review
+          {user && hasReviewed ? "Edit Review" : "Add Review"}
         </Button>
       </Col>
       <Col>

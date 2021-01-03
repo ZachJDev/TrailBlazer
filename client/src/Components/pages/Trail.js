@@ -26,7 +26,6 @@ export default function Trail({ match, history }) {
      setTrailInfo(trail)
    })
    getReviewPayload().then(reviewsRes => {
-     console.log(reviewsRes)
      setHasReviewed(reviewsRes.userHasReviewed)
      setTrailReviews(reviewsRes.reviews)
    })
@@ -48,6 +47,8 @@ export default function Trail({ match, history }) {
           handleReview={handleReviewRedirect}
           handleMap={alertComingSoon}
           handleShare={alertComingSoon}
+          hasReviewed={hasReviewed}
+          user={user}
         />
         </MainInfoTrail>
         <Description name={name} description={description}/>
