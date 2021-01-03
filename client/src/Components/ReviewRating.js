@@ -11,25 +11,29 @@ let RatingIcons = {
 }
 let typeLabel = {
     difficulty: "Difficulty:",
-    goodForGroups: "Good For Groups?",
+    goodForGroups: "Good For Groups",
     parking: "Parking:",
-    petFriendly: "Pet Friendly?",
-    wheelchairAcc: "Wheelchair Accessible?"
+    petFriendly: "Pet Friendly",
+    wheelchairAcc: "Wheelchair Accessible"
 }
 
 export default function ReviewRating({type, rating}) {
     let cssClass;
-    if( rating || rating === 'On Trailhead' || rating === 'Easy') {
+    if( rating === 'On Trailhead' || rating === 'Easy' || rating === true) { // type coercion comes back to bite me.
         cssClass = 'good'
     } else if (rating === 'Close' || rating === 'Medium') cssClass = 'neutral'
     else cssClass = 'bad'
-
     return (
         <div>
         <span className={`rating-icon ${cssClass}`}> 
         <FontAwesomeIcon icon={RatingIcons[type]}/>
         </span>
-        <p>{`${typeLabel[type]} ${rating}`}</p>
+        {
+            typeof rating === 'boolean' ? 
+            (<p>{`${rating === false ? 'Not ' : ''}${typeLabel[type]}`}</p>) :
+            (<p>{`${rating}`}</p>)
+        }
+        
         </div>
     )
 }

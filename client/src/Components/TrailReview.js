@@ -33,7 +33,8 @@ export default function TrailReview({
       </div>
       <div className="review-ratings">
         {Object.keys(ratings).map((rating) => {
-          if (ratings[rating]) {
+          if (ratings[rating] !== null) {
+              console.log(ratings)
             return <ReviewRating key={rating} type={rating} rating={ratings[rating]} />;
           }
         })}
