@@ -68,9 +68,9 @@ exports.postNewTrailReview = (req, res, next) => {
   const { reviewTitle, reviewText, parking, difficulty } = req.body;
   const { trailId } = req.query;
   console.log("Posting New Review...");
-  const petFriendly = req.query.petFriendly === "Yes";
-  const goodForGroups = req.query.goodForGroups === "Yes";
-  const wheelchairAcc = req.query.wheelchairAcc === "Yes";
+  const petFriendly = req.body.petFriendly === "Yes";
+  const goodForGroups = req.body.goodForGroups === "Yes";
+  const wheelchairAcc = req.body.wheelchairAcc === "Yes";
 
   db.Review.count({ where: { userId: req.session.userId, trailId } })
     .then((count) => {
