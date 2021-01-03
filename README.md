@@ -17,6 +17,6 @@ port: ....,
 
 ```
 
-Alternatively, you can hardcode any SQL database information into the index.js file in the models folder.
+Alternatively, you can hardcode any SQL database information into the index.js file in the models folder and the sessionStore setup in app.js (make sure to comment out the calls to dbconfig).
 
 After that, simply running `npm install` should get you everything you need.
