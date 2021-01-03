@@ -21,7 +21,6 @@ export default function NewTrailReview({ match, history }) {
     if (validateTrailReviewForm(formBody, addError)) {
       setReviewBody(formBody)
       .then((res) => {
-          console.log(res)
         if (res.success) {
           history.push(`/trail/${params.trailId}`);
         } else {

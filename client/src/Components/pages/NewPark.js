@@ -17,7 +17,6 @@ export default function NewPark({ history }) {
     if(validateNewParkForm(form, addError)) {
       setBody(form).then((payload) => {
         setFormErrors(payload.errors);
-        console.log(payload.status);
         if (payload.status === 401) {
           // Not Authorized
           history.push("/home");
