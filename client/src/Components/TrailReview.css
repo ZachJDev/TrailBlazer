@@ -29,9 +29,9 @@
 }
 
 .rating-icon.bad {
-
+    color: red;
 }
 
 .rating-icon.neutral {
-
+    color: darkorange;
 }
