@@ -17,7 +17,8 @@ export default function Search() {
   let [searchResults, setSearchResults] = useState([]);
   let [resultsList, setResultsList] = useState([]);
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     fetch(`/search/${searchType}?q=${searchTerm}`)
       .then((res) => {
         return res.json();
@@ -70,6 +71,7 @@ export default function Search() {
           width: "25%",
           margin: "0 auto",
         }}
+        onSubmit={handleSearch}
       >
         <FormInputText
           value={searchTerm}
@@ -95,7 +97,7 @@ export default function Search() {
           }
           append={
             <InputGroup.Append>
-              <Button onClick={handleSearch}>submit!</Button>
+              <Button type='submit' >submit!</Button>
             </InputGroup.Append>
           }
         />
