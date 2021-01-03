@@ -1,10 +1,12 @@
 const db = require("../models/index");
+const Op = require('sequelize').Op
 
 exports.search = (req, res, next) => {
+ const query = req.query.q;
   let type = req.params.type;
 
   if (type === "Park") {
-    db.Park.findAll().then((results) => {
+    db.Park.findAll({where: {name: {[Op.like]: `%${query}%`}}}).then((results) => {
       res.json(results);
     });
   }
@@ -13,7 +15,7 @@ exports.search = (req, res, next) => {
   // to the client and handling the averaging there NEEDS to STOP.
   else if (type === 'Trail') {
       let trails = {}
-    db.Trail.findAll({include: [db.Park]})
+    db.Trail.findAll({where: {name: {[Op.like]: `%${query}%`}}, include: [db.Park]})
     .then(results => {
         results.forEach(trail => {
             trails[trail.dataValues.trailId] = {...trail.dataValues, ratings: []}
