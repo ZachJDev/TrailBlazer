@@ -2,12 +2,11 @@ import React, { useEffect, useState, useContext } from "react";
 import useGetPayload from "../../hooks/useGetPayload";
 import useBool from "../../hooks/useBool";
 import { UserContext } from "../../contexts/UserContext";
-import usePostBody from "../../hooks/usePostBody";
-import NewTrailReviewForm from "../NewTrailReviewForm";
 import InfoContainer from "../InfoContainer";
 import MainInfoTrail from "../MainInfoTrail";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
 import Description from "../InfoContainers/Description";
+import TrailReview from "../TrailReview";
 
 export default function Trail({ match, history }) {
 
@@ -15,7 +14,6 @@ export default function Trail({ match, history }) {
   const { user } = useContext(UserContext);
   const [trailReviews, setTrailReviews] = useState([]);
   const [trailInfo, setTrailInfo] = useState({})
-  const [isSubmitted, flipSubmitted] = useBool(false)
   const [hasReviewed, setHasReviewed] = useState(true)
   const [getTrailInfo] = useGetPayload(`/trail/${trailId}`);
   const [getReviewPayload] = useGetPayload(
@@ -28,6 +26,7 @@ export default function Trail({ match, history }) {
      setTrailInfo(trail)
    })
    getReviewPayload().then(reviewsRes => {
+     console.log(reviewsRes)
      setHasReviewed(reviewsRes.userHasReviewed)
      setTrailReviews(reviewsRes.reviews)
    })
@@ -55,11 +54,9 @@ export default function Trail({ match, history }) {
         <section>
           <section className="reviews">
             {trailReviews.map((review, idx) => (
-              <div key={idx}>
-                <h2>{review.title}</h2>
-                <h3>Review by: {review.username}</h3>
-                <p>{review.text}</p>
-              </div>
+              <React.Fragment key={idx}>
+                <TrailReview {...review}/>
+              </React.Fragment>
             ))}
           </section>
         </section>

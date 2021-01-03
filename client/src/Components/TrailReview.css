@@ -1,0 +1,16 @@
+.review {
+    border: 1px solid black;
+    margin-top: 1rem;
+    padding: 1rem;
+}
+.review-header {
+    display: flex;
+     justify-content: space-between;
+}
+.review-user {
+    font-size: 1rem;
+}
+.edit-icon {
+    position: static;
+    padding-left: 1rem;
+}

@@ -15,9 +15,12 @@ export default function NewTrailReview({ match, history }) {
 
   const [errors, addError] = useSetAsArray([]);
   const [setReviewBody] = usePostBody(`/reviews/new?trailId=${params.trailId}`);
+
+
   const handleSubmit = (formBody) => {
     if (validateTrailReviewForm(formBody, addError)) {
-      setReviewBody(formBody).then((res) => {
+      setReviewBody(formBody)
+      .then((res) => {
           console.log(res)
         if (res.success) {
           history.push(`/trail/${params.trailId}`);
