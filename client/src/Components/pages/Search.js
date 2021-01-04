@@ -33,7 +33,6 @@ export default function Search() {
   useEffect(() => {
     if( searchResults.length > 0) {
       if(searchType === 'Trail') {
-        console.log(searchResults)
       setResultsList(searchResults.map(trail => (
         <TrailCard
         key={trail.trailId}
