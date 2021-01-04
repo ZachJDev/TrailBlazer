@@ -5,14 +5,16 @@ import InputGroup from "react-bootstrap/InputGroup";
 
 import { UserContext } from "../contexts/UserContext";
 import useInputState from "../hooks/useInputState";
+import useBool from '../hooks/useBool'
 
 import FormInputText from "./FormInputs/FormInputText";
 import FormInputTextArea from "./FormInputs/FormInputTextArea";
 import FormInputSelect from "./FormInputs/FormInputSelect";
 
-export default function NewTrailReviewForm({ isSubmitted, submitForm }) {
+export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultValues }) {
   const [reviewText, setReviewText, clearText] = useInputState("");
   const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
+  const [isSet, flipIsSet] = useBool(false)
 
   const [parking, setParking] = useInputState("On Trailhead");
   const [petFriendly, setPets] = useInputState("Yes");
@@ -36,6 +38,17 @@ export default function NewTrailReviewForm({ isSubmitted, submitForm }) {
       wheelchairAcc,
     });
   };
+
+  if(!isSet && Object.keys(defaultValues).length > 0) { // might be a more elegant way of checking this...
+    setReviewText(defaultValues.text)
+    setReviewTitle(defaultValues.title)
+    setParking(defaultValues.parking)
+    setPets(defaultValues.petFriendly ? 'Yes' : 'No')
+    setGroups(defaultValues.goodForGroups ? 'Yes' : 'No')
+    setDifficulty(defaultValues.difficulty)
+    setWCAcc(defaultValues.wheelchairAcc ? 'Yes' : 'No')
+    flipIsSet();
+  }
   return (
     <section className="review-form">
       <Form
