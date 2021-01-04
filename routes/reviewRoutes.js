@@ -7,6 +7,8 @@ const reviewController = require('../controllers/reviewController')
 
 router.get('/trails/:id', middleware.getUser, reviewController.checkUserForReview, reviewController.getTrailReviews)
 
+router.get('/user/:userId', middleware.getUser, reviewController.getSingleReview)
+
 router.post('/new', middleware.getUser, middleware.userMatches, reviewController.postNewTrailReview)
 
 module.exports = router

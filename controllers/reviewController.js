@@ -1,5 +1,9 @@
 const db = require("../models/index");
-const { EntryExistsError } = require("../classes/Errors");
+const {
+  EntryExistsError,
+  QueryError,
+  NotFoundError,
+} = require("../classes/Errors");
 
 exports.getTrailReviews = (req, res, next) => {
   const trailId = req.params.id;
@@ -28,7 +32,7 @@ exports.getTrailReviews = (req, res, next) => {
             petFriendly,
             wheelchairAcc,
           } = rating;
-          
+
           fetchedRatings[rating.userId] = {
             difficulty,
             goodForGroups,
@@ -61,6 +65,28 @@ exports.checkUserForReview = (req, res, next) => {
     req.userHasReviewed = count > 0;
     next();
   });
+};
+
+exports.getSingleReview = (req, res, next) => {
+  console.log("getting review for", req.params.userId);
+  try {
+    if (!req.query.trailId) throw new QueryError("no Trail specified in query");
+    db.Review.findOne({
+      where: { userId: req.params.userId, trailId: req.query.trailId },
+    })
+      .then((review) => {
+        if (review) {
+          res.status(200).json({ status: 200, ...review });
+        } else throw new NotFoundError("No review for that user and trail");
+      })
+      .catch((e) => {
+        if (e instanceof NotFoundError)
+          res.status(404).json({ errorMessage: e.message });
+      });
+  } catch (e) {
+    if (e instanceof QueryError)
+      res.status(400).json({ errorMessage: e.message });
+  }
 };
 
 exports.postNewTrailReview = (req, res, next) => {
