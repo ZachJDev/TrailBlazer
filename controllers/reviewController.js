@@ -68,7 +68,12 @@ exports.checkUserForReview = (req, res, next) => {
 };
 
 exports.getSingleReview = (req, res, next) => {
-  console.log("getting review for", req.params.userId);
+  console.log(
+    "getting review for",
+    req.params.userId,
+    "And",
+    req.query.trailId
+  );
   let foundReview, foundRatings;
   try {
     if (!req.query.trailId) throw new QueryError("no Trail specified in query");
@@ -87,7 +92,9 @@ exports.getSingleReview = (req, res, next) => {
         // Not a HUGE problem if ratings aren't found (though as it stands right now, not exactly possible to
         // post a review without them) Not going to throw an error here.
         foundRatings = ratings || {};
-        res.status(200).json({ status: 200, ...foundReview, ...foundRatings.dataValues });
+        res
+          .status(200)
+          .json({ status: 200, ...foundReview, ...foundRatings.dataValues });
       })
       .catch((e) => {
         if (e instanceof NotFoundError)
@@ -147,4 +154,31 @@ exports.postNewTrailReview = (req, res, next) => {
         });
       }
     });
+};
+
+exports.updateReview = (req, res, next) => {
+  const { reviewTitle, reviewText, parking, difficulty } = req.body;
+  const { trailId } = req.query;
+  console.log("Posting Edited Review...");
+  const petFriendly = req.body.petFriendly === "Yes";
+  const goodForGroups = req.body.goodForGroups === "Yes";
+  const wheelchairAcc = req.body.wheelchairAcc === "Yes";
+
+  console.log(req.session.userId);
+ return db.Review.update(
+    { text: reviewText, title: reviewTitle },
+    { where: { userId: req.user.userId, trailId } }
+  ).then((review) => {
+   return db.TrailRating.update(
+      { petFriendly, goodForGroups, wheelchairAcc, parking, difficulty },
+      { where: { userId: req.user.userId, trailId } }
+    );
+  })
+  .then(rating => {
+    res.status(200).json({success: true})
+  })
+  .catch(e => {
+    console.log(e.message);
+    res.status(400).json({errorMessage: e.message})
+  })
 };

@@ -11,4 +11,6 @@ router.get('/user/:userId', reviewController.getSingleReview)
 
 router.post('/new', middleware.getUser, middleware.userMatches, reviewController.postNewTrailReview)
 
+router.put('/edit', middleware.getUser, reviewController.updateReview)
+
 module.exports = router
