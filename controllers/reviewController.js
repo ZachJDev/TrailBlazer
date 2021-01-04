@@ -69,6 +69,7 @@ exports.checkUserForReview = (req, res, next) => {
 
 exports.getSingleReview = (req, res, next) => {
   console.log("getting review for", req.params.userId);
+  let foundReview, foundRatings
   try {
     if (!req.query.trailId) throw new QueryError("no Trail specified in query");
     db.Review.findOne({
@@ -76,8 +77,15 @@ exports.getSingleReview = (req, res, next) => {
     })
       .then((review) => {
         if (review) {
-          res.status(200).json({ status: 200, ...review });
+          foundReview = review.dataValues;
+          return db.TrailRating.findOne({where:{userId: req.params.userId, trailId: req.query.trailId}})
         } else throw new NotFoundError("No review for that user and trail");
+      })
+      .then(ratings => {
+        // Not a HUGE problem if ratings aren't found (though as it stands right now, not exactly possible to
+        // post a review without them) Not going to throw an error here
+        foundRatings = ratings.dataValues || {};
+          res.status(200).json({ status: 200, ...foundReview, ...foundRatings });
       })
       .catch((e) => {
         if (e instanceof NotFoundError)
