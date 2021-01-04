@@ -164,7 +164,6 @@ exports.updateReview = (req, res, next) => {
   const goodForGroups = req.body.goodForGroups === "Yes";
   const wheelchairAcc = req.body.wheelchairAcc === "Yes";
 
-  console.log(req.session.userId);
  return db.Review.update(
     { text: reviewText, title: reviewTitle },
     { where: { userId: req.user.userId, trailId } }
