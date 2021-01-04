@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./NewTrailReview.css";
+import "./TrailReview.css";
 
 import NewTrailReviewForm from "../NewTrailReviewForm";
 import FormWrapper from "../FormWrapper";

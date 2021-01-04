@@ -32,7 +32,7 @@ export default function Trail({ match, history }) {
   }, [])
 
   const handleReviewRedirect = () => {
-    history.push(`/trail/${trailId}/reviews/new`)
+    history.push(`/trail/${trailId}/reviews/${hasReviewed ? 'edit' : 'new'}`)
   }
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
