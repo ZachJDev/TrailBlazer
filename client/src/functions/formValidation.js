@@ -28,7 +28,9 @@ const errorMessages = {
 };
 
 const isNotEmpty = (text) => text.length > 0;
-const isYesNo = (text) => ["Yes", "No"].includes(text);
+
+const isYesNo = (text) => text === 'Yes' || text === 'No';
+
 const validateFormEntry = (entry, errorCode, validation) => {
   if (!validation(entry)) {
     throw new Error(errorCode);

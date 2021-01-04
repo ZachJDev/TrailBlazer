@@ -1,7 +1,7 @@
 const express = require("express");
-const methodOverride = require("method-override");
+// const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
-const path = require('path')
+// const path = require('path') Only needed for build
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,7 +37,7 @@ app.use(
 // Express Config
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(methodOverride("_method"));
+// app.use(methodOverride("_method")); I don't think I need this anymore...
 
 
 // For serving the build.

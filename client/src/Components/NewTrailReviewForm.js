@@ -43,7 +43,7 @@ export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultVal
     setReviewText(defaultValues.text)
     setReviewTitle(defaultValues.title)
     setParking(defaultValues.parking)
-    setPets(defaultValues.petFriendly ? 'Yes' : 'No')
+    setPets(defaultValues.petFriendly ? 'Yes' : 'No')   // And of setting some of these values
     setGroups(defaultValues.goodForGroups ? 'Yes' : 'No')
     setDifficulty(defaultValues.difficulty)
     setWCAcc(defaultValues.wheelchairAcc ? 'Yes' : 'No')
