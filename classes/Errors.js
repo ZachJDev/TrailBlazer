@@ -36,6 +36,13 @@ class ConflictError extends Error {
   }
 }
 
+class QueryError extends Error {
+  constructor(message) {
+    super(message);
+    Object.setPrototypeOf(this, QueryError.prototype);
+  }
+}
+
 module.exports = {
   AuthenticationError,
   InputError,
@@ -43,4 +50,5 @@ module.exports = {
   NoContentError,
   EntryExistsError,
   ConflictError,
+  QueryError
 };
