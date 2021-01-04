@@ -18,11 +18,12 @@ import User from "./Components/pages/User";
 import Search from "./Components/pages/Search";
 import SignUp from "./Components/pages/SignUp";
 import Nav from "./Components/Nav";
+import NewTrailReview from "./Components/pages/NewTrailReview";
+import EditTrailReview from "./Components/pages/EditTrailReview";
 
 import { UserProvider } from "./contexts/UserContext";
 
 import "./Components/Nav.css";
-import NewTrailReview from "./Components/pages/NewTrailReview";
 
 function App() {
   return (
@@ -80,6 +81,11 @@ function App() {
               path={"/trail/:trailId/reviews/new"}
               exact
               render={(routeProps) => <NewTrailReview {...routeProps} />}
+            />
+            <Route
+              path={"/trail/:trailId/reviews/edit"}
+              exact
+              render={(routeProps) => <EditTrailReview {...routeProps} />}
             />
             <Route
               path={"/user/:userId"}
