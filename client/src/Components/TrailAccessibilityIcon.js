@@ -18,7 +18,8 @@ export default function TrailAccessibilityIcon({
   numRatings = Infinity, // Kind of a hack default to keep css classes correct for reviews.
 }) {
   let cssClass;
-  if (rating === "On Trailhead" || rating === "Easy" || rating === true) {
+  // What a MESS!! there has to be a better way to do this...
+  if ((/On Trailhead|Easy|Good For Groups|Pet Friendly|Wheelchair Accessible/.test(rating) && !/Not/.test(rating)) || rating === true) {
     // type coercion comes back to bite me.
     cssClass = "good";
   } else if (rating === "Close" || rating === "Medium"){
