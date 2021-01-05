@@ -15,6 +15,9 @@
     padding-left: 1rem;
 }
 
+.edit-icon:hover {
+    cursor: pointer;
+}
 .review-ratings {
     display: flex;
     justify-content: space-around;

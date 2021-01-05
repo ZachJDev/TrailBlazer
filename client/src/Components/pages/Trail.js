@@ -58,7 +58,7 @@ export default function Trail({ match, history }) {
           <section className="reviews">
             {trailReviews.map((review, idx) => (
               <React.Fragment key={idx}>
-                <TrailReview {...review}/>
+                <TrailReview {...review} handleEdit={handleReviewRedirect}/>
               </React.Fragment>
             ))}
           </section>

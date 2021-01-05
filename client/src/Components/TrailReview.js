@@ -25,6 +25,7 @@ export default function TrailReview({
   username,
   isEditable,
   ratings = {},
+  handleEdit
 }) {
   return (
     <div className="review">
@@ -34,7 +35,7 @@ export default function TrailReview({
           Review by: {username}{" "}
           {isEditable && (
             <span className="edit-icon">
-              <FontAwesomeIcon icon={faEdit} />
+              <FontAwesomeIcon icon={faEdit} onClick={handleEdit} />
             </span>
           )}
         </h3>

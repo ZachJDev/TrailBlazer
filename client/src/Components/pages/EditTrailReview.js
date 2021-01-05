@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import "./TrailReview.css";
+import "./TrailReviewForm.css";
 
 import NewTrailReviewForm from "../NewTrailReviewForm";
 import FormWrapper from "../FormWrapper";
@@ -8,6 +8,7 @@ import FormWrapper from "../FormWrapper";
 import useSetAsArray from "../../hooks/useSetAsArray";
 import usePutBody from "../../hooks/usePutBody";
 import useGetPayload from "../../hooks/useGetPayload";
+import useBool from '../../hooks/useBool'
 
 import { UserContext } from "../../contexts/UserContext";
 
@@ -17,6 +18,7 @@ export default function EditTrailReview({ match, history }) {
   const { params } = match;
   const { user } = useContext(UserContext);
 
+  const [hasLoaded, flipHasLoaded] = useBool(false)
   const [errors, addError] = useSetAsArray([]);
   const [setReviewBody] = usePutBody(`/reviews/edit?trailId=${params.trailId}`);
   const [currentReview, setCurrentReview] = useState({});
@@ -28,6 +30,7 @@ export default function EditTrailReview({ match, history }) {
     if (user.isLoggedIn) {
       currentReviewRes().then((res) => {
         setCurrentReview(res);
+        flipHasLoaded();
       });
     }
   }, [user]);
@@ -46,10 +49,16 @@ export default function EditTrailReview({ match, history }) {
 
   return (
     <section className="add-review">
-      <h1>Add Review</h1>
+    {
+      hasLoaded ?(
+        <React.Fragment>
+      <h1>Edit Review</h1>
       <FormWrapper errors={errors}>
         <NewTrailReviewForm submitForm={handleSubmit} defaultValues={currentReview} />
       </FormWrapper>
+      </React.Fragment>
+      ) : <h2>Loading Form...</h2>
+    }
     </section>
   );
 }
