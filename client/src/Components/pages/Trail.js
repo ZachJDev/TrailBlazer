@@ -7,6 +7,7 @@ import MainInfoTrail from "../MainInfoTrail";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
 import Description from "../InfoContainers/Description";
 import TrailReview from "../TrailReview";
+import TrailAccessibility from '../TrailAccessibility'
 
 export default function Trail({ match, history }) {
 
@@ -43,6 +44,7 @@ export default function Trail({ match, history }) {
       {trailInfo.park ? (
         <InfoContainer>
         <MainInfoTrail name={name} length={length} parkId={trailInfo.park.parkId} parkName={trailInfo.park.name}> 
+        <TrailAccessibility trailId={trailId}/>
         <ButtonActionRow
           handleReview={handleReviewRedirect}
           handleMap={alertComingSoon}
