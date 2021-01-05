@@ -1,0 +1,22 @@
+.icon-block {
+    position: relative;
+}
+
+.icon-tooltip {
+    z-index: 1000;
+    position:absolute;
+    font-size: .6rem;
+    top: 30% ;
+    left: 50%;
+    color: beige;
+    width: 125px;
+    background-color: rgba(25, 25, 25, 1);
+    padding-left:1rem;
+    text-align: left;    
+
+    opacity: 0;
+}
+
+.icon-tooltip.show {
+    opacity: 1;
+}

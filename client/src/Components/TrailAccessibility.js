@@ -25,7 +25,6 @@ export default function TrailAccessibility({ trailId }) {
   useEffect(() => {
     getRatings().then((ratings) => {
       if (ratings.status === 200) {
-        console.log(ratings);
         setDifficultyMode(ratings.difficulty);
         setParkingMode(ratings.parking);
         setPetFriendlyMode(ratings.petFriendly);
