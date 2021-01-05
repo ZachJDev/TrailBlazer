@@ -1,102 +1,93 @@
 import React, { useState, useEffect } from "react";
+import {
+  faWheelchair,
+  faParking,
+  faMountain,
+  faUsers,
+  faPaw,
+} from "@fortawesome/free-solid-svg-icons";
+import TrailAccessibilityIcon from "./TrailAccessibilityIcon";
+
 import useBool from "../hooks/useBool";
 
 import useGetPayload from "../hooks/useGetPayload";
-import Difficulty from "./TrailAccessibilityCards/Difficulty";
-import GoodForGroups from "./TrailAccessibilityCards/GoodForGroups";
-import Parking from "./TrailAccessibilityCards/Parking";
-import PetFriendly from "./TrailAccessibilityCards/PetFriendly";
-import WheelCharAccessible from "./TrailAccessibilityCards/WheelCharAccessible";
 
 // Not in love with the '=== "true"' stuff in the actual display. I may play around with that later.
-// Also thinking that doing all this work on the client side is a waste of time and effort. I should try to move 
-// These calculations to the server.
-
+const DEFAULT_STATE = { name: "NER", freq: 0, numRatings: 0 };
 export default function TrailAccessibility({ trailId }) {
-  const MINIMUM_RATINGS = 4;
   const [getRatings] = useGetPayload(`/ratings/trail/${trailId}`);
   const [ratingsLoaded, updateLoaded] = useBool(false);
-  const [difficultyMode, setDifficultyMode] = useState({});
-  const [parkingMode, setParkingMode] = useState({});
-  const [petFriendlyMode, setPetFriendlyMode] = useState({});
-  const [goodForGroupsMode, setGoodForGroupsMode] = useState({});
-  const [wheelchairAccMode, setWheelchairAccMode] = useState({});
+  const [difficultyMode, setDifficultyMode] = useState(DEFAULT_STATE);
+  const [parkingMode, setParkingMode] = useState(DEFAULT_STATE);
+  const [petFriendlyMode, setPetFriendlyMode] = useState(DEFAULT_STATE);
+  const [goodForGroupsMode, setGoodForGroupsMode] = useState(DEFAULT_STATE);
+  const [wheelchairAccMode, setWheelchairAccMode] = useState(DEFAULT_STATE);
   useEffect(() => {
-    getRatings().then(ratings => {
+    getRatings().then((ratings) => {
       if (ratings.status === 200) {
-        const {
-          difficulty,
-          parking,
-          petFriendly,
-          goodForGroups,
-          wheelchairAcc,
-        } = ratings;
-      setDifficultyMode({
-        ...getMode(difficulty),
-        length: difficulty.length,
-      });
-      setParkingMode({
-        ...getMode(parking),
-        length: parking.length,
-      });
-      setPetFriendlyMode({
-        ...getMode(petFriendly),
-        length: petFriendly.length,
-      });
-      setGoodForGroupsMode({
-        ...getMode(goodForGroups),
-        length: goodForGroups.length,
-      });
-      setWheelchairAccMode({
-        ...getMode(wheelchairAcc),
-        length: wheelchairAcc.length,
-      });
+        console.log(ratings);
+        setDifficultyMode(ratings.difficulty);
+        setParkingMode(ratings.parking);
+        setPetFriendlyMode(ratings.petFriendly);
+        setGoodForGroupsMode(ratings.goodForGroups);
+        setWheelchairAccMode(ratings.wheelchairAcc);
+      }
       updateLoaded();
-    }
-    if(ratings.status === 204) {
-      updateLoaded();
-    }
-  })
+    });
   }, []);
-  
+
   return (
     <div
       style={{ display: "flex", justifyContent: "space-around" }}
       className="Trail-card-accessibility"
     >
-    {
-        ratingsLoaded ?
+      {ratingsLoaded ? (
         <React.Fragment>
-            <Difficulty {...difficultyMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
-            <WheelCharAccessible  {...wheelchairAccMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
-            <Parking  {...parkingMode} MINIMUM_RATINGS={MINIMUM_RATINGS} />
-            <GoodForGroups  {...goodForGroupsMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
-            <PetFriendly  {...petFriendlyMode} MINIMUM_RATINGS={MINIMUM_RATINGS}/>
+          <TrailAccessibilityIcon
+            icon={faMountain}
+            name="Difficulty"
+            rating={difficultyMode.name}
+            freq={difficultyMode.freq}
+            numRatings={difficultyMode.numRatings}
+          />
+          <TrailAccessibilityIcon
+            icon={faUsers}
+            name="Groups"
+            rating={`${
+              goodForGroupsMode.name === "true" ? "" : "Not"
+            } Good For Groups`}
+            freq={goodForGroupsMode.freq}
+            numRatings={goodForGroupsMode.numRatings}
+          />
+          <TrailAccessibilityIcon
+            icon={faParking}
+            name="Parking"
+            rating={parkingMode.name}
+            freq={parkingMode.freq}
+            numRatings={parkingMode.numRatings}
+          />
+          <TrailAccessibilityIcon
+            icon={faPaw}
+            name="Pet Friendly"
+            rating={`${
+              petFriendlyMode.name === "true" ? "" : "Not"
+            } Pet Friendly`}
+            freq={petFriendlyMode.freq}
+            numRatings={petFriendlyMode.numRatings}
+          />
+          <TrailAccessibilityIcon
+            icon={faWheelchair}
+            name="Wheelchair Accessible"
+            rating={`${
+              wheelchairAccMode.name === "true" ? "" : "Not"
+            } Wheelchair Accessible`}
+            freq={wheelchairAccMode.freq}
+            numRatings={wheelchairAccMode.numRatings}
+          />
         </React.Fragment>
-        : "Ratings Loading..."
-    }
+      ) : (
+        "Ratings Loading..."
+      )}
     </div>
   );
 }
-
-const getMode = (arr) => {
-  if (arr && arr.length > 0) {
-    const freqs = {};
-
-    arr.forEach((el) => {
-      if(el) freqs[el.toString()] = ++freqs[el.toString()] || 1;
-    });
-
-    // Building the objects for each key is a little dubious, as I will only return one.
-    return (
-      Object.keys(freqs)
-        .map((el) => {
-          return {
-            name: el,
-            freq: freqs[el],
-          };
-        })
-        .sort((a, b) => b.freq - a.freq)[0] || 0
-    );
-  }
-};
