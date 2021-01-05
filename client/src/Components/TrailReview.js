@@ -8,8 +8,16 @@ import {
   faUsers,
   faPaw,
 } from "@fortawesome/free-solid-svg-icons";
-import ReviewRating from "./ReviewRating";
+import TrailAccessibilityIcon from "./TrailAccessibilityIcon";
 import "./TrailReview.css";
+
+let ratingIcons = {
+  difficulty: faMountain,
+  goodForGroups: faUsers,
+  parking: faParking,
+  petFriendly: faPaw,
+  wheelchairAcc: faWheelchair
+}
 
 export default function TrailReview({
   text,
@@ -34,7 +42,7 @@ export default function TrailReview({
       <div className="review-ratings">
         {Object.keys(ratings).map((rating) => {
           if (ratings[rating] !== null) {
-            return <ReviewRating key={rating} type={rating} rating={ratings[rating]} />;
+            return <TrailAccessibilityIcon key={rating} icon={ratingIcons[rating]} name={rating} rating={ratings[rating]} />;
           }
         })}
       </div>
