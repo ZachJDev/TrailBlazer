@@ -11,7 +11,7 @@ export default function MainInfoTrail({name, length, parkId, parkName, children 
   return (
     <Row  style={{ marginTop: "1rem" }}>
       <Col  md={12} lg={6}>
-        <Row xs={10}  style={{ marginBottom: "9rem" }}>
+        <Row xs={10}  style={{ marginBottom: "4rem" }}>
           <div
             style={{
               margin: "auto",
