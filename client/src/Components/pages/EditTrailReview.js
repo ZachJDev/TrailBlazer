@@ -54,7 +54,7 @@ export default function EditTrailReview({ match, history }) {
         <React.Fragment>
       <h1>Edit Review</h1>
       <FormWrapper errors={errors}>
-        <NewTrailReviewForm submitForm={handleSubmit} defaultValues={currentReview} />
+        <NewTrailReviewForm submitForm={handleSubmit} defaultValues={currentReview} isEdit={true} />
       </FormWrapper>
       </React.Fragment>
       ) : <h2>Loading Form...</h2>

@@ -11,7 +11,7 @@ import FormInputText from "./FormInputs/FormInputText";
 import FormInputTextArea from "./FormInputs/FormInputTextArea";
 import FormInputSelect from "./FormInputs/FormInputSelect";
 
-export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultValues }) {
+export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultValues, isEdit = false }) {
   const [reviewText, setReviewText, clearText] = useInputState("");
   const [reviewTitle, setReviewTitle, clearTitle] = useInputState("");
   const [isSet, flipIsSet] = useBool(false)
@@ -39,7 +39,7 @@ export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultVal
     });
   };
 
-  if(!isSet && Object.keys(defaultValues).length > 0) { // might be a more elegant way of checking this...
+  if(isEdit && !isSet && Object.keys(defaultValues).length > 0 ) { // might be a more elegant way of checking this...
     setReviewText(defaultValues.text)
     setReviewTitle(defaultValues.title)
     setParking(defaultValues.parking)
