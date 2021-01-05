@@ -40,7 +40,8 @@ exports.postLogin = (req, res, next) => {
     })
     .then(() => {
         console.log("logged in:", user.username)
-        res.status(200).json({username: user.username, userId: user.userId, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true,  isAdmin: user.admin})
+        console.log('isAdmin?', user.isAdmin)
+        res.status(200).json({username: user.username, userId: user.userId, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true,  isAdmin: user.isAdmin})
     })
     .catch((e) => {
         console.log("LOGIN FAILED")
@@ -74,7 +75,7 @@ exports.signUp = (req, res, next) => {
         password: hash,
         email: emailAddress,
         lengthMeasurement: measure,
-        admin: isAdmin
+        isAdmin
       });
     })
     .then((user) => {
@@ -100,7 +101,7 @@ exports.getUserData =  (req, res, next) => {
       console.log( 'looking for: ', req.session.userId)
       db.User.findOne({where: {userId: req.session.userId}})
       .then(user => {
-        res.status(200).json({username: user.username, userId: user.userId, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true, isAdmin: user.admin})
+        res.status(200).json({username: user.username, userId: user.userId, lengthMeasurement: user.lengthMeasurement, isLoggedIn: true, isAdmin: user.isAdmin})
       })
       .catch(e => {
         console.log("USER NOT FOUND")
