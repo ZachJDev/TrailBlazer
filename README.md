@@ -19,4 +19,6 @@ port: ....,
 
 Alternatively, you can hardcode any SQL database information into the index.js file in the models folder and the sessionStore setup in app.js (make sure to comment out the calls to dbconfig).
 
+Additionally, You'll need to supply a secret for the session storage at [Line 29 in app.js](https://github.com/ZachJDev/TrailBlazer/blob/master/app.js#L29).
+
 After that, simply running `npm install` should get you everything you need.
