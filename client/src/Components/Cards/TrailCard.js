@@ -5,11 +5,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 
-import TrailAccessibility from "./TrailAccessibility";
+import TrailAccessibility from "../AccessibilityComponents/TrailAccessibility";
 
-import useGetPicture from "../hooks/useGetPicture";
+import useGetPicture from "../../hooks/useGetPicture";
 
-import Length from "./InfoContainers/Length";
+import Length from "../InfoContainers/Length";
 
 export default function TrailCard({
   trailId,

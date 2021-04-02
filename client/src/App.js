@@ -17,13 +17,13 @@ import NewTrail from "./Components/pages/NewTrail";
 import User from "./Components/pages/User";
 import Search from "./Components/pages/Search";
 import SignUp from "./Components/pages/SignUp";
-import Nav from "./Components/Nav";
+import Nav from "./Components/Nav/Nav";
 import NewTrailReview from "./Components/pages/NewTrailReview";
 import EditTrailReview from "./Components/pages/EditTrailReview";
 
 import { UserProvider } from "./contexts/UserContext";
 
-import "./Components/Nav.css";
+import "./Components/Nav/Nav.css";
 
 function App() {
   return (

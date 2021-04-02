@@ -5,9 +5,9 @@ import Image from "react-bootstrap/Image";
 import Button from "react-bootstrap/Button";
 import PictureContainer from "./PictureContainer";
 
-import Title from "./InfoContainers/Title";
-import Address from "./InfoContainers/Address";
-import ButtonActionRow from "./InfoContainers/ButtonActionRow";
+import Title from "./Title";
+import Address from "./Address";
+import ButtonActionRow from "./ButtonActionRow";
 
 export default function MainInfo({ name, address, city, state, children }) {
   return (

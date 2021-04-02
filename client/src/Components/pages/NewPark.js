@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import NewParkForm from "../NewParkForm";
+import NewParkForm from "../Forms/NewParkForm";
 import usePostBody from "../../hooks/usePostBody";
-import FormWrapper from "../FormWrapper";
+import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
 

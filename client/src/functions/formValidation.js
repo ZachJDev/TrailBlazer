@@ -31,6 +31,9 @@ const isNotEmpty = (text) => text.length > 0;
 
 const isYesNo = (text) => text === 'Yes' || text === 'No';
 
+
+// Accepts a form entry, errorCode and validation predicate function and checks the entry against the function.
+// If it fails, it throws an error with the errorCode.
 const validateFormEntry = (entry, errorCode, validation) => {
   if (!validation(entry)) {
     throw new Error(errorCode);

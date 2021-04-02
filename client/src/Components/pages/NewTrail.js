@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import NewTrailForm from "../NewTrailForm";
-import FormWrapper from "../FormWrapper";
+import NewTrailForm from "../Forms/NewTrailForm";
+import FormWrapper from "../Forms/FormWrapper";
 
 import usePostBody from "../../hooks/usePostBody";
 import useSetAsArray from "../../hooks/useSetAsArray";
@@ -18,8 +18,6 @@ export default function NewTrail({ location, history }) {
 
   // Lots of side effects here and pretty cluttered -- def in need
   // of some refactoring TLC
-
- 
 
   const [errors, addError, removeError] = useSetAsArray([]);
   const [formErrors, setFormErrors] = useState([]);

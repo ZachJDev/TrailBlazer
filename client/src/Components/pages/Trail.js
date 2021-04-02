@@ -2,12 +2,12 @@ import React, { useEffect, useState, useContext } from "react";
 import useGetPayload from "../../hooks/useGetPayload";
 import useBool from "../../hooks/useBool";
 import { UserContext } from "../../contexts/UserContext";
-import InfoContainer from "../InfoContainer";
-import MainInfoTrail from "../MainInfoTrail";
+import InfoContainer from "../InfoContainers/InfoContainer";
+import MainInfoTrail from "../InfoContainers/MainInfoTrail";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
 import Description from "../InfoContainers/Description";
-import TrailReview from "../TrailReview";
-import TrailAccessibility from '../TrailAccessibility'
+import TrailReview from "../Reviews/TrailReview";
+import TrailAccessibility from '../AccessibilityComponents/TrailAccessibility'
 
 export default function Trail({ match, history }) {
 

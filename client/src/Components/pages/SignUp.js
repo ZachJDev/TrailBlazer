@@ -1,7 +1,7 @@
 import React from "react";
 import usePostBody from "../../hooks/usePostBody";
-import SignUpForm from '../SignUpForm'
-import FormWrapper from "../FormWrapper";
+import SignUpForm from '../Forms/SignUpForm'
+import FormWrapper from "../Forms/FormWrapper";
 import useSetAsArray from "../../hooks/useSetAsArray";
 
 import {validateSignUpForm} from '../../functions/formValidation'

@@ -3,13 +3,13 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 
-import { UserContext } from "../contexts/UserContext";
-import useInputState from "../hooks/useInputState";
-import useBool from '../hooks/useBool'
+import { UserContext } from "../../contexts/UserContext";
+import useInputState from "../../hooks/useInputState";
+import useBool from '../../hooks/useBool'
 
-import FormInputText from "./FormInputs/FormInputText";
-import FormInputTextArea from "./FormInputs/FormInputTextArea";
-import FormInputSelect from "./FormInputs/FormInputSelect";
+import FormInputText from "../FormInputs/FormInputText";
+import FormInputTextArea from "../FormInputs/FormInputTextArea";
+import FormInputSelect from "../FormInputs/FormInputSelect";
 
 export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultValues, isEdit = false }) {
   const [reviewText, setReviewText, clearText] = useInputState("");

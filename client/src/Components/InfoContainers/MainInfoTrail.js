@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-import Title from './InfoContainers/Title'
+import Title from './Title'
 import PictureContainer from './PictureContainer'
-import Length from './InfoContainers/Length';
+import Length from './Length';
 
 export default function MainInfoTrail({name, length, parkId, parkName, children }) {
   return (

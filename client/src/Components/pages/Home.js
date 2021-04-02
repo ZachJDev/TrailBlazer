@@ -1,7 +1,7 @@
 import React from "react";
 
-import HomeSearch from '../HomeSearch'
-import AboutCards from '../AboutCards'
+import HomeSearch from '../Search/HomeSearch'
+import AboutCards from '../Cards/AboutCards'
 
 export default function Home({history}) {
   return (

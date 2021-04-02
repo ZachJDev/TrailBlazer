@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 
 import "./TrailReviewForm.css";
 
-import NewTrailReviewForm from "../NewTrailReviewForm";
-import FormWrapper from "../FormWrapper";
+import NewTrailReviewForm from "../Forms/NewTrailReviewForm";
+import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
 import usePutBody from "../../hooks/usePutBody";

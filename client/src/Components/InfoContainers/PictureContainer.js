@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from "react-bootstrap/Image";
-import useGetPicture from '../hooks/useGetPicture'
+import useGetPicture from '../../hooks/useGetPicture'
 export default function PictureContainer() {
     const [picUrl] = useGetPicture("");
 

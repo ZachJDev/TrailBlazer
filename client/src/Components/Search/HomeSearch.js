@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import InputGroup from 'react-bootstrap/InputGroup'
 
-import useInputState from '../hooks/useInputState'
+import useInputState from '../../hooks/useInputState'
 export default function HomeSearch({history}) {
 const [searchState, setSearchState] = useInputState('')
 const handleSearch = (e) => {

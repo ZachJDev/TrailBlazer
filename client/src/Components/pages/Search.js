@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
+// import {useLocation} from "react-router-dom"
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Button from "react-bootstrap/Button";
 
-import SearchResultContainer from "../SearchResultContainer";
-import TrailCard from '../TrailCard'
+import SearchResultContainer from "../Search/SearchResultContainer";
+import TrailCard from '../Cards/TrailCard'
 import FormInputText from "../FormInputs/FormInputText";
 
 import useInputState from "../../hooks/useInputState";
 
-export default function Search() {
+export default function Search({history, location}) {
   const [searchType, setSearchType] = useState("Park");
-  const [searchTerm, setSearchTerm] = useInputState("");
+  const [searchTerm, setSearchTerm] = useInputState(new URLSearchParams(location.search).get("term") || "");
   let [searchResults, setSearchResults] = useState([]);
   let [resultsList, setResultsList] = useState([]);
 
-  const handleSearch = (e) => {
+
+
+    const handleSearch = (e) => {
     e.preventDefault();
     fetch(`/search/${searchType}?q=${searchTerm}`)
       .then((res) => {
@@ -61,7 +64,13 @@ export default function Search() {
     }
   
   }, [searchResults])
-  
+
+useEffect(() => {
+    if(searchTerm !== "") {
+        handleSearch(new Event("submit")) // Dummy event to make sure an error isn't thrown when handleSearch expects one.
+    }
+}, [])
+
   return (
     <div>
       <p>Search page</p>

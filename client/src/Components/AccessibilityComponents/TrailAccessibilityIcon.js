@@ -23,9 +23,7 @@ export default function TrailAccessibilityIcon({
   let cssClass;
   // What a MESS!! there has to be a better way to do this...
   if (
-    (/On Trailhead|Easy|Good For Groups|Pet Friendly|Wheelchair Accessible/.test(
-      rating
-    ) &&
+    (/On Trailhead|Easy|Good For Groups|Pet Friendly|Wheelchair Accessible/.test(rating) &&
       !/Not/.test(rating)) ||
     rating === true
   ) {
@@ -58,9 +56,9 @@ export default function TrailAccessibilityIcon({
           <FontAwesomeIcon icon={icon} />
         </span>
         <p>{caption}</p>
-        {numRatings < Infinity && (
+        {numRatings < Infinity && numRatings >= MINIMUM_RATINGS && (
           <div className={tooltipClass}>
-            <p>{`${freq} out of ${numRatings} thought this trail ${
+            <p>{`${freq} out of ${numRatings} people thought this trail ${
               name === "Parking" ? "had parking" : "was"
             } ${caption.toLowerCase()}`}</p>
           </div>

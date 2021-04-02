@@ -8,9 +8,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import TrailAccessibilityIcon from "./TrailAccessibilityIcon";
 
-import useBool from "../hooks/useBool";
+import useBool from "../../hooks/useBool";
 
-import useGetPayload from "../hooks/useGetPayload";
+import useGetPayload from "../../hooks/useGetPayload";
 
 // Not in love with the '=== "true"' stuff in the actual display. I may play around with that later.
 const DEFAULT_STATE = { name: "NER", freq: 0, numRatings: 0 };

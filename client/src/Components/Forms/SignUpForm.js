@@ -2,12 +2,12 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
-import useInputState from "../hooks/useInputState";
-import useBool from "../hooks/useBool";
+import useInputState from "../../hooks/useInputState";
+import useBool from "../../hooks/useBool";
 
-import FormInputText from "./FormInputs/FormInputText";
-import FormInputPassword from "./FormInputs/FormInputPassword";
-import FormInputSelect from "./FormInputs/FormInputSelect";
+import FormInputText from "../FormInputs/FormInputText";
+import FormInputPassword from "../FormInputs/FormInputPassword";
+import FormInputSelect from "../FormInputs/FormInputSelect";
 
 
 export default function SignUpForm({handleSubmit}) {

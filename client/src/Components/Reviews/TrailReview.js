@@ -8,7 +8,7 @@ import {
   faUsers,
   faPaw,
 } from "@fortawesome/free-solid-svg-icons";
-import TrailAccessibilityIcon from "./TrailAccessibilityIcon";
+import TrailAccessibilityIcon from "../AccessibilityComponents/TrailAccessibilityIcon";
 import "./TrailReview.css";
 
 let ratingIcons = {

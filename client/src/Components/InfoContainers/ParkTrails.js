@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-import TrailCard from './TrailCard'
+import TrailCard from '../Cards/TrailCard'
 
 
 export default function ParkTrails({trails, parkId, name}) {

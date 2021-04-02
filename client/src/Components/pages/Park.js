@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import useGetPayload from "../../hooks/useGetPayload";
 import Description from "../InfoContainers/Description";
-import InfoContainer from "../InfoContainer";
+import InfoContainer from "../InfoContainers/InfoContainer";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
-import MainInfo from "../MainInfo";
+import MainInfo from "../InfoContainers/MainInfo";
 
-import ParkTrails from "../ParkTrails";
+import ParkTrails from "../InfoContainers/ParkTrails";
 
 export default function Park({ match }) {
   const alertComingSoon = () => alert("Functionality Coming Soon!");

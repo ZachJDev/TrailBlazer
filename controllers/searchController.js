@@ -5,8 +5,8 @@ exports.search = (req, res, next) => {
  const query = req.query.q;
   let type = req.params.type;
 
-  if (type === "Park") {
-    db.Park.findAll({where: {name: {[Op.like]: `%${query}%`}}}).then((results) => {
+  if (type === "Park") { db.Park.findAll({where: {name: {[Op.like]: `%${query}%`}}})
+  .then((results) => {
       res.json(results);
     });
   }
