@@ -8,4 +8,6 @@ router.get('/:parkId([0-9]+$)',  parkController.getOne)
 
 router.post('/new', getUser, parkController.add)
 
+router.put("/edit",  getUser, parkController.update)
+
 module.exports = router;

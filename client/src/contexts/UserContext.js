@@ -20,6 +20,7 @@ const updateUser = (form) => {
         }
     })
 }
+const userExists = () => !(Object.keys(user).length === 0 && user.constructor === Object)
 const clearUser = () => setUser({})
 
 useEffect(() => {
@@ -33,7 +34,7 @@ useEffect(() => {
 }, [])
 
     return (
-        <UserContext.Provider value={{user, updateUser, errors, clearUser}}>
+        <UserContext.Provider value={{user, updateUser, errors, clearUser, userExists}}>
             {children}
         </UserContext.Provider>
     )

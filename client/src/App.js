@@ -18,12 +18,13 @@ import User from "./Components/pages/User";
 import Search from "./Components/pages/Search";
 import SignUp from "./Components/pages/SignUp";
 import Nav from "./Components/Nav/Nav";
-import NewTrailReview from "./Components/pages/NewTrailReview";
+import NewTrailReview from "./Components/Forms/NewTrailReview";
 import EditTrailReview from "./Components/pages/EditTrailReview";
 
 import { UserProvider } from "./contexts/UserContext";
 
 import "./Components/Nav/Nav.css";
+import EditPark from './Components/pages/EditPark';
 
 function App() {
   return (
@@ -72,6 +73,11 @@ function App() {
               exact
               render={(routeProps) => <Park {...routeProps} />}
             />
+              <Route
+                  path={"/park/:parkId/edit"}
+                  exact
+                  render={(routeProps) => <EditPark {...routeProps} />}
+              />
             <Route
               path={"/trail/:trailId"}
               exact

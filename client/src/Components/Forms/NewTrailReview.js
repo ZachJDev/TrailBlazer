@@ -2,8 +2,8 @@ import React from "react";
 
 import "./TrailReviewForm.css";
 
-import NewTrailReviewForm from "../Forms/NewTrailReviewForm";
-import FormWrapper from "../Forms/FormWrapper";
+import NewTrailReviewForm from "./NewTrailReviewForm";
+import FormWrapper from "./FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
 import usePostBody from "../../hooks/usePostBody";

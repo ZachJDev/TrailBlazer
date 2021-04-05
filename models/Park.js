@@ -28,8 +28,16 @@ module.exports = (sequelize, Sequelize) => {
         },
         description: {
             type: DataTypes.TEXT('long')
-        }
+        },
 
-    }, )
+    })
+
+// Park.update = (id, newValues) => {
+//     Park.findOne({where: {parkId: id}})
+//         .then(res => {
+//             console.log(res);
+//         })
+// }
+
     return Park
 }

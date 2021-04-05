@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 
-import "./TrailReviewForm.css";
+import "../Forms/TrailReviewForm.css";
 
 import NewTrailReviewForm from "../Forms/NewTrailReviewForm";
 import FormWrapper from "../Forms/FormWrapper";

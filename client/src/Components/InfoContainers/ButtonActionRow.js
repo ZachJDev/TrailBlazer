@@ -9,6 +9,7 @@ export default function ButtonActionRow({
   handleReview,
   handleShare,
   handleMap,
+    handleEdit,
   hasReviewed
 }) {
 
@@ -50,6 +51,14 @@ export default function ButtonActionRow({
         >
           Map
         </Button>
+          {user.isAdmin ?
+              <Button
+                  style={{
+                      margin: "auto .5rem",
+                  }}
+                  onClick={handleEdit}>
+                  Edit
+          </Button> : null}
       </Col>
     </Row>
   );

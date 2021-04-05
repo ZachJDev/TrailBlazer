@@ -43,24 +43,24 @@ const validateFormEntry = (entry, errorCode, validation) => {
 
 export const validateNewParkForm = (
   {
-    newParkName,
-    newParkDescription,
-    newParkAddress,
-    newParkCity,
-    newParkState,
-    newParkZipCode,
-    newParkCountry,
+    name,
+    description,
+    address,
+    city,
+    state,
+    zipCode,
+    country,
   },
   errorHandler
 ) => {
   try {
-    validateFormEntry(newParkName, "PARK_NAME", isNotEmpty);
-    validateFormEntry(newParkDescription, "PARK_DESC", isNotEmpty);
-    validateFormEntry(newParkAddress, "PARK_ADDRESS", isNotEmpty);
-    validateFormEntry(newParkCity, "PARK_ CITY", isNotEmpty);
-    validateFormEntry(newParkCountry, "PARK_COUNTRY", isNotEmpty);
-    validateFormEntry(newParkState, "PARK_ST", (val) => val.length === 2);
-    validateFormEntry(newParkZipCode, "PARK_ZIP", (val) => val.length === 5);
+    validateFormEntry(name, "PARK_NAME", isNotEmpty);
+    validateFormEntry(description, "PARK_DESC", isNotEmpty);
+    validateFormEntry(address, "PARK_ADDRESS", isNotEmpty);
+    validateFormEntry(city, "PARK_ CITY", isNotEmpty);
+    validateFormEntry(country, "PARK_COUNTRY", isNotEmpty);
+    validateFormEntry(state, "PARK_ST", (val) => val.length === 2);
+    validateFormEntry(zipCode, "PARK_ZIP", (val) => val.length === 5);
     return true;
   } catch (e) {
     errorHandler(errorMessages[e.message]);

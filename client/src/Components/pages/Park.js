@@ -7,12 +7,16 @@ import MainInfo from "../InfoContainers/MainInfo";
 
 import ParkTrails from "../InfoContainers/ParkTrails";
 
-export default function Park({ match }) {
+export default function Park({ match, history }) {
   const alertComingSoon = () => alert("Functionality Coming Soon!");
   const [parkInfo, setParkInfo] = useState({})
   const [getParkInfo] = useGetPayload(`/park/${match.params.parkId}`);
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
+
+    const AdminEdit = () => {
+            history.push(`/park/${match.params.parkId}/edit`)
+    }
 
   useEffect(() => {
     getParkInfo().then(info => {
@@ -33,6 +37,7 @@ export default function Park({ match }) {
             handleReview={alertComingSoon}
             handleMap={alertComingSoon}
             handleShare={alertComingSoon}
+            handleEdit={AdminEdit}
           />
         </MainInfo>
         <Description description={parkInfo.description} name={parkInfo.name} />

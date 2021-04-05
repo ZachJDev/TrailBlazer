@@ -39,7 +39,7 @@ export default function NewTrailReviewForm({ isSubmitted, submitForm, defaultVal
     });
   };
 
-  if(isEdit && !isSet && Object.keys(defaultValues).length > 0 ) { // might be a more elegant way of checking this...
+      if(isEdit && !isSet && Object.keys(defaultValues).length > 0 ) { // might be a more elegant way of checking this...
     setReviewText(defaultValues.text)
     setReviewTitle(defaultValues.title)
     setParking(defaultValues.parking)
