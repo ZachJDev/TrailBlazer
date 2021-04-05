@@ -2,7 +2,7 @@
     display: flex;
     justify-content: space-between;
     padding: 2rem 4rem;
-    background-color: darksalmon;
+    background-color: #352828;
 }
 .nav-auth {
     width: 20%;
