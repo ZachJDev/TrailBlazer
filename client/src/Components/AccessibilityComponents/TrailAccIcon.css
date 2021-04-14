@@ -20,3 +20,12 @@
 .icon-tooltip.show {
     opacity: 1;
 }
+
+@media screen and (max-width: 767px ) {
+    .icon-block .caption {
+        display: none;
+    }
+    .icon-block {
+        margin-bottom: 1rem;
+    }
+}

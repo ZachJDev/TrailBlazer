@@ -55,7 +55,7 @@ export default function TrailAccessibilityIcon({
         <span className={`rating-icon ${cssClass}`}>
           <FontAwesomeIcon icon={icon} />
         </span>
-        <p>{caption}</p>
+        <p className={"caption"}>{caption}</p>
         {numRatings < Infinity && numRatings >= MINIMUM_RATINGS && (
           <div className={tooltipClass}>
             <p>{`${freq} out of ${numRatings} people thought this trail ${
