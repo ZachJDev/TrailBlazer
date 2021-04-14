@@ -22,18 +22,16 @@ export default function EditPark({ match, history }) {
 
     const [hasLoaded, flipHasLoaded] = useBool(false)
     const [errors, addError] = useSetAsArray([]);
-    const [setParkFormBody] = usePutBody(`/park/edit?parkId=${params.parkId}`);
+    const [setParkFormBody] = usePutBody(`/park/${params.parkId}/edit`);
     const [currentPark, setCurrentPark] = useState({});
-    const [currentParkRes] = useGetPayload(
-        `/park/${params.parkId}`
-    );
+    const [currentParkRes] = useGetPayload( `/park/${params.parkId}`);
 
     let AwaitingInfoNotice = () => {
         if(hasLoaded && !user.isAdmin) {
             return "Forbidden Action Performed."
         }
         if(!hasLoaded) {
-            return "Loading Form..."
+           return "Loading Form..."
         }
     }
 
@@ -50,6 +48,8 @@ export default function EditPark({ match, history }) {
             setParkFormBody(formBody).then((res) => {
                 if (res.success) {
                     history.push(`/park/${params.parkId}`);
+                }else if(res.status === 401) {
+                    alert("You are not authorized to perform that action.")
                 } else {
                     addError(res.errorMessage);
                 }

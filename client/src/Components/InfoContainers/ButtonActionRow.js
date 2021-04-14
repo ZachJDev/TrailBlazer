@@ -19,14 +19,12 @@ export default function ButtonActionRow({
     <Row
       style={{
         width: "100%",
+          display: "flex",
         marginBottom: "1rem",
       }}
     >
       <Col>
         <Button
-          style={{
-            margin: "auto .5rem",
-          }}
           onClick={user.isLoggedIn ? handleReview : ()=> alert("Please Log In")}
         >
           {user && hasReviewed ? "Edit Review" : "Add Review"}
@@ -34,32 +32,21 @@ export default function ButtonActionRow({
       </Col>
       <Col>
         <Button
-          style={{
-            margin: "auto .5rem",
-          }}
-          onClick={handleShare}
-        >
-          Share
-        </Button>
-      </Col>
-      <Col>
-        <Button
-          style={{
-            margin: "auto .5rem",
-          }}
           onClick={handleMap}
         >
           Map
+
         </Button>
+      </Col>
           {user.isAdmin ?
+              <Col>
               <Button
-                  style={{
-                      margin: "auto .5rem",
-                  }}
+                  variant={"warning"}
                   onClick={handleEdit}>
                   Edit
-          </Button> : null}
-      </Col>
+          </Button>
+              </Col> : null}
+
     </Row>
   );
 }

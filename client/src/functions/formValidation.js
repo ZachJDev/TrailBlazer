@@ -69,13 +69,13 @@ export const validateNewParkForm = (
 };
 
 export const validateNewTrailForm = (
-  { newTrailName, newTrailDescription, newTrailLength },
+  { name, description, length },
   errorHandler
 ) => {
   try {
-    validateFormEntry(newTrailName, "TRAIL_NAME", isNotEmpty);
-    validateFormEntry(newTrailDescription, "TRAIL_DESC", isNotEmpty);
-    validateFormEntry(newTrailLength, "TRAIL_LENGTH", (val) => val > 0);
+    validateFormEntry(name, "TRAIL_NAME", isNotEmpty);
+    validateFormEntry(description, "TRAIL_DESC", isNotEmpty);
+    validateFormEntry(length, "TRAIL_LENGTH", (val) => val > 0);
     return true;
   } catch (e) {
     errorHandler(errorMessages[e.message]);

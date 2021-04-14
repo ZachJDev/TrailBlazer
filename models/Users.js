@@ -28,8 +28,14 @@ module.exports = (sequelize, Sequelize) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
     }, )
+
+    User.foo =  async () =>  await User.findAll().then(users => {
+        return users.length > 0;
+
+    });
+    User.foo().then(hasUsers => console.log(hasUsers))
     User.sync({alter: true})
     return User
 }

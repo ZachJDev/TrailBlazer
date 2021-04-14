@@ -2,20 +2,20 @@ const db = require("../models/index");
 
 exports.new = (req, res, next) => {
     const {
-        newTrailName,
-        newTrailDescription,
+        name,
+        description,
         newTrailPark,
         newTrailLength,
         lengthUnit
     } = req.body
-    db.Trail.findOne({ where: { name: newTrailName, parkId: newTrailPark } })
+    db.Trail.findOne({ where: { name: name, parkId: newTrailPark } })
     .then(trail => {
     if(trail) {
         throw new Error("Trail Already Exists")
     }
     return db.Trail.create({
-        name: newTrailName,
-        description: newTrailDescription,
+        name: name,
+        description: description,
         parkId: newTrailPark,
         // This automatically handles converting between miles and Km, and we will only store the length in miles.
         length: Number(lengthUnit === 'm' ? newTrailLength : (newTrailLength / 1.609344))
@@ -37,5 +37,18 @@ exports.getOne = (req, res, next) => {
         if(trail) res.status(200).send(trail)
         else res.status(404).send(trail)
     })
+}
+exports.update = (req, res, next) => {
+    let trailId = req.params.trailId
+    try {
+    db.Trail.update({...req.body}, {where: {trailId}})
+        .then(trail => {
+            console.log(trail)
+            res.status(200).json({success: true, trailId: trail.trailId})
+        })
+    } catch (e) {
+        res.status(400).json({success: false, errors: [e.message]})
+    }
+
 }
 

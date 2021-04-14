@@ -6,7 +6,6 @@ exports.getOne = (req, res, next) => {
     db.Park.findOne({where: {parkId: parkId}, include: [db.Trail]}).then((park) => {
         if (park !== null) {
             res.json(park.dataValues);
-            console.log('Park Found lkajlkjs');
         } else {
             res.status(404).send('');
             console.log(`Could not find Park with id ${parkId}`);
@@ -85,9 +84,9 @@ exports.add = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    const parkId = req.query.parkId;
+    const parkId = req.params.parkId;
     // need to get form data here.
-    if (user.isAdmin) {
+    if (req.user.isAdmin) {
         db.Park.update({...req.body}, {where: {parkId}})
             .then(Park => {
                 res.status(200).json({success: true});

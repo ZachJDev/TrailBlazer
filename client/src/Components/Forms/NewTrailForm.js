@@ -10,19 +10,19 @@ import FormInputTextArea from '../FormInputs/FormInputTextArea';
 
 import useInputState from '../../hooks/useInputState';
 
-export default function NewTrailForm({handleSubmit, park}) {
-    const [newTrailName, setTrailName] = useInputState('');
-    const [newTrailDescription, setTrailDescription] = useInputState('');
-    const [newTrailLength, setTrailLength] = useInputState('');
-    const [lengthUnit, setLengthUnit] = useState('m');
+export default function NewTrailForm({handleSubmit, park, isEdit, defaultValues}) {
+    const [name, setTrailName] = useInputState(defaultValues.name || '');
+    const [description, setTrailDescription] = useInputState(defaultValues.description || '');
+    const [length, setTrailLength] = useInputState(defaultValues.length ||'');
+    const [lengthUnit, setLengthUnit] = useState(defaultValues.lengthUnit || 'm');
 
     const startSubmit = (event) => {
         event.preventDefault();
         handleSubmit({
-            newTrailName,
-            newTrailDescription,
+            name,
+            description,
             lengthUnit,
-            newTrailLength,
+            length,
             newTrailPark: park,
         });
     };
@@ -37,16 +37,16 @@ export default function NewTrailForm({handleSubmit, park}) {
             }}
         >
             <FormInputText
-                name="newTrailName"
+                name="name"
                 label="Trail Name:"
-                value={newTrailName}
+                value={name}
                 handleChange={setTrailName}
                 cssClass="new-Trail-name"
             />
             <FormInputTextArea
-                name="newTrailDescription"
+                name="description"
                 label="Description:"
-                value={newTrailDescription}
+                value={description}
                 handleChange={setTrailDescription}
                 cssClass="new-park-description"
             />
@@ -58,8 +58,8 @@ export default function NewTrailForm({handleSubmit, park}) {
                     <Form.Control
                         type="number"
                         onChange={setTrailLength}
-                        value={newTrailLength}
-                        name="newTrailLength"
+                        value={length}
+                        name="length"
                         step=".25"
                     />
                     <DropdownButton as={InputGroup.Append} title={lengthUnit}>

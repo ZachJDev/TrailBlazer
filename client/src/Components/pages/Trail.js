@@ -35,6 +35,9 @@ export default function Trail({ match, history }) {
   const handleReviewRedirect = () => {
     history.push(`/trail/${trailId}/reviews/${hasReviewed ? 'edit' : 'new'}`)
   }
+    const AdminEdit = () => {
+        history.push(`/trail/${match.params.trailId}/edit`)
+    }
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
   const { length, name, description } = trailInfo;
@@ -49,6 +52,7 @@ export default function Trail({ match, history }) {
           handleReview={handleReviewRedirect}
           handleMap={alertComingSoon}
           handleShare={alertComingSoon}
+          handleEdit={AdminEdit}
           hasReviewed={hasReviewed}
           user={user}
         />

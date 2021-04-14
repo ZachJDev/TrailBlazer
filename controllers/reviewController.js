@@ -46,7 +46,9 @@ exports.getTrailReviews = (req, res, next) => {
       });
       res.json({
         reviews: fetchedReviews.map((rev) => {
+            console.log(rev)
           return {
+              reviewId: rev.ReviewId,
             title: rev.title,
             username: rev.user.username,
             text: rev.text,
@@ -176,8 +178,30 @@ exports.updateReview = (req, res, next) => {
   .then(rating => {
     res.status(200).json({success: true})
   })
-  .catch(e => {
+.catch(e => {
     console.log(e.message);
     res.status(400).json({errorMessage: e.message})
   })
 };
+
+exports.getById = (req, res, next) => {
+
+    db.Review.findOne({where: {reviewId: req.params.id}, include: [db.Trail, db.User]}).then(review => {
+        if(review === null) {
+            throw new Error("cannot find review")
+        }
+        const isEditable = req.user && req.user.userId === review.user.userId
+        const reply = {
+            text: review.text,
+            title: review.title,
+            trail: review.trail,
+            trailId: review.trailId,
+            username: review.user.username,
+            isEditable
+        }
+        res.status(200).json({success: true, review: reply });
+    })
+        .catch(e => {
+            res.status(404).json({success: false, error: e.message})
+        })
+}

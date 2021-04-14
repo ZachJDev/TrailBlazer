@@ -1,13 +1,19 @@
 const express = require('express')
-const {getUser} = require("../middleware/middleware")
+const {getUser, userIsAdmin} = require("../middleware/middleware")
 const router = express.Router({mergeParams: true})
 
 const parkController =require('../controllers/ParkController')
 
+// Update
+router.put("/:parkId/edit",  getUser, userIsAdmin,  parkController.update)
+
+// Read
 router.get('/:parkId([0-9]+$)',  parkController.getOne) 
 
+// Create
 router.post('/new', getUser, parkController.add)
 
-router.put("/edit",  getUser, parkController.update)
+// TODO: Destroy
+
 
 module.exports = router;

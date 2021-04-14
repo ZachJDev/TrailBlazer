@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {Link} from 'react-router-dom'
 import {
   faEdit,
   faWheelchair,
@@ -25,12 +26,21 @@ export default function TrailReview({
   username,
   isEditable,
   ratings = {},
-  handleEdit
+  handleEdit,
+  reviewId,
+    useLink = true,
 }) {
   return (
     <div className="review">
       <div className="review-header">
-        <h2 className="review-title">{title} </h2>
+          {
+            useLink ?
+                <Link to={`/review/${reviewId}`}>
+                    <h2 className="review-title">{title} </h2>
+                </Link>
+                :
+                <h2 className="review-title">{title} </h2>
+              }
         <h3 className="review-user">
           Review by: {username}{" "}
           {isEditable && (
