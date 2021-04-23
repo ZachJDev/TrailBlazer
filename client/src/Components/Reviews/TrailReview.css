@@ -10,12 +10,16 @@
 .review-user {
     font-size: 1rem;
 }
-.edit-icon {
+
+.review-text {
+    text-align: left;
+}
+ .review .review_edit-icon {
     position: static;
     padding-left: 1rem;
 }
 
-.edit-icon:hover {
+.review_edit-icon:hover {
     cursor: pointer;
 }
 .review-ratings {

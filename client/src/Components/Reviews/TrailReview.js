@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import TrailAccessibilityIcon from "../AccessibilityComponents/TrailAccessibilityIcon";
 import "./TrailReview.css";
+import ReviewComments from '../ReviewComments/ReviewComments';
+import withHeader from '../../HigherOrderComponents/withHeader'
 
 let ratingIcons = {
   difficulty: faMountain,
@@ -44,7 +46,7 @@ export default function TrailReview({
         <h3 className="review-user">
           Review by: {username}{" "}
           {isEditable && (
-            <span className="edit-icon">
+            <span className="review_edit-icon">
               <FontAwesomeIcon icon={faEdit} onClick={handleEdit} />
             </span>
           )}
@@ -58,6 +60,7 @@ export default function TrailReview({
         })}
       </div>
       <p className="review-text">{text}</p>
+        {withHeader(<ReviewComments reviewId={reviewId}/>, 'Comments:', "comments")}
     </div>
   );
 }
