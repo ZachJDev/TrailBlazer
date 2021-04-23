@@ -27,7 +27,7 @@ export default function UserComment({comment, depth}) {
             />
             {
                 isEditing ?
-                    <CommentEditMode text={text} handleText={setText} resetText={resetText}/>
+                    <CommentEditMode text={text} handleText={setText} cancelOnClick={resetText}/>
                 :  <FlexWrapper>
                         <p className={"text"}>{text}</p>
                         <span><FontAwesomeIcon className={"comment_edit-icon"} onClick={flipIsEditing} icon={faEdit}/> Edit comment</span>

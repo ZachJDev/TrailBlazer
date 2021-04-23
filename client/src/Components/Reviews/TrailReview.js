@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Link} from 'react-router-dom'
 import {
@@ -13,6 +13,7 @@ import TrailAccessibilityIcon from "../AccessibilityComponents/TrailAccessibilit
 import "./TrailReview.css";
 import ReviewComments from '../ReviewComments/ReviewComments';
 import withHeader from '../../HigherOrderComponents/withHeader'
+import {ReviewProvider} from '../../contexts/ReviewContext';
 
 let ratingIcons = {
   difficulty: faMountain,
@@ -32,7 +33,10 @@ export default function TrailReview({
   reviewId,
     useLink = true,
 }) {
+
+
   return (
+      <ReviewProvider id={reviewId}>
     <div className="review">
       <div className="review-header">
           {
@@ -62,5 +66,6 @@ export default function TrailReview({
       <p className="review-text">{text}</p>
         {withHeader(<ReviewComments reviewId={reviewId}/>, 'Comments:', "comments")}
     </div>
+      </ReviewProvider>
   );
 }
