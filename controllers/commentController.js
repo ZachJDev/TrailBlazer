@@ -18,8 +18,10 @@ exports.getMultipleReviews = (req, res, next) => {
 };
 
 exports.postNewComment = (req, res, next) => {
+    const {text, parentId, reviewId} = req.body
+    console.log(text, parentId, reviewId)
     if(req.user.matchesRequest) {
-    db.Comment.addComment(req.body)
+    db.Comment.addComment({text, parentId, userId: req.user.userId, reviewId})
         .then(commentRes => {
             res.json(commentRes)
         })

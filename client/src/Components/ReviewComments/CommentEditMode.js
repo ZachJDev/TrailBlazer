@@ -2,14 +2,21 @@ import React from 'react'
 import FlexWrapper from '../Wrappers/FlexWrap';
 import Button from 'react-bootstrap/Button';
 
-export default function CommentEditMode({text, handleText, resetText}) {
+export default function CommentEditMode({text = '',
+                                            handleText,
+                                            cancelOnClick,
+                                            className,
+                                            submitOnClick}) {
+    const handleSubmit = () => {
+        submitOnClick()
+    }
     return (
-        <React.Fragment>
+        <div className={className}>
             <textarea className={"edit-area"} value={text} onChange={handleText}/>
             <FlexWrapper className={"edit-buttons"}>
-                <Button className={"button submit"}>Submit</Button>
-                <Button className={"button cancel"} variant={'warning'} onClick={resetText}>Cancel</Button>
+                <Button onClick={handleSubmit} className={"button submit"}>Submit</Button>
+                <Button className={"button cancel"} variant={'warning'} onClick={cancelOnClick}>Cancel</Button>
             </FlexWrapper>
-        </React.Fragment>
+        </div>
     )
 }

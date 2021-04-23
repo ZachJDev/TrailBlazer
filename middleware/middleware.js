@@ -16,7 +16,7 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.userMatches = (req, res, next) => {
     try {
-        req.user.matchesRequest = req.user.username === req.body.username;
+        req.user.matchesRequest = req.user.userId === req.body.userId;
         console.log('user Matches: ', req.user.matchesRequest);
         next();
     } catch (e) {

@@ -73,9 +73,10 @@ module.exports = (sequelize, Sequelize) => {
             })
     }
     Comment.addComment = ({reviewId, parentId, userId, text}) => {
+        console.log("Adding Comment")
        return Comment.create({userId, parentId, reviewId, text})
             .then(comment => {
-                return {success: true};
+                return {success: true, comment};
             })
     }
 
