@@ -1,5 +1,6 @@
 db = require("../models/index");
 const { NoContentError } = require("../classes/Errors");
+
 exports.getTrailRatings = (req, res, next) => {
   let trailId = req.params.id;
   let ratingModes = {};
