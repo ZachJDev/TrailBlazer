@@ -11,7 +11,6 @@ const [getReview] = useGetPayload(`/reviews/${match.params.reviewId}`)
         getReview().then(reviewRes => {
             console.log(reviewRes)
             if(reviewRes.success) {
-
                 setReview(reviewRes.review);
             } else {
                 console.log(reviewRes.error);
