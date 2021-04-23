@@ -1,3 +1,8 @@
+.caption {
+    margin-bottom: 20px;
+    padding-bottom: 2rem;
+}
+
 .icon-block {
     position: relative;
 }
