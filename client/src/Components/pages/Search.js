@@ -73,7 +73,6 @@ useEffect(() => {
 
   return (
     <div>
-      <p>Search page</p>
       <Form
         style={{
           width: "25%",
