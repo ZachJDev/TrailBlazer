@@ -26,7 +26,7 @@ export default function TrailCard({
       style={{
         border: "2px solid black",
         margin: " 1rem auto",
-        maxHeight: "13rem",
+        maxHeight: "14rem",
       }}
     >
       <Row>
