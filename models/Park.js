@@ -10,7 +10,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         name: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            unique: 'stateUnique'
         },
         address: {
             type: DataTypes.STRING,
@@ -24,13 +25,25 @@ module.exports = (sequelize, Sequelize) => {
         },
         state: {
             type: DataTypes.STRING(2),
-            allowNull: false
+            allowNull: false,
+            unique: 'stateUnique'
         },
         description: {
             type: DataTypes.TEXT('long')
         },
+        latitude: {
+            type: DataTypes.GEOMETRY('POINT')
+        },
+        longitude: {
+            type: DataTypes.GEOMETRY('POINT')
+        }
 
+    }, {
+        uniqueKeys: {
+            stateUnique: {
+                fields: ['state', 'name']
+            }
+        }
     })
-
     return Park
 }
