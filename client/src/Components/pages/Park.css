@@ -15,7 +15,7 @@
     transition: height .5s ease-out;
 }
 
-.show {
+.show-map {
     height: 500px;
 }
 

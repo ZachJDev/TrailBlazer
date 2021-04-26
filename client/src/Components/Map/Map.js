@@ -19,7 +19,7 @@ function MyComponent({lat, lng, show = false}) {
             googleMapsApiKey="AIzaSyBCJA0RJNGUSvq8Rmwm7FxF_yu1POmKH1I"
         >
             <GoogleMap
-                mapContainerClassName={`map ${show ? 'show' : null}`}
+                mapContainerClassName={`map ${show ? 'show-map' : null}`}
                 center={center}
                 zoom={10}
             >
