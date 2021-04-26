@@ -53,6 +53,12 @@ module.exports = (sequelize, Sequelize) => {
         }
     },  )
 
+    Comment.afterDestroy(async (instance, options) => {
+        const {commentId} = instance
+        await Comment.destroy({where: {parentId: commentId}, individualHooks: true})
+        console.log("destroying child comments...")
+    })
+
     Comment.findByReviewId = (reviewId, user) => {
         return Comment.findAll({where: {reviewId},
             include: [{association: Comment.associations.user, attributes: ["username", "userId"]}],
@@ -88,7 +94,8 @@ module.exports = (sequelize, Sequelize) => {
     }
 
     Comment.deleteComment = (commentId, userId) => {
-        return Comment.delete({where: commentId, userId})
+        console.log("DELETING")
+        return Comment.destroy({where: {commentId, userId}, individualHooks: true})
             .then(comment => {
                 return {success: true}
             })
