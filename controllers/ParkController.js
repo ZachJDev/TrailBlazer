@@ -42,20 +42,8 @@ exports.add = (req, res, next) => {
             status = 400;
             throw new Error('missing Information');
         }
-
         // 2. check if the park already exists -- possible REFACTOR -- use sequelize to add constraints; instead of looking for the entry, just try to add it.
-        db.Park.findOne({where: {name: name, state: state}})
-            .then((park) => {
-                if (park !== null) {
-                    body.errors.push('Park Already Exists');
-                    body.errors.push(park);
-                    status = 409;
-                    throw new Error('Duplicate Park');
-                }
-                    // 3. add the park
-                // Add the park if nothing found
-                else {
-                    return db.Park.create({
+        db.Park.create({
                         name,
                         address,
                         country,
@@ -63,9 +51,7 @@ exports.add = (req, res, next) => {
                         city,
                         zipCode,
                         description,
-                    });
-                }
-            })
+                    })
             .then((park) => {
                 console.log(park);
                 console.log('Park Added', park.parkId);
