@@ -45,7 +45,6 @@ exports.add = (req, res, next) => {
         }
         getGeocodeAsync(geocodeParams).then(res => {
             const locGeo = res.results[0].geometry;
-            console.log(typeof locGeo.location.lat)
             return db.Park.create({
                 name,
                 address,
@@ -55,7 +54,6 @@ exports.add = (req, res, next) => {
                 zipCode,
                 description,
                 location: {type: 'Point', coordinates: [locGeo.location.lat, locGeo.location.lng]}
-
             })
         })
             .then((park) => {
@@ -64,7 +62,6 @@ exports.add = (req, res, next) => {
                 res.status(200).json({parkId: park.parkId});
             })
             .catch((e) => {
-                console.log('This should really be caught on the frontend...');
                 console.log(e.message)
                 body.errors.push(e.message)
                 res.status(400).json(body);
