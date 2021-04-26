@@ -9,9 +9,9 @@ import Title from "./Title";
 import Address from "./Address";
 import ButtonActionRow from "./ButtonActionRow";
 
-export default function MainInfo({ name, address, city, state, children }) {
+export default function MainInfo({ className, name, address, city, state, children }) {
   return (
-    <Row  style={{ marginTop: "1rem" }}>
+    <Row className={className}  style={{ marginTop: "1rem" }}>
       <Col  md={12} lg={6}>
         <Row xs={10}  style={{ marginBottom: "9rem" }}>
           <div
