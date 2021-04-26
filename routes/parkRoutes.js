@@ -11,7 +11,7 @@ router.put("/:parkId/edit",  getUser, userIsAdmin,  parkController.update)
 router.get('/:parkId([0-9]+$)',  parkController.getOne) 
 
 // Create
-router.post('/new', getUser, parkController.add)
+router.post('/new', getUser, userIsAdmin, parkController.add)
 
 // TODO: Destroy
 
