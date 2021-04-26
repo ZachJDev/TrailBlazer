@@ -16,8 +16,6 @@ export default function NewParkForm({handleSubmit, missing = [], defaultValues, 
     const [city, setParkCity] = useInputState(defaultValues?.city || '');
     const [description, setParkDescription] = useInputState(defaultValues?.description || '');
 
-    console.log(zipCode);
-
     const startSubmit = (event) => {
         event.preventDefault();
         handleSubmit({
