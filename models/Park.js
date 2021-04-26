@@ -31,10 +31,7 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: DataTypes.TEXT('long')
         },
-        latitude: {
-            type: DataTypes.GEOMETRY('POINT')
-        },
-        longitude: {
+        location: {
             type: DataTypes.GEOMETRY('POINT')
         }
 
@@ -45,5 +42,6 @@ module.exports = (sequelize, Sequelize) => {
             }
         }
     })
+    Park.sync({alter: true})
     return Park
 }
