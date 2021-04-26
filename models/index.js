@@ -1,4 +1,4 @@
-const { Sequelize, Model, DataTypes } = require("sequelize");
+const { Sequelize} = require("./sequelizeGeometryHack");
 const { dbname, user, pw, host, port } = require("./dbConfig");
 
 const sequelize = new Sequelize(dbname, user, pw, {
