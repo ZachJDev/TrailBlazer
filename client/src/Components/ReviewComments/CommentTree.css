@@ -1,3 +1,48 @@
 .comment-tree {
     margin-left: 2%;
 }
+
+.more-replies {
+    font-size: .7rem;
+    margin-left: 1rem;
+    border: none;
+}
+.more-replies::before {
+}
+
+.more-comments {
+    width: 90%;
+    margin-left: 1rem;
+    height: 100%;
+    border: none;
+}
+
+.more-comments::before, .more-comments:after {
+    content: " ↓↓ "
+}
+
+.button-box {
+    text-align: left;
+    border-left: 6px solid;
+    margin-top: 0;
+}
+
+.button-box-comments {
+    width: 100%;
+    margin-left: 2%;
+
+}
+.level-0 {
+    border-color: #7B6867 ;
+}
+.level-1 {
+    border-color:#005D9E;
+}
+
+.level-2 {
+    border-color: #FF671B;
+}
+
+.level-3 {
+    border-color: #B7AC44;
+}

@@ -8,7 +8,7 @@ export default function CommentEditMode({text = '',
                                             className,
                                             submitOnClick}) {
     const handleSubmit = () => {
-        submitOnClick()
+        submitOnClick(text)
     }
     return (
         <div className={className}>
