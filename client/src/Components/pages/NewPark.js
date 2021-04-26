@@ -12,11 +12,12 @@ export default function NewPark({ history }) {
   const [setBody] = usePostBody("/park/new");
   const [errors, addError, removeError] = useSetAsArray();
 
-
+console.log(errors)
   const handleFormSubmit = (form) => {
     if(validateNewParkForm(form, addError)) {
       setBody(form).then((payload) => {
         setFormErrors(payload.errors);
+        console.log(payload)
         if (payload.status === 401) {
           // Not Authorized
           history.push("/home");
