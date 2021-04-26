@@ -1,5 +1,8 @@
+const fetch = require('node-fetch')
 const {AuthenticationError} = require('../classes/Errors');
 const db = require('../models/index');
+
+const getGeocodeAsync = require('../functions/getGeocodeAsync')
 
 exports.getOne = (req, res, next) => {
     let parkId = req.params.parkId;
@@ -32,34 +35,38 @@ exports.add = (req, res, next) => {
     // I don't love this double error handling. I should look for a way to maybe turn this check into a promise,
     // Then chain it with the other stuff.
     try {
-        console.log(req.user);
-        if (!req.user || !req.user.isAdmin) {
-            status = 401;
-            throw new AuthenticationError('User Not Authorized');
-        }
         if (body.errors.length > 0) {
             body.errorMessage = 'Missing Required Information';
             status = 400;
             throw new Error('missing Information');
         }
-        // 2. check if the park already exists -- possible REFACTOR -- use sequelize to add constraints; instead of looking for the entry, just try to add it.
-        db.Park.create({
-                        name,
-                        address,
-                        country,
-                        state,
-                        city,
-                        zipCode,
-                        description,
-                    })
+        const geocodeParams = {
+            address:   `${address}, ${city} ${state}, ${zipCode}`
+        }
+        getGeocodeAsync(geocodeParams).then(res => {
+            const locGeo = res.results[0].geometry;
+            console.log(typeof locGeo.location.lat)
+            return db.Park.create({
+                name,
+                address,
+                country,
+                state,
+                city,
+                zipCode,
+                description,
+                location: {type: 'Point', coordinates: [locGeo.location.lat, locGeo.location.lng]}
+
+            })
+        })
             .then((park) => {
-                console.log(park);
+                // console.log(park);
                 console.log('Park Added', park.parkId);
                 res.status(200).json({parkId: park.parkId});
             })
             .catch((e) => {
                 console.log('This should really be caught on the frontend...');
-                console.log(e.message);
+                console.log(e.message)
+                body.errors.push(e.message)
                 res.status(400).json(body);
             });
     } catch (e) {
