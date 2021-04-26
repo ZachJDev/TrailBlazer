@@ -34,6 +34,11 @@ exports.postNewComment = (req, res, next) => {
 exports.updateComment = (req, res, next) => {
     db.Comment.updateComment(req.body.commentId, req.body.text, req.user.userId)
         .then(comment => {
-
+            res.json(comment)
         })
+}
+
+exports.deleteComment  =  async (req, res, next) => {
+    const deleteRes = await db.Comment.deleteComment(req.body.commentId, req.body.userId)
+    res.json(deleteRes)
 }

@@ -10,4 +10,8 @@ router.get("/MultipleReviews", middleware.getUser, commentController.getMultiple
 
 router.post("/add", middleware.getUser, middleware.userMatches, commentController.postNewComment)
 
+router.put('/update', middleware.getUser, middleware.userMatches, commentController.updateComment)
+
+router.delete("/delete", middleware.getUser, middleware.userMatches, commentController.deleteComment)
+
 module.exports = router;
