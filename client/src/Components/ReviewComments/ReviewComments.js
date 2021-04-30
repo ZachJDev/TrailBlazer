@@ -1,5 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
-import useGetPayload from '../../hooks/useGetPayload';
+import React, {useContext, useEffect, useState} from 'react';
 import CommentTree from './CommentTree';
 
 import './ReviewComments.css';
@@ -14,40 +13,41 @@ import {UserContext} from '../../contexts/UserContext';
 const DEFAULT_DEPTH = 3;
 const DEFAULT_SHOWN = 2;
 
-export default function ReviewComments({ fetchComments = false}) {
+export default function ReviewComments() {
     const {reviewId, comments, totalComments, refreshComments} = useContext(ReviewContext);
-    const {user} = useContext(UserContext)
-    const [displayComments, setDisplayComments] = useState([])
+    const {user} = useContext(UserContext);
+    const [displayComments, setDisplayComments] = useState([]);
     const [shown, setShown] = useState(DEFAULT_SHOWN);
-    const [postNewComment] = usePostBody('/comments/add')
-    const [isAdding, flipAdding] = useBool(false)
+    const [postNewComment] = usePostBody('/comments/add');
+    const [isAdding, flipAdding] = useBool(false);
     const [newCommentText, setNewCommentText] = useState('');
 
     useEffect(() => {
-        console.log("DISPLAY COMMENTS: " ,comments)
-        setDisplayComments(comments)
-    },[comments])
+        console.log('DISPLAY COMMENTS: ', comments);
+        setDisplayComments(comments);
+    }, [comments]);
 
     const handlePostNewComment = async () => {
-       await postNewComment({
-            text:newCommentText,
+        await postNewComment({
+            text: newCommentText,
             parentId: null,
             reviewId,
-            userId: user.userId});
+            userId: user.userId,
+        });
         await refreshComments();
-        setShown(totalComments)
+        setShown(totalComments);
         flipAdding();
-    }
+    };
 
     const handleCancelNewComment = () => {
-        setNewCommentText("");
+        setNewCommentText('');
         flipAdding();
-    }
+    };
 
     const handleNewCommentText = (e) => {
         e.preventDefault();
-        setNewCommentText(e.target.value)
-    }
+        setNewCommentText(e.target.value);
+    };
 
     return (
         <React.Fragment>

@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 const db = require("../models/index");
 const {
   EntryExistsError,
@@ -5,7 +7,7 @@ const {
   NotFoundError,
 } = require("../classes/Errors");
 
-exports.getTrailReviews = (req, res, next) => {
+exports.getTrailReviews = (req, res) => {
   const trailId = req.params.id;
   let fetchedReviews;
   let fetchedRatings = {};
@@ -158,7 +160,7 @@ exports.postNewTrailReview = (req, res, next) => {
     });
 };
 
-exports.updateReview = (req, res, next) => {
+exports.updateReview = (req, res) => {
   const { reviewTitle, reviewText, parking, difficulty } = req.body;
   const { trailId } = req.query;
   console.log("Posting Edited Review...");
@@ -184,7 +186,7 @@ exports.updateReview = (req, res, next) => {
   })
 };
 
-exports.getById = (req, res, next) => {
+exports.getById = (req, res) => {
 
     db.Review.findOne({where: {reviewId: req.params.id}, include: [db.Trail, db.User]}).then(review => {
         if(review === null) {

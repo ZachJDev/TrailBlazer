@@ -1,11 +1,12 @@
-import {useState} from 'react'
+import {useState} from 'react';
+
 /**
- * A hook that returns a bool and a function to 
+ * A hook that returns a bool and a function to
  * 'flip' the value of the bool.
  * @param {boolean} init
  */
 export default function useBool(init = false) {
-    const [state, setState] = useState(init)
-    const updateState = () => setState(!state)
-    return [state, updateState]
+    const [state, setState] = useState(init);
+    const updateState = () => setState(!state);
+    return [state, updateState];
 }

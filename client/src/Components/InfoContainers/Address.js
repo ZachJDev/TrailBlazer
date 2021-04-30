@@ -1,12 +1,12 @@
-import React from 'react'
+import React from 'react';
 
 export default function Address({address, city, state}) {
     return (
         <React.Fragment>
-             <p>{address}</p>
+            <p>{address}</p>
             <p>
-              {city}, {state}
+                {city}, {state}
             </p>
         </React.Fragment>
-    )
+    );
 }

@@ -10,13 +10,13 @@ import useGetPayload from '../../hooks/useGetPayload';
 import useBool from '../../hooks/useBool';
 import {UserContext} from '../../contexts/UserContext';
 
-export default function NewTrail({location, history, match}) {
+export default function NewTrail({history, match}) {
 
-    const { user } = useContext(UserContext);
+    const {user} = useContext(UserContext);
     // Lots of side effects here and pretty cluttered -- def in need
     // of some refactoring TLC
     const [hasLoaded, flipHasLoaded] = useBool(false);
-    const [errors, addError, removeError] = useSetAsArray( []);
+    const [errors, addError] = useSetAsArray();
     const [formErrors, setFormErrors] = useState([]);
     const [currentTrail, setCurrentTrail] = useState({});
     const [setBodyAndPost] = usePutBody(`/trail/${currentTrail.trailId}/edit`);
@@ -29,24 +29,24 @@ export default function NewTrail({location, history, match}) {
             setCurrentTrail(res);
             flipHasLoaded();
         });
-    }
+    };
 
     let AwaitingInfoNotice = () => {
-        if(hasLoaded && !user.isAdmin) {
-            return "Forbidden Action Performed."
+        if (hasLoaded && !user.isAdmin) {
+            return 'Forbidden Action Performed.';
         }
-        if(!hasLoaded) {
-            return "Loading Form..."
+        if (!hasLoaded) {
+            return 'Loading Form...';
         }
-    }
+    };
 
     useEffect(mounted, []);
 
     const handleFormSubmit = (form) => {
         if (validateNewTrailForm(form, addError)) {
             setBodyAndPost(form).then((payload) => {
-                if(payload.status === 401) {
-                    alert("You are not authorized to do that action.")
+                if (payload.status === 401) {
+                    alert('You are not authorized to do that action.');
                 }
                 if (payload.status !== 200) setFormErrors(payload.errors);
                 else {

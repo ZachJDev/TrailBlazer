@@ -7,7 +7,7 @@ import {useState} from 'react'
  * if the array has an item.
  * @param {iterable} init 
  */
-export default function useSetAsArray(init) {
+export default function useSetAsArray(init = null) {
     const set = new Set(init)
     const [state, setState] = useState(Array.from(set))
     const addToSet = (val) => {

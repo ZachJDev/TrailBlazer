@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const Trail = sequelize.define("trail", {
         trailId: {
             type: DataTypes.INTEGER,

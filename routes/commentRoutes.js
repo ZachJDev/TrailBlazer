@@ -1,5 +1,4 @@
 const express = require('express')
-const db = require("../models/index")
 const router = express.Router({mergeParams: true})
 const commentController = require('../controllers/commentController');
 const middleware = require('../middleware/middleware')

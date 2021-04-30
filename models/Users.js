@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const User = sequelize.define("user", {
         username: {
             type: DataTypes.STRING,

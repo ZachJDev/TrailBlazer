@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const Park = sequelize.define("park", {
         parkId: {
             type: DataTypes.INTEGER,

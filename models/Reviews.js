@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable
     const Review = sequelize.define("review", {
         title: {
             type: DataTypes.STRING,

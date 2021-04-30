@@ -1,31 +1,31 @@
-import React, {createContext, useState, useEffect} from 'react'
+import React, {createContext, useEffect, useState} from 'react';
 import useGetPayload from '../hooks/useGetPayload';
-export const ReviewContext = createContext()
+
+export const ReviewContext = createContext(null);
 
 export function ReviewProvider({children, id}) {
-    const [reviewId] = useState(id)
-    const [comments, setComments] = useState([])
-    const [totalComments, setTotal] = useState(0)
+    const [reviewId] = useState(id);
+    const [comments, setComments] = useState([]);
+    const [totalComments, setTotal] = useState(0);
     const [getComments] = useGetPayload(`/comments/byReviewId/${id}`);
 
     const refreshComments = async () => {
         const commentRes = await getComments();
-        console.log(commentRes.comments)
+        console.log(commentRes.comments);
         setComments(commentRes.comments);
-        setTotal(commentRes.total)
-    }
+        setTotal(commentRes.total);
+    };
 
     useEffect(() => {
         async function refresh() {
             await refreshComments();
         }
-            refresh()
+        refresh().then(() =>{});
     }, []);
-
 
     return (
         <ReviewContext.Provider value={{reviewId, comments, totalComments, refreshComments}}>
             {children}
         </ReviewContext.Provider>
-    )
+    );
 }

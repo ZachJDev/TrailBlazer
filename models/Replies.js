@@ -1,6 +1,7 @@
 const {DataTypes} = require('sequelize')
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable
     const Reply = sequelize.define("reply", {
         commentId: {
             type: DataTypes.INTEGER,

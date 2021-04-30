@@ -27,7 +27,8 @@ const countComments = (comments) => {
     }, 0)
 };
 
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize) => {
+    // noinspection JSUnresolvedVariable
     const Comment = sequelize.define("comment", {
         userId: {
             type: DataTypes.UUID,
@@ -53,7 +54,7 @@ module.exports = (sequelize, Sequelize) => {
         }
     },  )
 
-    Comment.afterDestroy(async (instance, options) => {
+    Comment.afterDestroy(async (instance) => {
         const {commentId} = instance
         await Comment.destroy({where: {parentId: commentId}, individualHooks: true})
         console.log("destroying child comments...")
@@ -72,6 +73,7 @@ module.exports = (sequelize, Sequelize) => {
             include: [{association: Comment.associations.user, attributes: ["username", "userId"]}],
             attributes: ["text", "commentId", "parentId", "reviewId", "updatedAt"]})
             .then(comments => {
+                // noinspection JSUnresolvedVariable
                 return reviewIds.map(revId => ({
                     reviewId: revId,
                     comments: buildCommentTree(comments.filter(comment => revId === comment.reviewId), user)
@@ -87,6 +89,7 @@ module.exports = (sequelize, Sequelize) => {
     }
 
     Comment.updateComment = (commentId, text, userId) => {
+        // noinspection JSUnusedLocalSymbols
         return Comment.update({text}, {where: {commentId, userId}}) // This should stop unauthorized access to other users' comments.
             .then(comment => {
                 return {success: true}
@@ -95,6 +98,7 @@ module.exports = (sequelize, Sequelize) => {
 
     Comment.deleteComment = (commentId, userId) => {
         console.log("DELETING")
+        // noinspection JSUnusedLocalSymbols
         return Comment.destroy({where: {commentId, userId}, individualHooks: true})
             .then(comment => {
                 return {success: true}

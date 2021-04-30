@@ -1,5 +1,4 @@
 const express = require("express");
-// const methodOverride = require("method-override");
 const bodyParser = require("body-parser");
 // const path = require('path') Only needed for build
 
@@ -24,6 +23,7 @@ const TrailSessionStore = new SequelizeStore({
   db: sequelize,
 });
 
+// noinspection SpellCheckingInspection
 app.use(
   session({
     secret: JSON.parse(process.env.SECRET),
@@ -67,7 +67,7 @@ app.use("/comments", commentRoutes);
 db.sequelize
   .sync()
   .then(() => {
-    return TrailSessionStore.sync({ force: true });
+    return TrailSessionStore.sync();
   })
   .then(() => {
     app.listen(PORT, () => {

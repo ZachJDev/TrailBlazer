@@ -4,18 +4,18 @@
     padding-left: 1rem;
     min-height: 5rem;
     border-left: 6px solid #2f2e2e;
-
-
 }
 
 .non-user-comment-actions {
     width: 15%;
 }
+
 .level-0 {
-    border-color: #7B6867 ;
+    border-color: #7B6867;
 }
+
 .level-1 {
-    border-color:#005D9E;
+    border-color: #005D9E;
 }
 
 .level-2 {

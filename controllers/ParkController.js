@@ -1,8 +1,7 @@
-const fetch = require('node-fetch')
-const {AuthenticationError} = require('../classes/Errors');
+// const {AuthenticationError} = require('../classes/Errors');
 const db = require('../models/index');
 
-const getGeocodeAsync = require('../functions/getGeocodeAsync')
+const getGeocodeAsync = require('../functions/getGeocodeAsync');
 
 exports.getOne = (req, res, next) => {
     let parkId = req.params.parkId;
@@ -41,8 +40,8 @@ exports.add = (req, res, next) => {
             throw new Error('missing Information');
         }
         const geocodeParams = {
-            address:   `${address}, ${city} ${state}, ${zipCode}`
-        }
+            address: `${address}, ${city} ${state}, ${zipCode}`,
+        };
         getGeocodeAsync(geocodeParams).then(res => {
             const locGeo = res.results[0].geometry;
             return db.Park.create({
@@ -53,8 +52,8 @@ exports.add = (req, res, next) => {
                 city,
                 zipCode,
                 description,
-                location: {type: 'Point', coordinates: [locGeo.location.lat, locGeo.location.lng]}
-            })
+                location: {type: 'Point', coordinates: [locGeo.location.lat, locGeo.location.lng]},
+            });
         })
             .then((park) => {
                 // console.log(park);
@@ -62,8 +61,8 @@ exports.add = (req, res, next) => {
                 res.status(200).json({parkId: park.parkId});
             })
             .catch((e) => {
-                console.log(e.message)
-                body.errors.push(e.message)
+                console.log(e.message);
+                body.errors.push(e.message);
                 res.status(400).json(body);
             });
     } catch (e) {
@@ -85,7 +84,7 @@ exports.update = (req, res, next) => {
                 console.log(err);
             });
     } else {
-        res.status(500).json({success: false, error: "NOT_ADMIN"})
+        res.status(500).json({success: false, error: 'NOT_ADMIN'});
     }
 };
 
@@ -94,7 +93,7 @@ exports.delete = (req, res, next) => {
 
 const getEmptyProps = (object) => {
     let errors = [];
-    for (prop in object) {
+    for (let prop in object) {
         if (!object[prop]) {
             errors.push(prop);
         }

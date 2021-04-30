@@ -7,6 +7,7 @@
     margin-left: 1rem;
     border: none;
 }
+
 .more-replies::before {
 }
 
@@ -30,13 +31,14 @@
 .button-box-comments {
     width: 100%;
     margin-left: 2%;
+}
 
-}
 .level-0 {
-    border-color: #7B6867 ;
+    border-color: #7B6867;
 }
+
 .level-1 {
-    border-color:#005D9E;
+    border-color: #005D9E;
 }
 
 .level-2 {

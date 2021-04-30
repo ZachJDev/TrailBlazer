@@ -1,18 +1,10 @@
-import React from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
-
-
-const containerStyle = {
-    width: '400px',
-    height: '400px'
-};
-
-
+import React from 'react';
+import {GoogleMap, LoadScript, Marker} from '@react-google-maps/api';
 
 function MyComponent({lat, lng, show = false}) {
     const center = {
         lat,
-        lng
+        lng,
     };
     return (
         <LoadScript
@@ -23,12 +15,12 @@ function MyComponent({lat, lng, show = false}) {
                 center={center}
                 zoom={10}
             >
-                <Marker position={{lat,lng}}/>
-                { /* Child components, such as markers, info windows, etc. */ }
+                <Marker position={{lat, lng}}/>
+                { /* Child components, such as markers, info windows, etc. */}
                 <></>
             </GoogleMap>
         </LoadScript>
-    )
+    );
 }
 
-export default React.memo(MyComponent)
+export default React.memo(MyComponent);

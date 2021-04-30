@@ -1,7 +1,6 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react';
 
-export default function useGetPicture () {
-    const [picUrl, setPicUrl] = useState("https://source.unsplash.com/random/?hike")
-
-    return [picUrl]
+export default function useGetPicture() {
+    const [picUrl] = useState('https://source.unsplash.com/random/?hike');
+    return [picUrl];
 }

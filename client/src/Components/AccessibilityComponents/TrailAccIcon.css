@@ -9,16 +9,15 @@
 
 .icon-tooltip {
     z-index: 1000;
-    position:absolute;
+    position: absolute;
     font-size: .6rem;
-    top: 30% ;
+    top: 30%;
     left: 50%;
     color: beige;
     width: 125px;
     background-color: rgba(25, 25, 25, 1);
-    padding-left:1rem;
-    text-align: left;    
-
+    padding-left: 1rem;
+    text-align: left;
     opacity: 0;
 }
 
@@ -30,6 +29,7 @@
     .icon-block .caption {
         display: none;
     }
+
     .icon-block {
         margin-bottom: 1rem;
     }

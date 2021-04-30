@@ -1,5 +1,4 @@
 const express = require('express')
-const db = require("../models/index")
 const {getUser, userIsAdmin} = require('../middleware/middleware')
 const router = express.Router({mergeParams: true})
 const trailController = require('../controllers/trailController')

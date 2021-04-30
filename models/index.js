@@ -20,7 +20,7 @@ db.Trail = require("./Trails")(sequelize, Sequelize);
 db.Review = require("./Reviews")(sequelize, Sequelize);
 db.TrailRating = require("./TrailRatings")(sequelize, Sequelize);
 
-// Before 11/24, I had onl had FKs fon the 'hasMany' relationship, which seems okay from the Squelize Docs
+// Before 11/24, I had onl had FKs fon the 'hasMany' relationship, which seems okay from the Sequelize Docs
 // However, that didn't seem to work correctly with trails/Parks, so I just added them all to both.
 
 // User has Many Comments

@@ -1,6 +1,7 @@
 // Sequelize currently has a bug with MySql Geometry types. This fix makes it work.
 // from: https://github.com/sequelize/sequelize/issues/9786
-// Import this file rather than the node_modules one.
+// Import this file rather than the node_modules one when using geometry.
+// noinspection JSUnresolvedFunction
 
 const Sequelize = require('sequelize')
 

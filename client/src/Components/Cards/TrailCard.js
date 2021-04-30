@@ -14,7 +14,6 @@ import Length from "../InfoContainers/Length";
 export default function TrailCard({
   trailId,
   name,
-  description,
   length,
   park,
 }) {
@@ -56,7 +55,6 @@ export default function TrailCard({
             <Length miles={length}/>
           </div>
           <TrailAccessibility trailId={trailId} />
-          <div className="Trail-card-desc"></div>
         </Col>
       </Row>
     </Container>

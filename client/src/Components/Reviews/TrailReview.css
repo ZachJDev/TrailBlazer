@@ -3,10 +3,12 @@
     margin-top: 1rem;
     padding: 1rem;
 }
+
 .review-header {
     display: flex;
-     justify-content: space-between;
+    justify-content: space-between;
 }
+
 .review-user {
     font-size: 1rem;
 }
@@ -14,7 +16,8 @@
 .review-text {
     text-align: left;
 }
- .review .review_edit-icon {
+
+.review .review_edit-icon {
     position: static;
     padding-left: 1rem;
 }
@@ -22,6 +25,7 @@
 .review_edit-icon:hover {
     cursor: pointer;
 }
+
 .review-ratings {
     display: flex;
     justify-content: space-around;

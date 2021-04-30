@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 db = require("../models/index");
 const { NoContentError } = require("../classes/Errors");
 
@@ -20,7 +22,6 @@ exports.getTrailRatings = (req, res, next) => {
           ratingModes[rating] = getMaxFrequency(freqChart);
         } catch (e) {
           console.log(e);
-          continue
         }
       }
       res.status(200).json({ ...ratingModes, success: true });
@@ -46,7 +47,7 @@ const splitRatings = (ratings) => {
     goodForGroups: [],
   };
   ratings.forEach((element) => {
-    for (let key in element.dataValues) {
+      for (let key in element.dataValues) {
       try {
         splitRatings[key].push(element.dataValues[key]);
       } catch (e) {
