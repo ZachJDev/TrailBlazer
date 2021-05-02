@@ -24,7 +24,7 @@ export default function Nav() {
             <div className="nav-auth">
                 {user.status === 200 ? (
                     <React.Fragment>
-                        <Link to="/user">{user.username}</Link>
+                        <Link to={`/user/${user.userId}`}>{user.username}</Link>
                         <Link to="/logout">Logout</Link>
                     </React.Fragment>
                 ) : (

@@ -55,6 +55,7 @@ const trailRoutes = require("./routes/trailRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const ratingRoutes = require("./routes/ratingRoutes");
 const commentRoutes = require("./routes/commentRoutes");
+const userRoutes = require('./routes/userRoutes')
 app.use("/park", parkRoutes);
 app.use("/search", searchRoutes);
 app.use("/auth", authRoutes);
@@ -62,6 +63,7 @@ app.use("/trail", trailRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/ratings", ratingRoutes);
 app.use("/comments", commentRoutes);
+app.use('/user', userRoutes)
 
 
 db.sequelize
