@@ -96,7 +96,7 @@ module.exports = (sequelize) => {
         })
     }
 
-    Comment.deleteComment = (commentId, userId) => {
+    Comment.deleteComment = (commentId, userId) => { // Deletes all children as well.
         console.log("DELETING")
         // noinspection JSUnusedLocalSymbols
         return Comment.destroy({where: {commentId, userId}, individualHooks: true})

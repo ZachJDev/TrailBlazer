@@ -6,9 +6,9 @@ const reviewController = require('../controllers/reviewController')
 
 // Read
 router.get('/trails/:id', middleware.getUser, reviewController.checkUserForReview, reviewController.getTrailReviews)
-router.get('/user/:userId', reviewController.getSingleReview)
-
+router.get('/user/:userId', reviewController.getSingleReview) // seems redundant
 router.get('/:id', middleware.getUser, reviewController.getById)
+router.get('/search/:term', reviewController.getReviews)
 
 // Create
 router.post('/new', middleware.getUser, middleware.userMatches, reviewController.postNewTrailReview)

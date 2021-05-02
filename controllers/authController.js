@@ -87,13 +87,13 @@ exports.signUp = (req, res, next) => {
       if(e instanceof ConflictError) res.status(409).json({ errorMessage: e.message});
     });
 };
+
 exports.logout = (req, res, next) => {
   req.session.destroy((err, ses) => {
     console.log(err)
     res.status(200).json({success: true})
   });
 }
-
 
 exports.getUserData =  (req, res, next) => {
   console.log("user session:",req.session)

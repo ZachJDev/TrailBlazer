@@ -7,6 +7,9 @@ const {
   NotFoundError,
 } = require("../classes/Errors");
 
+const queryString = require('query-string')
+
+
 exports.getTrailReviews = (req, res) => {
   const trailId = req.params.id;
   let fetchedReviews;
@@ -187,7 +190,6 @@ exports.updateReview = (req, res) => {
 };
 
 exports.getById = (req, res) => {
-
     db.Review.findOne({where: {reviewId: req.params.id}, include: [db.Trail, db.User]}).then(review => {
         if(review === null) {
             throw new Error("cannot find review")
@@ -206,4 +208,16 @@ exports.getById = (req, res) => {
         .catch(e => {
             res.status(404).json({success: false, error: e.message})
         })
+}
+
+exports.getReviews = async (req, res, next) => {
+    const searchTerms = queryString.parse(req.params.term)
+    try {
+        const results = await db.Review.search(searchTerms)
+        res.json(results)
+    }catch (e) {
+        console.log(e.message);
+    }
+
+
 }

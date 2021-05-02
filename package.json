@@ -27,6 +27,7 @@
     "node-fetch": "^2.6.1",
     "pg": "^8.3.3",
     "pg-hstore": "^2.3.3",
+    "query-string": "^7.0.0",
     "react-bootstrap": "^1.4.0",
     "react-router-dom": "^5.2.0",
     "sequelize": "^6.3.5",
