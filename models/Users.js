@@ -30,6 +30,10 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        bio: {
+            type: DataTypes.STRING,
+            allowNull: true
+        }
     }, )
     User.sync({alter: true})
     return User
