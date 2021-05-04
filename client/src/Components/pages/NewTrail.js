@@ -36,7 +36,7 @@ export default function NewTrail({location, history}) {
 
     return (
         <div>
-            <h1>New Trail for {params.parkName}</h1>
+            <h1>New Trail for {decodeURI(params.parkName)}</h1>
             <FormWrapper errors={errors}>
                 <NewTrailForm
                     handleSubmit={handleFormSubmit}
