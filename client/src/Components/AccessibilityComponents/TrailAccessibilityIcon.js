@@ -50,10 +50,12 @@ export default function TrailAccessibilityIcon({
     const handleMouseLeave = (e) => setTooltipClass('icon-tooltip');
 
     return (
-        <div className="icon-block">
+        <div role={'img text'} aria-label={'rating'} title={`${freq} out of ${numRatings} people thought this trail ${
+            name === 'Parking' ? 'had parking' : 'was'
+        } ${caption.toLowerCase()}`} className="icon-block">
             <div onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver} className="mouseCapture">
         <span className={`rating-icon ${cssClass}`}>
-          <FontAwesomeIcon icon={icon}/>
+          <FontAwesomeIcon alt={'asdsa'} icon={icon}/>
         </span>
                 <p className={'caption'}>{caption}</p>
                 {numRatings < Infinity && numRatings >= MINIMUM_RATINGS && (
