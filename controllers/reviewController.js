@@ -201,6 +201,7 @@ exports.getById = (req, res) => {
             trail: review.trail,
             trailId: review.trailId,
             username: review.user.username,
+            reviewId: review.ReviewId,
             isEditable
         }
         res.status(200).json({success: true, review: reply });
