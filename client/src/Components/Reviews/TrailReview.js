@@ -25,13 +25,17 @@ export default function TrailReview({
                                         handleEdit,
                                         reviewId,
                                         useLink = true,
-                                        useComments = true
+                                        useComments = true,
+                                        showPark = false,
+                                        showTrail = false,
+                                        park = {},
+                                        trail = {},
                                     }) {
-console.log(reviewId)
     return (
         <ReviewProvider id={reviewId}>
             <div className="review">
                 <div className="review-header">
+                    <div className={'title-box'}>
                     {
                         useLink ?
                             <Link to={`/review/${reviewId}`}>
@@ -40,6 +44,11 @@ console.log(reviewId)
                             :
                             <h2 className="review-title">{title} </h2>
                     }
+                    <div className={'links'}>
+                        {showPark ? <Link to={`/park/${park.parkId}`}><p>{`go to ${park.name}`}</p></Link> : null}
+                        {showTrail ? <Link to={`/trail/${trail.trailId}`}><p>{`go to ${trail.name}`}</p></Link> : null}
+                    </div>
+                    </div>
                     <h3 className="review-user">
                         Review by: {username}{' '}
                         {isEditable && (

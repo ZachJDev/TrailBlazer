@@ -190,7 +190,7 @@ exports.updateReview = (req, res) => {
 };
 
 exports.getById = (req, res) => {
-    db.Review.findOne({where: {reviewId: req.params.id}, include: [db.Trail, db.User]}).then(review => {
+    db.Review.findOne({where: {reviewId: req.params.id}, include: [{model: db.Trail, include: [db.Park]}, db.User, ]}).then(review => {
         if(review === null) {
             throw new Error("cannot find review")
         }

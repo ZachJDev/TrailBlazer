@@ -13,13 +13,13 @@ export default function ProfileReviews({userId, username = ''}) {
             setReviews(res.reviews);
         });
     }, []);
-
+    console.log(reviews)
     return (
         <div className={'profile-reviews'}>
             {reviews?.length > 0 ?
                 reviews.map(review => {
                     return (
-                        <TrailReview {...review} reviewId={review.ReviewId} username={username} useComments={false}/>
+                        <TrailReview {...review} reviewId={review.ReviewId} username={username} useComments={false} showTrail={true} showPark={true} park={review.trail.park} trail={review.trail} />
                     );
                 })
                 : <p>Do Not Have Reviews</p>}

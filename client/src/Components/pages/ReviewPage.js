@@ -22,7 +22,7 @@ export default function ReviewPage({match,  history}) {
 
     return (
     review ?
-    <TrailReview {...review} reviewId={review.reviewId} handleEdit={handleReviewRedirect} showPark={true} useLink={false}/>
+    <TrailReview {...review} reviewId={review.reviewId} handleEdit={handleReviewRedirect} showPark={true} showTrail={true} trail={review.trail} useLink={false} park={review.trail.park}/>
         : null
     );
 }

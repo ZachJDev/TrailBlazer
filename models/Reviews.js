@@ -42,14 +42,19 @@ module.exports = (sequelize) => {
             throw new Error('No Valid Search Terms provided');
         }
 
+        const associations = Review.associations;
+        const trail = associations.trail;
+        const user =  associations.user;
 
         return Review.findAll(
             {
                 where: FinalSearchTerms,
                 attributes: options.reviewAttributes ||['title', 'text', 'trailId', 'userId', 'updatedAt', 'ReviewId'],
                 include:
-                    [{association: Review.associations.trail, attributes:  options.trailAttributes ||['trailId', 'name', 'parkId', 'length']},
-                        {association: Review.associations.user, attributes:  options.userAttributes ||['username', 'userId']},
+                    [{association: trail, include: [{association: trail.target.associations.park,
+                                                        attributes: ['name', 'parkId']}],
+                        attributes:  options.trailAttributes ||['trailId', 'name', 'parkId', 'length', ]},
+                        {association: user, attributes:  options.userAttributes ||['username', 'userId']},
         ],
             });
     };
