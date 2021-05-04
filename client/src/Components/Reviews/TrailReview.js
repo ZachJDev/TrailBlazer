@@ -25,8 +25,9 @@ export default function TrailReview({
                                         handleEdit,
                                         reviewId,
                                         useLink = true,
+                                        useComments = true
                                     }) {
-
+console.log(reviewId)
     return (
         <ReviewProvider id={reviewId}>
             <div className="review">
@@ -57,7 +58,7 @@ export default function TrailReview({
                     })}
                 </div>
                 <p className="review-text">{text}</p>
-                {withHeader(<ReviewComments reviewId={reviewId}/>, 'Comments:', 'comments')}
+                {useComments ? withHeader(<ReviewComments reviewId={reviewId}/>, 'Comments:', 'comments') : null}
             </div>
         </ReviewProvider>
     );
