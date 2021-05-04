@@ -5,6 +5,7 @@ import useBool from '../../hooks/useBool';
 import ProfileReviews from '../Profile/ProfileReviews';
 import ProfileBio from '../Profile/ProfileBio'
 import Col from 'react-bootstrap/Col';
+import withHeader from '../../HigherOrderComponents/withHeader';
 
 export default function User({match}) {
     const [userInfo, setUserInfo] = useState(null)
@@ -23,7 +24,7 @@ export default function User({match}) {
         <Col>
             <ProfileHeader user={userInfo}/>
             <ProfileBio bio={userInfo.bio}/>
-            <ProfileReviews userId={userInfo.userId}/>
+            {withHeader(<ProfileReviews userId={userInfo.userId} username={userInfo.username}/>, `${userInfo.username}'s reviews:`, 'header')}
         </Col>
             : null
     );
