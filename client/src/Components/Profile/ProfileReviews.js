@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import useGetPayload from '../../hooks/useGetPayload';
-import ProfileReviewContainer from './ProfileReviewContainer';
+import TrailReview from '../Reviews/TrailReview';
 
-export default function ProfileReviews({userId}) {
+import './ProfileReviews.css'
+
+export default function ProfileReviews({userId, username = ''}) {
     const [reviews, setReviews] = useState(null);
     const [reviewsRes] = useGetPayload(`/reviews/search/userId=${userId}`);
 
@@ -12,13 +14,15 @@ export default function ProfileReviews({userId}) {
         });
     }, []);
 
-    console.log(reviews);
-
     return (
-        reviews?.length > 0 ?
-            reviews.map(review => (
-                <ProfileReviewContainer {...review}/>
-            ))
-            : <p>Do Not Have Reviews</p>
+        <div className={'profile-reviews'}>
+            {reviews?.length > 0 ?
+                reviews.map(review => {
+                    return (
+                        <TrailReview {...review} reviewId={review.ReviewId} username={username} useComments={false}/>
+                    );
+                })
+                : <p>Do Not Have Reviews</p>}
+        </div>
     );
 }
