@@ -21,6 +21,6 @@ Alternatively, you can hardcode any SQL database information into the index.js f
 
 You'll also need
  - to supply a secret for the session storage at [Line 29 in app.js](https://github.com/ZachJDev/TrailBlazer/blob/master/app.js#L29).
- - to have an active Google Cloud Platform API Key. It belongs in a simple JS export in the /configs directory following the shape of the pbulic config here: https://www.npmjs.com/package/googlemaps
+ - to have an active Google Cloud Platform API Key. It belongs in a simple JS export in the /configs directory following the shape of the public config here: https://www.npmjs.com/package/googlemaps#usage
 
 After that, simply running `npm install` should get you everything you need.
