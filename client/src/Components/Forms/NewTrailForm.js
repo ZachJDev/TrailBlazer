@@ -11,10 +11,10 @@ import FormInputTextArea from '../FormInputs/FormInputTextArea';
 import useInputState from '../../hooks/useInputState';
 
 export default function NewTrailForm({handleSubmit, park, defaultValues}) {
-    const [name, setTrailName] = useInputState(defaultValues.name || '');
-    const [description, setTrailDescription] = useInputState(defaultValues.description || '');
-    const [length, setTrailLength] = useInputState(defaultValues.length || '');
-    const [lengthUnit, setLengthUnit] = useState(defaultValues.lengthUnit || 'm');
+    const [name, setTrailName] = useInputState(defaultValues?.name || '');
+    const [description, setTrailDescription] = useInputState(defaultValues?.description || '');
+    const [length, setTrailLength] = useInputState(defaultValues?.length || '');
+    const [lengthUnit, setLengthUnit] = useState(defaultValues?.lengthUnit || 'm');
 
     const startSubmit = (event) => {
         event.preventDefault();
