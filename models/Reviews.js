@@ -41,13 +41,16 @@ module.exports = (sequelize) => {
         if (Object.keys(FinalSearchTerms) < 1) {
             throw new Error('No Valid Search Terms provided');
         }
+
+
         return Review.findAll(
             {
                 where: FinalSearchTerms,
                 attributes: options.reviewAttributes ||['title', 'text', 'trailId', 'userId', 'updatedAt', 'ReviewId'],
                 include:
                     [{association: Review.associations.trail, attributes:  options.trailAttributes ||['trailId', 'name', 'parkId', 'length']},
-                        {association: Review.associations.user, attributes:  options.userAttributes ||['username', 'userId']}],
+                        {association: Review.associations.user, attributes:  options.userAttributes ||['username', 'userId']},
+        ],
             });
     };
     return Review;

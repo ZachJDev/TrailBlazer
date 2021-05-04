@@ -214,7 +214,7 @@ exports.getReviews = async (req, res, next) => {
     const searchTerms = queryString.parse(req.params.term)
     try {
         const results = await db.Review.search(searchTerms)
-        res.json(results)
+        res.json({reviews: results})
     }catch (e) {
         console.log(e.message);
     }
