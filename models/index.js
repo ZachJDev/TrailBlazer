@@ -52,4 +52,5 @@ db.User.belongsTo(db.TrailRating, {foreignKey: 'userId'})
 db.TrailRating.hasMany(db.Trail, {foreignKey: 'trailId'})
 db.Trail.belongsTo(db.TrailRating, {foreignKey: 'trailId'})
 
+
 module.exports = db;
