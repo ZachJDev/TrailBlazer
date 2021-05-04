@@ -3,12 +3,11 @@ import useGetPayload from '../../hooks/useGetPayload';
 import TrailReview from '../Reviews/TrailReview';
 
 export default function ReviewPage({match,  history}) {
-    const [review, setReview] = useState({});
+    const [review, setReview] = useState(null);
     const [getReview] = useGetPayload(`/reviews/${match.params.reviewId}`);
 
     useEffect(() => {
         getReview().then(reviewRes => {
-            console.log(reviewRes);
             if (reviewRes.success) {
                 setReview(reviewRes.review);
             } else {
@@ -22,6 +21,8 @@ export default function ReviewPage({match,  history}) {
     };
 
     return (
-        <TrailReview {...review} handleEdit={handleReviewRedirect} useLink={false}/>
+    review ?
+    <TrailReview {...review} reviewId={review.reviewId} handleEdit={handleReviewRedirect} showPark={true} useLink={false}/>
+        : null
     );
 }
