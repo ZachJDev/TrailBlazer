@@ -42,11 +42,11 @@ export default function NewTrailReviewForm({submitForm, defaultValues, isEdit = 
     if (isEdit && !isSet && Object.keys(defaultValues).length > 0) { // might be a more elegant way of checking this...
         setReviewText(defaultValues.text);
         setReviewTitle(defaultValues.title);
-        setParking(defaultValues.parking);
-        setPets(defaultValues.petFriendly ? 'Yes' : 'No');   // And of setting some of these values
-        setGroups(defaultValues.goodForGroups ? 'Yes' : 'No');
-        setDifficulty(defaultValues.difficulty);
-        setWCAcc(defaultValues.wheelchairAcc ? 'Yes' : 'No');
+        setParking(defaultValues?.parking || 'Close');
+        setPets(defaultValues?.petFriendly ? 'Yes' : 'No');   // And of setting some of these values
+        setGroups(defaultValues?.goodForGroups ? 'Yes' : 'No');
+        setDifficulty(defaultValues?.difficulty || 'Medium');
+        setWCAcc(defaultValues?.wheelchairAcc ? 'Yes' : 'No');
         flipIsSet();
     }
     return (
