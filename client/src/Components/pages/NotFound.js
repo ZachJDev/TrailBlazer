@@ -1,9 +1,12 @@
 import React from 'react';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function NotFound() {
+function NotFound() {
     return (
         <div>
             <p>Not Found</p>
         </div>
     );
 }
+
+export default withHelmet({title: '404 Not Found'})(NotFound)

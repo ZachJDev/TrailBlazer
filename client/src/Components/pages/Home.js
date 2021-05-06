@@ -2,8 +2,9 @@ import React from 'react';
 
 import HomeSearch from '../Search/HomeSearch';
 import AboutCards from '../Cards/AboutCards';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function Home({history}) {
+function Home({history}) {
     return (
         <React.Fragment>
             <div style={{
@@ -22,3 +23,5 @@ export default function Home({history}) {
         </React.Fragment>
     );
 }
+
+export default withHelmet()(Home)

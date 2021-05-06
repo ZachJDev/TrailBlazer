@@ -7,12 +7,14 @@ import ButtonActionRow from '../InfoContainers/ButtonActionRow';
 import Description from '../InfoContainers/Description';
 import TrailReview from '../Reviews/TrailReview';
 import TrailAccessibility from '../AccessibilityComponents/TrailAccessibility';
+import {Helmet} from 'react-helmet';
 
 export default function Trail({match, history}) {
 
     const {trailId} = match.params;
     const {user} = useContext(UserContext);
     const [trailReviews, setTrailReviews] = useState([]);
+    const [title, setTitle] = useState('TrailBlazer | Hike Your Way');
     const [trailInfo, setTrailInfo] = useState({});
     const [hasReviewed, setHasReviewed] = useState(true);
     const [getTrailInfo] = useGetPayload(`/trail/${trailId}`);
@@ -23,6 +25,7 @@ export default function Trail({match, history}) {
     useEffect(() => {
         getTrailInfo().then(trail => {
             setTrailInfo(trail);
+            setTitle(trail.name)
         });
         getReviewPayload().then(reviewsRes => {
             setHasReviewed(reviewsRes.userHasReviewed);
@@ -41,6 +44,10 @@ export default function Trail({match, history}) {
     const {length, name, description} = trailInfo;
     //I'll need to handle any 404 errors here, I think.
     return (
+        <React.Fragment>
+    <Helmet>
+        <title>{title}</title>
+    </Helmet>
         <div>
             {trailInfo.park ? (
                 <InfoContainer>
@@ -71,5 +78,6 @@ export default function Trail({match, history}) {
                 <h1>Loading...</h1>
             )}
         </div>
+        </React.Fragment>
     );
 }

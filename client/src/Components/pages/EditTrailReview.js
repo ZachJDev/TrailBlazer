@@ -13,8 +13,9 @@ import useBool from '../../hooks/useBool';
 import {UserContext} from '../../contexts/UserContext';
 
 import {validateTrailReviewForm} from '../../functions/formValidation';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function EditTrailReview({match, history}) {
+ function EditTrailReview({match, history}) {
     const {params} = match;
     const {user} = useContext(UserContext);
 
@@ -62,3 +63,5 @@ export default function EditTrailReview({match, history}) {
         </section>
     );
 }
+
+export default withHelmet({title: 'Edit Review'})(EditTrailReview)

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-
+import {Helmet} from 'react-helmet';
 import '../Forms/TrailReviewForm.css';
 
 import {validateNewParkForm} from '../../functions/formValidation';
@@ -14,7 +14,9 @@ import useBool from '../../hooks/useBool';
 import {UserContext} from '../../contexts/UserContext';
 import NewParkForm from '../Forms/NewParkForm';
 
-export default function EditPark({match, history}) {
+import withHelmet from '../../HigherOrderComponents/withHelmet';
+
+ function EditPark({match, history}) {
     const {params} = match;
     const {user} = useContext(UserContext);
 
@@ -70,3 +72,5 @@ export default function EditPark({match, history}) {
         </section>
     );
 }
+
+export default withHelmet({title: 'Edit Park'})(EditPark)
