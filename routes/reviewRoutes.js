@@ -1,21 +1,26 @@
 const express = require('express')
 const router = express.Router({mergeParams: true})
 
-const middleware = require('../middleware/middleware')
+const {getUser, userMatches} = require('../middleware/middleware')
 const reviewController = require('../controllers/reviewController')
+const {userIsAdmin} = require('../middleware/middleware');
 
 // Read
-router.get('/trails/:id', middleware.getUser, reviewController.checkUserForReview, reviewController.getTrailReviews)
+router.get('/trails/:id', getUser, reviewController.checkUserForReview, reviewController.getTrailReviews)
 router.get('/user/:userId', reviewController.getSingleReview) // seems redundant
-router.get('/:id', middleware.getUser, reviewController.getById)
+router.get('/:id', getUser, reviewController.getById)
 router.get('/search/:term', reviewController.getReviews)
 
 // Create
-router.post('/new', middleware.getUser, middleware.userMatches, reviewController.postNewTrailReview)
+router.post('/new', getUser, userMatches, reviewController.postNewTrailReview)
 
 // Update
-router.put('/edit', middleware.getUser, reviewController.updateReview)
+router.put('/edit', getUser, reviewController.updateReview)
 
 // TODO: Destroy
+
+router.delete('/Admin/delete/:reviewId', getUser, userIsAdmin, reviewController.delete)
+
+router.delete('/delete/:reviewId', getUser, userMatches, reviewController.delete)
 
 module.exports = router

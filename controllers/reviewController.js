@@ -222,3 +222,19 @@ exports.getReviews = async (req, res, next) => {
         console.log(e.message);
     }
 }
+
+exports.delete = async (req, res, next) => {
+    const ReviewId = req.params.reviewId; // capitalization needs to be fixed in db, and then propagated to all sorts of different places...
+    try{
+        const deleteRes = await db.Review.destroy({where:{ReviewId}})
+        if(deleteRes !== 1) {
+            res.status(400).json({success: false, errors: ['Review does not Exist']});
+        } else {
+            await db.Comment.destroy({where: {reviewId: ReviewId}})
+            res.status(200).json({success: true})
+        }
+    } catch (e) {
+        console.log(e);
+        res.status(200).json({success: true, errors: [e.message]})
+    }
+}

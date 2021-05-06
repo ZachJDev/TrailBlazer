@@ -88,7 +88,19 @@ exports.update = (req, res, next) => {
     }
 };
 
-exports.delete = (req, res, next) => {
+exports.delete = async (req, res, next) => {
+    const parkId = req.params.parkId;
+    try{
+        const deleteRes = await db.Park.destroy({where:{parkId}})
+        if(deleteRes !== 1) {
+            res.status(400).json({success: false, errors: ['Park does not Exist']});
+        } else {
+            res.status(200).json({success: true})
+        }
+    } catch (e) {
+        console.log(e);
+        res.status(200).json({success: true, errors: [e.message]})
+    }
 };
 
 const getEmptyProps = (object) => {

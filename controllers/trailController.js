@@ -49,6 +49,19 @@ exports.update = (req, res, next) => {
     } catch (e) {
         res.status(400).json({success: false, errors: [e.message]})
     }
+}
 
+exports.delete = async (req, res, next) => {
+    const trailId = req.params.trailId;
+    try {
+        const deleteRes = await db.delete({where: {trailId}});
+        if(deleteRes === 0) {
+            res.status(400).json({success: false, errors: ['trail does not exist.']})
+        } else {
+            res.status(200).json({success: true});
+        }
+    } catch (e) {
+        res.status(400).json({success: false, errors: [e.message]});
+    }
 }
 

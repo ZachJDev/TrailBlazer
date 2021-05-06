@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router({mergeParams: true})
 
 const authController = require('../controllers/authController')
+const {userIsAdmin} = require('../middleware/middleware');
+const {userMatches} = require('../middleware/middleware');
+const {getUser} = require('../middleware/middleware');
 
 // Login
 router.post("/login", authController.postLogin)
@@ -16,5 +19,9 @@ router.get("/UserData", authController.getUserData)
 router.post("/logout", authController.logout)
 
 // TODO: Delete User
+
+router.delete('/delete/:userId', getUser, userMatches, authController.deleteUser)
+
+router.delete('/Admin/delete/:userId', getUser, userIsAdmin, authController.deleteUser)
 
 module.exports = router

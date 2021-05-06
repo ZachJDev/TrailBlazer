@@ -14,6 +14,6 @@ router.get('/:parkId([0-9]+$)',  parkController.getOne)
 router.post('/new', getUser, userIsAdmin, parkController.add)
 
 // TODO: Destroy
-
+router.delete('/delete/:parkId', userIsAdmin, parkController.delete);
 
 module.exports = router;

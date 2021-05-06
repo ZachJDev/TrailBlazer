@@ -14,5 +14,7 @@ router.post('/new', trailController.new)
 
 // TODO: Destroy
 
+router.delete('/delete/:trailId', getUser, userIsAdmin, trailController.delete)
+
 
 module.exports = router
