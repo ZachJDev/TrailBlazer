@@ -56,6 +56,7 @@ exports.getTrailReviews = (req, res) => {
               reviewId: rev.ReviewId,
             title: rev.title,
             username: rev.user.username,
+              userId: rev.user.userId,
             text: rev.text,
             isEditable: rev.userId === req.session.userId,
             ratings: fetchedRatings[rev.userId],
@@ -201,6 +202,7 @@ exports.getById = (req, res) => {
             trail: review.trail,
             trailId: review.trailId,
             username: review.user.username,
+            userId: review.user.userId,
             reviewId: review.ReviewId,
             isEditable
         }
