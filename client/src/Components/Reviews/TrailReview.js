@@ -20,6 +20,7 @@ export default function TrailReview({
                                         text,
                                         title,
                                         username,
+                                        userId = '',
                                         isEditable,
                                         ratings = {},
                                         handleEdit,
@@ -36,21 +37,22 @@ export default function TrailReview({
             <div className="review">
                 <div className="review-header">
                     <div className={'title-box'}>
-                    {
-                        useLink ?
-                            <Link to={`/review/${reviewId}`}>
+                        {
+                            useLink ?
+                                <Link to={`/review/${reviewId}`}>
+                                    <h2 className="review-title">{title} </h2>
+                                </Link>
+                                :
                                 <h2 className="review-title">{title} </h2>
-                            </Link>
-                            :
-                            <h2 className="review-title">{title} </h2>
-                    }
-                    <div className={'links'}>
-                        {showPark ? <Link to={`/park/${park.parkId}`}><p>{`go to ${park.name}`}</p></Link> : null}
-                        {showTrail ? <Link to={`/trail/${trail.trailId}`}><p>{`go to ${trail.name}`}</p></Link> : null}
-                    </div>
+                        }
+                        <div className={'links'}>
+                            {showPark ? <Link to={`/park/${park.parkId}`}><p>{`Park: ${park.name}`}</p></Link> : null}
+                            {showTrail ?
+                                <Link to={`/trail/${trail.trailId}`}><p>{`Trail: ${trail.name}`}</p></Link> : null}
+                        </div>
                     </div>
                     <h3 className="review-user">
-                        Review by: {username}{' '}
+                        Review by: <Link to={`/user/${userId}`}> {username}{' '}</Link>
                         {isEditable && (
                             <span className="review_edit-icon">
               <FontAwesomeIcon icon={faEdit} onClick={handleEdit}/>
@@ -63,7 +65,7 @@ export default function TrailReview({
                         if (ratings[rating] !== null) {
                             return <TrailAccessibilityIcon key={rating} icon={ratingIcons[rating]} name={rating}
                                                            rating={ratings[rating]}/>;
-                        } else return null
+                        } else return null;
                     })}
                 </div>
                 <p className="review-text">{text}</p>

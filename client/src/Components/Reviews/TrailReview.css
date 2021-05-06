@@ -55,6 +55,9 @@
 
 .review .links {
     display: flex;
-    justify-content: space-between;
-    width: 50%;
+    justify-content: left;
+}
+
+.review .links * {
+    margin-right:1rem;
 }
