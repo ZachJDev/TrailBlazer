@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 
 import {UserContext} from '../../contexts/UserContext';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function Logout() {
+ function Logout() {
 
     const [payload, setPayload] = useState({});
     const {clearUser} = useContext(UserContext);
@@ -34,3 +35,5 @@ export default function Logout() {
         </div>
     );
 }
+
+export default withHelmet({title: 'Logout'})(Logout)

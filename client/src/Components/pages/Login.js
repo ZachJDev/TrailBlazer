@@ -6,8 +6,9 @@ import FormInputText from '../FormInputs/FormInputText';
 import FormInputPassword from '../FormInputs/FormInputPassword';
 
 import {UserContext} from '../../contexts/UserContext';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function Login({history}) {
+ function Login({history}) {
     const [username, setUsername] = useInputState('');
     const [password, setPassword] = useInputState('');
     const {user, updateUser, errors} = useContext(UserContext);
@@ -42,3 +43,5 @@ export default function Login({history}) {
         </div>
     );
 }
+
+export default withHelmet({title: 'Login'})(Login)

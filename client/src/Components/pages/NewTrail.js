@@ -6,8 +6,9 @@ import usePostBody from '../../hooks/usePostBody';
 import useSetAsArray from '../../hooks/useSetAsArray';
 
 import {validateNewTrailForm} from '../../functions/formValidation';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function NewTrail({location, history}) {
+ function NewTrail({location, history}) {
     //Deconstruct url query
     const keyPairs = location.search.split('&').map((q) => q.split('='));
     // Hardcoding for now... may refactor later to be more flexible
@@ -47,3 +48,5 @@ export default function NewTrail({location, history}) {
         </div>
     );
 }
+
+export default withHelmet({title: 'New Trail'})(NewTrail)

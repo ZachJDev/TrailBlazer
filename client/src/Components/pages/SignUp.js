@@ -5,8 +5,9 @@ import FormWrapper from '../Forms/FormWrapper';
 import useSetAsArray from '../../hooks/useSetAsArray';
 
 import {validateSignUpForm} from '../../functions/formValidation';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function SignUp({history}) {
+function SignUp({history}) {
 
     const [errors, addError] = useSetAsArray();
     const [setBodyAndPost] = usePostBody('/auth/signup');
@@ -39,3 +40,4 @@ export default function SignUp({history}) {
         </div>
     );
 }
+export default withHelmet({title: 'Sign Up'})(SignUp)

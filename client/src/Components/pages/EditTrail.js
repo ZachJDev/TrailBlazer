@@ -9,8 +9,9 @@ import usePutBody from '../../hooks/usePutBody';
 import useGetPayload from '../../hooks/useGetPayload';
 import useBool from '../../hooks/useBool';
 import {UserContext} from '../../contexts/UserContext';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function NewTrail({history, match}) {
+function NewTrail({history, match}) {
 
     const {user} = useContext(UserContext);
     // Lots of side effects here and pretty cluttered -- def in need
@@ -74,3 +75,5 @@ export default function NewTrail({history, match}) {
         ) : <h2>{AwaitingInfoNotice()}</h2>
     );
 }
+
+export default withHelmet({title: 'Edit Trail'})(NewTrail)

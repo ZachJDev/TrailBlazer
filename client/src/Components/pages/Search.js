@@ -11,8 +11,10 @@ import TrailCard from '../Cards/TrailCard';
 import FormInputText from '../FormInputs/FormInputText';
 
 import useInputState from '../../hooks/useInputState';
+import {Helmet} from 'react-helmet';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function Search({location}) {
+ function Search({location}) {
     const [searchType, setSearchType] = useState('Park');
     const [searchTerm, setSearchTerm] = useInputState(new URLSearchParams(location.search).get('term') || '');
     let [searchResults, setSearchResults] = useState([]);
@@ -114,3 +116,5 @@ export default function Search({location}) {
         </div>
     );
 }
+
+export default withHelmet({title: 'Find Your Trail'})(Search)

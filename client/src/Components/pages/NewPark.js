@@ -6,13 +6,13 @@ import FormWrapper from '../Forms/FormWrapper';
 import useSetAsArray from '../../hooks/useSetAsArray';
 
 import {validateNewParkForm} from '../../functions/formValidation';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
 
-export default function NewPark({history}) {
+ function NewPark({history}) {
     const [formErrors, setFormErrors] = useState([]);
     const [setBody] = usePostBody('/park/new');
     const [errors, addError] = useSetAsArray();
 
-    console.log(errors);
     const handleFormSubmit = (form) => {
         if (validateNewParkForm(form, addError)) {
             setBody(form).then((payload) => {
@@ -40,3 +40,5 @@ export default function NewPark({history}) {
         </div>
     );
 }
+
+export default withHelmet({title: 'New Park'})(NewPark)

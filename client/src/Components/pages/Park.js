@@ -10,9 +10,13 @@ import ParkTrails from '../InfoContainers/ParkTrails';
 
 import './Park.css';
 import useBool from '../../hooks/useBool';
+import withHelmet from '../../HigherOrderComponents/withHelmet';
+import {Helmet} from 'react-helmet';
 
-export default function Park({match, history}) {
+
+function Park({match, history}) {
     const alertComingSoon = () => alert('Functionality Coming Soon!');
+    const [title, setTitle] = useState('TrailBlazer | Hike Your Way');
     const [parkInfo, setParkInfo] = useState({});
     const [getParkInfo] = useGetPayload(`/park/${match.params.parkId}`);
     const [showMap, flipShowMap] = useBool(false);
@@ -26,13 +30,17 @@ export default function Park({match, history}) {
     useEffect(() => {
         getParkInfo().then(info => {
             setParkInfo(info);
+            setTitle(info.name);
         })
             .catch((e) => {
                 console.log(e);
             });
     }, []);
-    console.log(parkInfo);
     return (
+        <React.Fragment>
+            <Helmet>
+                <title>{title}</title>
+            </Helmet>
         <div className="park-info">
             {
                 parkInfo.status === 200 ? (
@@ -58,7 +66,10 @@ export default function Park({match, history}) {
                     </h1>
                 )
             }
-
         </div>
+        </React.Fragment>
+
     );
 }
+
+export default Park
