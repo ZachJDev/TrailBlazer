@@ -9,7 +9,7 @@ import Address from './Address';
 export default function MainInfo({className, name, address, city, state, children}) {
     return (
         <Row className={className} style={{marginTop: '1rem'}}>
-            <Col md={12} lg={6}>
+            <Col md={12} lg={6} style={{minWidth:'40vw'}}>
                 <Row xs={10} style={{marginBottom: '9rem'}}>
                     <div
                         style={{

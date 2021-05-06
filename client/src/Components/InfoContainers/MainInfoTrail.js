@@ -10,7 +10,7 @@ import Length from './Length';
 export default function MainInfoTrail({name, length, parkId, parkName, children}) {
     return (
         <Row style={{marginTop: '1rem'}}>
-            <Col md={12} lg={6}>
+            <Col md={12} lg={6} style={{minWidth: '40vw'}}>
                 <Row xs={10} style={{marginBottom: '4rem'}}>
                     <div
                         style={{
