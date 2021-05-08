@@ -10,6 +10,8 @@ export default function ButtonActionRow({
                                             handleMap,
                                             handleEdit,
                                             hasReviewed,
+                                            handleDelete,
+                                            showReview
                                         }) {
 
     const {user} = useContext(UserContext);
@@ -22,13 +24,17 @@ export default function ButtonActionRow({
                 marginBottom: '1rem',
             }}
         >
-            <Col>
-                <Button
-                    onClick={user.isLoggedIn ? handleReview : () => alert('Please Log In')}
-                >
-                    {user && hasReviewed ? 'Edit Review' : 'Add Review'}
-                </Button>
-            </Col>
+            {
+                showReview &&
+                    <Col>
+                        <Button
+                            onClick={user.isLoggedIn ? handleReview : () => alert('Please Log In')}
+                        >
+                            {user && hasReviewed ? 'Edit Review' : 'Add Review'}
+                        </Button>
+                    </Col>
+            }
+
             <Col>
                 <Button
                     onClick={handleMap}
@@ -37,14 +43,24 @@ export default function ButtonActionRow({
 
                 </Button>
             </Col>
-            {user.isAdmin ?
+            {user.isAdmin &&
+                <React.Fragment>
                 <Col>
                     <Button
                         variant={'warning'}
                         onClick={handleEdit}>
                         Edit
                     </Button>
-                </Col> : null}
+                </Col>
+                    <Col>
+                    <Button
+                    variant={'warning'}
+                    onClick={handleDelete}>
+                        Delete
+                    </Button>
+                    </Col>
+                </React.Fragment>
+                 }
 
         </Row>
     );

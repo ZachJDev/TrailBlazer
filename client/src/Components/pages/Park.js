@@ -48,9 +48,11 @@ function Park({match, history}) {
                     <InfoContainer>
                         <MainInfo className={`park-info-row`} {...parkInfo}>
                             <ButtonActionRow
+                                showReview={false}
                                 handleReview={alertComingSoon}
                                 handleMap={flipShowMap}
                                 handleEdit={AdminEdit}
+                                handleDelete={alertComingSoon}
                             />
                         </MainInfo>
                         <Map lat={parkInfo.location?.coordinates[0] || 0}
