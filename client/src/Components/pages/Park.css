@@ -10,8 +10,8 @@
 .map {
     width: 100%;
     height: 0;
-    margin-left: 50%;
     transition: height .5s ease-out;
+    margin-bottom: 1rem;
 }
 
 .show-map {

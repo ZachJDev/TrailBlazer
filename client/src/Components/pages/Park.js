@@ -52,9 +52,9 @@ function Park({match, history}) {
                                 handleMap={flipShowMap}
                                 handleEdit={AdminEdit}
                             />
-                            <Map lat={parkInfo.location?.coordinates[0] || 0}
-                                 lng={parkInfo.location?.coordinates[1] || 0} show={showMap}/>
                         </MainInfo>
+                        <Map lat={parkInfo.location?.coordinates[0] || 0}
+                             lng={parkInfo.location?.coordinates[1] || 0} show={showMap}/>
                         <Description description={parkInfo.description} name={parkInfo.name}/>
                         <ParkTrails {...match.params.parkId} {...parkInfo} />
 
