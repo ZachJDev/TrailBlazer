@@ -12,9 +12,16 @@
 
     margin: 1rem 1rem;
     padding: 1rem;
+    align-content: center;
 
     border-radius: 50px;
     background-color: rgba(176, 176, 176, 0.52);
+}
+
+.profile-header .button_delete-user {
+    width: 30%;
+    align-self: center;
+    margin: 1rem;
 }
 
 
