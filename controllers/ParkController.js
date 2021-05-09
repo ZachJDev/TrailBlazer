@@ -9,7 +9,7 @@ exports.getOne = (req, res, next) => {
         if (park !== null) {
             res.json(park.dataValues);
         } else {
-            res.status(404).send('');
+            res.status(404).send({success: false, errors: ['Park Not Found']});
             console.log(`Could not find Park with id ${parkId}`);
         }
     }).catch(e => {
@@ -90,6 +90,7 @@ exports.update = (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     const parkId = req.params.parkId;
+    console.log('Deleting', parkId)
     try{
         const deleteRes = await db.Park.destroy({where:{parkId}})
         if(deleteRes !== 1) {
