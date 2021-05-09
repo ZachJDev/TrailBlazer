@@ -111,23 +111,4 @@ exports.getUserData =  (req, res, next) => {
   }
 }
 
-exports.deleteUser =  async (req, res, next) => {
-    const userId = req.params.userId;
-    console.log('Deleting User...')
-    try {
-        const deleteRes = await db.User.destroy({where: {userId}})
-        if (deleteRes !== 1) {
-            res.status(400).send({success: false, errors: ['user does not exist']})
-        } else {
-            await db.Review.destroy({where: {userId}});
-            await db.TrailRating.destroy({where: {userId}});
-            await db.Comment.destroy({where: {userId}})
-            res.status(200).send({success: true})
-        }
-    } catch(e) {
-        console.log(e);
-        res.status(200).send({success: true})
-    }
 
-
-}
