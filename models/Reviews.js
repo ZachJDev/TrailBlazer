@@ -1,62 +1,84 @@
-const {DataTypes} = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-    // noinspection JSUnresolvedVariable
-    const Review = sequelize.define('review', {
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        text: {
-            type: DataTypes.TEXT,
-        },
-        userId: {
-            type: DataTypes.UUID,
-            allowNull: false,
-        },
-        ReviewId: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            autoIncrement: true,
-        },
-    });
+  // noinspection JSUnresolvedVariable
+  const Review = sequelize.define("review", {
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    text: {
+      type: DataTypes.TEXT,
+    },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+    },
+    ReviewId: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
+    },
+  });
 
-    Review.getAttributes = () => {
-        const attributes = [];
-        for (let attribute in Review.rawAttributes) {
-            attributes.push(attribute);
-        }
-        return attributes;
-    };
+  Review.getAttributes = () => {
+    const attributes = [];
+    for (let attribute in Review.rawAttributes) {
+      attributes.push(attribute);
+    }
+    return attributes;
+  };
 
-    Review.search = (searchTerms, options = {}) => {
-        const attributes = Review.getAttributes();
-        const FinalSearchTerms = {};
-        for (let term in searchTerms) { // loop over the parsed query string and add terms that actually exist in the Model.
-            if (attributes.includes(term)) {
-                FinalSearchTerms[term] = searchTerms[term];
-            }
-        }
-        if (Object.keys(FinalSearchTerms) < 1) {
-            throw new Error('No Valid Search Terms provided');
-        }
+  Review.search = (searchTerms, options = {}) => {
+    const attributes = Review.getAttributes();
+    const FinalSearchTerms = {};
+    for (let term in searchTerms) {
+      // loop over the parsed query string and add terms that actually exist in the Model.
+      if (attributes.includes(term)) {
+        FinalSearchTerms[term] = searchTerms[term];
+      }
+    }
+    if (Object.keys(FinalSearchTerms) < 1) {
+      throw new Error("No Valid Search Terms provided");
+    }
 
-        const associations = Review.associations;
-        const trail = associations.trail;
-        const user =  associations.user;
+    const associations = Review.associations;
+    const trail = associations.trail;
+    const user = associations.user;
 
-        return Review.findAll(
+    return Review.findAll({
+      where: FinalSearchTerms,
+      attributes: options.reviewAttributes || [
+        "title",
+        "text",
+        "trailId",
+        "userId",
+        "updatedAt",
+        "ReviewId",
+      ],
+      include: [
+        {
+          association: trail,
+          include: [
             {
-                where: FinalSearchTerms,
-                attributes: options.reviewAttributes ||['title', 'text', 'trailId', 'userId', 'updatedAt', 'ReviewId'],
-                include:
-                    [{association: trail, include: [{association: trail.target.associations.park,
-                                                        attributes: ['name', 'parkId']}],
-                        attributes:  options.trailAttributes ||['trailId', 'name', 'parkId', 'length', ]},
-                        {association: user, attributes:  options.userAttributes ||['username', 'userId']},
-        ],
-            });
-    };
-    return Review;
+              association: trail.target.associations.park,
+              attributes: ["name", "parkId"],
+            },
+          ],
+          attributes: options.trailAttributes || [
+            "trailId",
+            "name",
+            "parkId",
+            "length",
+          ],
+        },
+        {
+          association: user,
+          attributes: options.userAttributes || ["username", "userId"],
+        },
+      ],
+    });
+  };
+  return Review;
 };

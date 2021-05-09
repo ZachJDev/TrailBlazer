@@ -22,6 +22,4 @@ router.post("/logout", authController.logout);
 
 //  Delete User
 
-
-
 module.exports = router;

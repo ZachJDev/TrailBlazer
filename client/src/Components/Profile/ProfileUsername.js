@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-export default function ProfileUsername({name}) {
-    return (
-        <div >
-        <h1 className={'profile-username'}>{name}</h1>
-        </div>
-    )
+export default function ProfileUsername({ name }) {
+  return (
+    <div>
+      <h1 className={"profile-username"}>{name}</h1>
+    </div>
+  );
 }

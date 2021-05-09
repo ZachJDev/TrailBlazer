@@ -1,5 +1,5 @@
-import useDeleteBody from '../useDeleteBody';
+import useDeleteBody from "../useDeleteBody";
 
 export default function useAddComment() {
-    return useDeleteBody('/comments/delete')[0];
+  return useDeleteBody("/comments/delete")[0];
 }

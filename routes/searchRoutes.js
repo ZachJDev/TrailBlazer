@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router({mergeParams: true})
+const express = require("express");
+const router = express.Router({ mergeParams: true });
 
-const searchController =require('../controllers/searchController')
+const searchController = require("../controllers/searchController");
 
-router.get("/:type", searchController.search)
+router.get("/:type", searchController.search);
 
 module.exports = router;

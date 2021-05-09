@@ -1,64 +1,63 @@
 .review {
-    border: 1px solid black;
-    margin-top: 1rem;
-    padding: 1rem;
+  border: 1px solid black;
+  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .review-header {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #2f2e2e;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #2f2e2e;
 }
 
 .review-user {
-    font-size: 1rem;
+  font-size: 1rem;
 }
 
 .review .title-box {
-    min-width: 70%;
-    text-align: left;
+  min-width: 70%;
+  text-align: left;
 }
 
 .review-text {
-    text-align: left;
+  text-align: left;
 }
 
 .review .review_edit-icon {
-    position: static;
-    padding: 0 1rem;
-
+  position: static;
+  padding: 0 1rem;
 }
 
 .review_icon:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .review-ratings {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .rating-icon {
-    font-size: 2rem;
+  font-size: 2rem;
 }
 
 .rating-icon.good {
-    color: green
+  color: green;
 }
 
 .rating-icon.bad {
-    color: red;
+  color: red;
 }
 
 .rating-icon.neutral {
-    color: darkorange;
+  color: darkorange;
 }
 
 .review .links {
-    display: flex;
-    justify-content: left;
+  display: flex;
+  justify-content: left;
 }
 
 .review .links * {
-    margin-right:1rem;
+  margin-right: 1rem;
 }

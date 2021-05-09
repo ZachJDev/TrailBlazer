@@ -1,18 +1,17 @@
-const express = require('express')
-const {getUser, authDelete,} = require('../middleware/middleware')
-const userController = require('../controllers/userController')
-const router = express.Router({mergeParams: true})
+const express = require("express");
+const { getUser, authDelete } = require("../middleware/middleware");
+const userController = require("../controllers/userController");
+const router = express.Router({ mergeParams: true });
 
-
-router.get('/:userId', getUser, userController.getUserInfo)
+router.get("/:userId", getUser, userController.getUserInfo);
 
 // Delete
 
 router.delete(
-    "/delete/:userId",
-    getUser,
-    authDelete,
-    userController.deleteUser
+  "/delete/:userId",
+  getUser,
+  authDelete,
+  userController.deleteUser
 );
 
-module.exports = router
+module.exports = router;

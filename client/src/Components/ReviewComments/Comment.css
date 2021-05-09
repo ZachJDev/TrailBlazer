@@ -1,27 +1,27 @@
 .comment {
-    text-align: left;
-    padding-bottom: .4rem;
-    padding-left: 1rem;
-    min-height: 5rem;
-    border-left: 6px solid #2f2e2e;
+  text-align: left;
+  padding-bottom: 0.4rem;
+  padding-left: 1rem;
+  min-height: 5rem;
+  border-left: 6px solid #2f2e2e;
 }
 
 .non-user-comment-actions {
-    width: 15%;
+  width: 15%;
 }
 
 .level-0 {
-    border-color: #7B6867;
+  border-color: #7b6867;
 }
 
 .level-1 {
-    border-color: #005D9E;
+  border-color: #005d9e;
 }
 
 .level-2 {
-    border-color: #FF671B;
+  border-color: #ff671b;
 }
 
 .level-3 {
-    border-color: #B7AC44;
+  border-color: #b7ac44;
 }

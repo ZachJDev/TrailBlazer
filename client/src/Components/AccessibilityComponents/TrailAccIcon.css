@@ -1,36 +1,36 @@
 .caption {
-    margin-bottom: 20px;
-    padding-bottom: 2rem;
+  margin-bottom: 20px;
+  padding-bottom: 2rem;
 }
 
 .icon-block {
-    position: relative;
+  position: relative;
 }
 
 .icon-tooltip {
-    z-index: 1000;
-    position: absolute;
-    font-size: .6rem;
-    top: 30%;
-    left: 50%;
-    color: beige;
-    width: 125px;
-    background-color: rgba(25, 25, 25, 1);
-    padding-left: 1rem;
-    text-align: left;
-    opacity: 0;
+  z-index: 1000;
+  position: absolute;
+  font-size: 0.6rem;
+  top: 30%;
+  left: 50%;
+  color: beige;
+  width: 125px;
+  background-color: rgba(25, 25, 25, 1);
+  padding-left: 1rem;
+  text-align: left;
+  opacity: 0;
 }
 
 .icon-tooltip.show {
-    opacity: 1;
+  opacity: 1;
 }
 
-@media screen and (max-width: 767px ) {
-    .icon-block .caption {
-        display: none;
-    }
+@media screen and (max-width: 767px) {
+  .icon-block .caption {
+    display: none;
+  }
 
-    .icon-block {
-        margin-bottom: 1rem;
-    }
+  .icon-block {
+    margin-bottom: 1rem;
+  }
 }

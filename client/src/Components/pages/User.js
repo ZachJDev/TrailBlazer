@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import {Button} from 'react-bootstrap';
-import {faTrash} from '@fortawesome/free-solid-svg-icons/faTrash';
+import { Button } from "react-bootstrap";
+import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { Helmet } from "react-helmet";
 
-import {UserContext} from '../../contexts/UserContext'
+import { UserContext } from "../../contexts/UserContext";
 import useGetPayload from "../../hooks/useGetPayload";
 import ProfileHeader from "../Profile/ProfileHeader";
 import useBool from "../../hooks/useBool";
@@ -12,15 +12,14 @@ import ProfileBio from "../Profile/ProfileBio";
 import Col from "react-bootstrap/Col";
 import withHeader from "../../HigherOrderComponents/withHeader";
 
-import useDeleteUser from '../../hooks/Users/useDeleteUser'
-
+import useDeleteUser from "../../hooks/Users/useDeleteUser";
 
 export default function User({ match, history }) {
   const [userInfo, setUserInfo] = useState(null);
   const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
   const [isLoaded, flipIsloaded] = useBool(false);
   const [getUserInfo] = useGetPayload(`/user/${match.params.userId}`);
-  const sendDelete = useDeleteUser(userInfo?.userId)
+  const sendDelete = useDeleteUser(userInfo?.userId);
 
   useEffect(() => {
     getUserInfo().then((info) => {
@@ -30,10 +29,13 @@ export default function User({ match, history }) {
   }, []);
 
   const handleDelete = async () => {
-      const deleteRes = await sendDelete();
-      if(deleteRes.success) {history.push('/')}
-      else {console.log(deleteRes.errors[0])}
-  }
+    const deleteRes = await sendDelete();
+    if (deleteRes.success) {
+      history.push("/");
+    } else {
+      console.log(deleteRes.errors[0]);
+    }
+  };
 
   return (
     <React.Fragment>

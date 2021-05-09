@@ -1,5 +1,5 @@
-import usePutBody from '../usePutBody';
+import usePutBody from "../usePutBody";
 
 export default function useEditComment() {
-    return usePutBody('/comments/update')[0];
+  return usePutBody("/comments/update")[0];
 }

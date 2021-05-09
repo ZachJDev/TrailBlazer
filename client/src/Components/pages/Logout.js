@@ -1,39 +1,40 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from "react";
 
-import {UserContext} from '../../contexts/UserContext';
-import withHelmet from '../../HigherOrderComponents/withHelmet';
+import { UserContext } from "../../contexts/UserContext";
+import withHelmet from "../../HigherOrderComponents/withHelmet";
 
- function Logout() {
+function Logout() {
+  const [payload, setPayload] = useState({});
+  const { clearUser } = useContext(UserContext);
 
-    const [payload, setPayload] = useState({});
-    const {clearUser} = useContext(UserContext);
+  useEffect(() => {
+    async function logUserOut() {
+      const res = await fetch("/auth/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+      const ret = await res.json();
+      setPayload({ ...ret });
+      if (ret.success) {
+        clearUser(null);
+      }
+    }
 
-    useEffect(() => {
-        async function logUserOut() {
-            const res = await fetch('/auth/logout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({}),
-            });
-            const ret = await res.json();
-            setPayload({...ret});
-            if (ret.success) {
-                clearUser(null);
-            }
-        }
-        logUserOut().then(r => {});
-    }, []);
+    logUserOut().then((r) => {});
+  }, []);
 
-    return (
-        <div>
-            {payload.success ?
-                <h2>Successfully Logged out.</h2>
-                : <h2>Logging you out...</h2>
-            }
-        </div>
-    );
+  return (
+    <div>
+      {payload.success ? (
+        <h2>Successfully Logged out.</h2>
+      ) : (
+        <h2>Logging you out...</h2>
+      )}
+    </div>
+  );
 }
 
-export default withHelmet({title: 'Logout'})(Logout)
+export default withHelmet({ title: "Logout" })(Logout);

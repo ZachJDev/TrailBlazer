@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from "react";
 
 /**
  * A hook that returns a bool and a function to
@@ -6,7 +6,7 @@ import {useState} from 'react';
  * @param {boolean} init
  */
 export default function useBool(init = false) {
-    const [state, setState] = useState(init);
-    const updateState = () => setState(!state);
-    return [state, updateState];
+  const [state, setState] = useState(init);
+  const updateState = () => setState(!state);
+  return [state, updateState];
 }

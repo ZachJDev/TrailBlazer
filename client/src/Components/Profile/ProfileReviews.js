@@ -17,7 +17,7 @@ export default function ProfileReviews({ userId, username = "" }) {
     <div className={"profile-reviews"}>
       {reviews?.length > 0 ? (
         reviews.map((review) => {
-         return (
+          return (
             <TrailReview
               {...review}
               reviewId={review.ReviewId}

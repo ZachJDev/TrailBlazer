@@ -1,17 +1,17 @@
 .comments .header {
-    text-align: left;
+  text-align: left;
 }
 
 .comments .new-comment-editing {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .new-comment-editing .edit-area {
-    width: 97.5%;
-    margin-left: 2.5%
+  width: 97.5%;
+  margin-left: 2.5%;
 }
 
 .new-comment-editing .edit-buttons {
-    margin-left: 2.5%;
-    width: 25%;
+  margin-left: 2.5%;
+  width: 25%;
 }

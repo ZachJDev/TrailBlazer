@@ -1,79 +1,75 @@
-import React, {useContext, useEffect, useState} from 'react';
-import NewTrailForm from '../Forms/NewTrailForm';
-import FormWrapper from '../Forms/FormWrapper';
+import React, { useContext, useEffect, useState } from "react";
+import NewTrailForm from "../Forms/NewTrailForm";
+import FormWrapper from "../Forms/FormWrapper";
 
-import useSetAsArray from '../../hooks/useSetAsArray';
+import useSetAsArray from "../../hooks/useSetAsArray";
 
-import {validateNewTrailForm} from '../../functions/formValidation';
-import usePutBody from '../../hooks/usePutBody';
-import useGetPayload from '../../hooks/useGetPayload';
-import useBool from '../../hooks/useBool';
-import {UserContext} from '../../contexts/UserContext';
-import withHelmet from '../../HigherOrderComponents/withHelmet';
+import { validateNewTrailForm } from "../../functions/formValidation";
+import usePutBody from "../../hooks/usePutBody";
+import useGetPayload from "../../hooks/useGetPayload";
+import useBool from "../../hooks/useBool";
+import { UserContext } from "../../contexts/UserContext";
+import withHelmet from "../../HigherOrderComponents/withHelmet";
 
-function NewTrail({history, match}) {
+function NewTrail({ history, match }) {
+  const { user } = useContext(UserContext);
+  // Lots of side effects here and pretty cluttered -- def in need
+  // of some refactoring TLC
+  const [hasLoaded, flipHasLoaded] = useBool(false);
+  const [errors, addError] = useSetAsArray();
+  const [formErrors, setFormErrors] = useState([]);
+  const [currentTrail, setCurrentTrail] = useState({});
+  const [setBodyAndPost] = usePutBody(`/trail/${currentTrail.trailId}/edit`);
+  const [currentTrailRes] = useGetPayload(`/trail/${match.params.trailId}`);
 
-    const {user} = useContext(UserContext);
-    // Lots of side effects here and pretty cluttered -- def in need
-    // of some refactoring TLC
-    const [hasLoaded, flipHasLoaded] = useBool(false);
-    const [errors, addError] = useSetAsArray();
-    const [formErrors, setFormErrors] = useState([]);
-    const [currentTrail, setCurrentTrail] = useState({});
-    const [setBodyAndPost] = usePutBody(`/trail/${currentTrail.trailId}/edit`);
-    const [currentTrailRes] = useGetPayload(
-        `/trail/${match.params.trailId}`,
-    );
+  const mounted = () => {
+    currentTrailRes().then((res) => {
+      setCurrentTrail(res);
+      flipHasLoaded();
+    });
+  };
 
-    const mounted = () => {
-        currentTrailRes().then(res => {
-            setCurrentTrail(res);
-            flipHasLoaded();
-        });
-    };
+  let AwaitingInfoNotice = () => {
+    if (hasLoaded && !user.isAdmin) {
+      return "Forbidden Action Performed.";
+    }
+    if (!hasLoaded) {
+      return "Loading Form...";
+    }
+  };
 
-    let AwaitingInfoNotice = () => {
-        if (hasLoaded && !user.isAdmin) {
-            return 'Forbidden Action Performed.';
+  useEffect(mounted, []);
+
+  const handleFormSubmit = (form) => {
+    if (validateNewTrailForm(form, addError)) {
+      setBodyAndPost(form).then((payload) => {
+        if (payload.status === 401) {
+          alert("You are not authorized to do that action.");
         }
-        if (!hasLoaded) {
-            return 'Loading Form...';
+        if (payload.status !== 200) setFormErrors(payload.errors);
+        else {
+          history.push(`/trail/${match.params.trailId}`);
         }
-    };
+      });
+    }
+  };
 
-    useEffect(mounted, []);
-
-    const handleFormSubmit = (form) => {
-        if (validateNewTrailForm(form, addError)) {
-            setBodyAndPost(form).then((payload) => {
-                if (payload.status === 401) {
-                    alert('You are not authorized to do that action.');
-                }
-                if (payload.status !== 200) setFormErrors(payload.errors);
-                else {
-                    history.push(`/trail/${match.params.trailId}`);
-                }
-            });
-        }
-    };
-
-    return (
-        hasLoaded && user.isAdmin ? (
-            <div>
-                <h1>Edit Trail for {currentTrail.park.name} </h1>
-                <FormWrapper errors={errors}>
-                    <NewTrailForm
-                        handleSubmit={handleFormSubmit}
-                        missing={formErrors}
-                        park={currentTrail.park.parkId}
-                        isEdit={true}
-                        defaultValues={currentTrail}
-                    />
-                </FormWrapper>
-
-            </div>
-        ) : <h2>{AwaitingInfoNotice()}</h2>
-    );
+  return hasLoaded && user.isAdmin ? (
+    <div>
+      <h1>Edit Trail for {currentTrail.park.name} </h1>
+      <FormWrapper errors={errors}>
+        <NewTrailForm
+          handleSubmit={handleFormSubmit}
+          missing={formErrors}
+          park={currentTrail.park.parkId}
+          isEdit={true}
+          defaultValues={currentTrail}
+        />
+      </FormWrapper>
+    </div>
+  ) : (
+    <h2>{AwaitingInfoNotice()}</h2>
+  );
 }
 
-export default withHelmet({title: 'Edit Trail'})(NewTrail)
+export default withHelmet({title: 'Edit Trail'})(NewTrail);

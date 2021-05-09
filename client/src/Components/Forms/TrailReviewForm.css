@@ -1,7 +1,7 @@
 .add-review .review-form .select-group {
-    display: flex;
-    justify-content: space-around;
-    border: 1px solid black;
-    padding: 1.9rem;
-    margin-bottom: 1rem
+  display: flex;
+  justify-content: space-around;
+  border: 1px solid black;
+  padding: 1.9rem;
+  margin-bottom: 1rem;
 }

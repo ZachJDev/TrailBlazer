@@ -7,8 +7,7 @@ const {
   NotFoundError,
 } = require("../classes/Errors");
 
-const queryString = require('query-string')
-
+const queryString = require("query-string");
 
 exports.getTrailReviews = (req, res) => {
   const trailId = req.params.id;
@@ -51,12 +50,12 @@ exports.getTrailReviews = (req, res) => {
       });
       res.json({
         reviews: fetchedReviews.map((rev) => {
-            console.log(rev)
+          console.log(rev);
           return {
-              reviewId: rev.ReviewId,
+            reviewId: rev.ReviewId,
             title: rev.title,
             username: rev.user.username,
-              userId: rev.user.userId,
+            userId: rev.user.userId,
             text: rev.text,
             isEditable: rev.userId === req.session.userId,
             ratings: fetchedRatings[rev.userId],
@@ -172,69 +171,76 @@ exports.updateReview = (req, res) => {
   const goodForGroups = req.body.goodForGroups === "Yes";
   const wheelchairAcc = req.body.wheelchairAcc === "Yes";
 
- return db.Review.update(
+  return db.Review.update(
     { text: reviewText, title: reviewTitle },
     { where: { userId: req.user.userId, trailId } }
-  ).then((review) => {
-   return db.TrailRating.update(
-      { petFriendly, goodForGroups, wheelchairAcc, parking, difficulty },
-      { where: { userId: req.user.userId, trailId } }
-    );
-  })
-  .then(rating => {
-    res.status(200).json({success: true})
-  })
-.catch(e => {
-    console.log(e.message);
-    res.status(400).json({errorMessage: e.message})
-  })
+  )
+    .then((review) => {
+      return db.TrailRating.update(
+        { petFriendly, goodForGroups, wheelchairAcc, parking, difficulty },
+        { where: { userId: req.user.userId, trailId } }
+      );
+    })
+    .then((rating) => {
+      res.status(200).json({ success: true });
+    })
+    .catch((e) => {
+      console.log(e.message);
+      res.status(400).json({ errorMessage: e.message });
+    });
 };
 
 exports.getById = (req, res) => {
-    db.Review.findOne({where: {reviewId: req.params.id}, include: [{model: db.Trail, include: [db.Park]}, db.User, ]}).then(review => {
-        if(review === null) {
-            throw new Error("cannot find review")
-        }
-        const isEditable = req.user && req.user.userId === review.user.userId
-        const reply = {
-            text: review.text,
-            title: review.title,
-            trail: review.trail,
-            trailId: review.trailId,
-            username: review.user.username,
-            userId: review.user.userId,
-            reviewId: review.ReviewId,
-            isEditable
-        }
-        res.status(200).json({success: true, review: reply });
+  db.Review.findOne({
+    where: { reviewId: req.params.id },
+    include: [{ model: db.Trail, include: [db.Park] }, db.User],
+  })
+    .then((review) => {
+      if (review === null) {
+        throw new Error("cannot find review");
+      }
+      const isEditable = req.user && req.user.userId === review.user.userId;
+      const reply = {
+        text: review.text,
+        title: review.title,
+        trail: review.trail,
+        trailId: review.trailId,
+        username: review.user.username,
+        userId: review.user.userId,
+        reviewId: review.ReviewId,
+        isEditable,
+      };
+      res.status(200).json({ success: true, review: reply });
     })
-        .catch(e => {
-            res.status(404).json({success: false, error: e.message})
-        })
-}
+    .catch((e) => {
+      res.status(404).json({ success: false, error: e.message });
+    });
+};
 
 exports.getReviews = async (req, res, next) => {
-    const searchTerms = queryString.parse(req.params.term)
-    try {
-        const results = await db.Review.search(searchTerms)
-        res.json({reviews: results})
-    }catch (e) {
-        console.log(e.message);
-    }
-}
+  const searchTerms = queryString.parse(req.params.term);
+  try {
+    const results = await db.Review.search(searchTerms);
+    res.json({ reviews: results });
+  } catch (e) {
+    console.log(e.message);
+  }
+};
 
 exports.delete = async (req, res, next) => {
-    const ReviewId = req.params.reviewId; // capitalization needs to be fixed in db, and then propagated to all sorts of different places...
-    try{
-        const deleteRes = await db.Review.destroy({where:{ReviewId}})
-        if(deleteRes !== 1) {
-            res.status(400).json({success: false, errors: ['Review does not Exist']});
-        } else {
-            await db.Comment.destroy({where: {reviewId: ReviewId}})
-            res.status(200).json({success: true})
-        }
-    } catch (e) {
-        console.log(e);
-        res.status(200).json({success: true, errors: [e.message]})
+  const ReviewId = req.params.reviewId; // capitalization needs to be fixed in db, and then propagated to all sorts of different places...
+  try {
+    const deleteRes = await db.Review.destroy({ where: { ReviewId } });
+    if (deleteRes !== 1) {
+      res
+        .status(400)
+        .json({ success: false, errors: ["Review does not Exist"] });
+    } else {
+      await db.Comment.destroy({ where: { reviewId: ReviewId } });
+      res.status(200).json({ success: true });
     }
-}
+  } catch (e) {
+    console.log(e);
+    res.status(200).json({ success: true, errors: [e.message] });
+  }
+};

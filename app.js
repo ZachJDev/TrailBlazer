@@ -13,7 +13,7 @@ const Sequelize = require("sequelize");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
-const { dbname, user, pw } = require("./models/dbConfig");
+const { dbname, user, pw } = require("./configs/dbConfig");
 
 const sequelize = new Sequelize(dbname, user, pw, {
   dialect: "mysql",

@@ -6,20 +6,22 @@
  */
 
 export default function usePostBody(endpoint) {
-    let status;
-    const post = (body) => {
-        return fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        }).then(res => {
-            status = res.status;
-            return res.json();
-        }).then(payload => {
-            return {...payload, status};
-        });
-    };
-    return [post];
+  let status;
+  const post = (body) => {
+    return fetch(endpoint, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((res) => {
+        status = res.status;
+        return res.json();
+      })
+      .then((payload) => {
+        return { ...payload, status };
+      });
+  };
+  return [post];
 }

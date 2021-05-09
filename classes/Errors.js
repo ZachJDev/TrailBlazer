@@ -4,18 +4,21 @@ class AuthenticationError extends Error {
     Object.setPrototypeOf(this, AuthenticationError.prototype);
   }
 }
+
 class InputError extends Error {
   constructor(message) {
     super(message);
     Object.setPrototypeOf(this, InputError.prototype);
   }
 }
+
 class NotFoundError extends Error {
   constructor(message) {
     super(message);
     Object.setPrototypeOf(this, NotFoundError.prototype);
   }
 }
+
 class NoContentError extends Error {
   constructor(message) {
     super(message);
@@ -29,6 +32,7 @@ class EntryExistsError extends Error {
     Object.setPrototypeOf(this, EntryExistsError.prototype);
   }
 }
+
 class ConflictError extends Error {
   constructor(message) {
     super(message);
@@ -50,5 +54,5 @@ module.exports = {
   NoContentError,
   EntryExistsError,
   ConflictError,
-  QueryError
+  QueryError,
 };

@@ -11,12 +11,7 @@ import useGetPicture from "../../hooks/useGetPicture";
 
 import Length from "../InfoContainers/Length";
 
-export default function TrailCard({
-  trailId,
-  name,
-  length,
-  park,
-}) {
+export default function TrailCard({ trailId, name, length, park }) {
   const [picUrl] = useGetPicture();
 
   return (
@@ -52,7 +47,7 @@ export default function TrailCard({
                 <h6>{park.name}</h6>
               </Link>
             )}
-            <Length miles={length}/>
+            <Length miles={length} />
           </div>
           <TrailAccessibility trailId={trailId} />
         </Col>

@@ -47,7 +47,7 @@ const splitRatings = (ratings) => {
     goodForGroups: [],
   };
   ratings.forEach((element) => {
-      for (let key in element.dataValues) {
+    for (let key in element.dataValues) {
       try {
         splitRatings[key].push(element.dataValues[key]);
       } catch (e) {
@@ -59,15 +59,15 @@ const splitRatings = (ratings) => {
 };
 
 const getMaxFrequency = (obj) => {
-    let max = -Infinity
+  let max = -Infinity;
   let maxName = "foo";
   let numRatings = 0;
   for (let x in obj) {
-      numRatings +=obj[x]
+    numRatings += obj[x];
     if (obj[x] > max) {
       maxName = x;
       max = obj[x];
     }
-}
-  return {name: maxName, freq: max, numRatings };
+  }
+  return { name: maxName, freq: max, numRatings };
 };
