@@ -1,5 +1,5 @@
 const express = require('express')
-const {getUser, userIsAdmin} = require('../middleware/middleware')
+const {getUser, userIsAdmin, authDelete} = require('../middleware/middleware')
 const router = express.Router({mergeParams: true})
 const trailController = require('../controllers/trailController')
 
@@ -12,9 +12,9 @@ router.get(`/:id([0-9]+$)`, trailController.getOne)
 // Create
 router.post('/new', trailController.new)
 
-// TODO: Destroy
+// Destroy
 
-router.delete('/delete/:trailId', getUser, userIsAdmin, trailController.delete)
+router.delete('/delete/:trailId', getUser, authDelete, trailController.delete)
 
 
 module.exports = router

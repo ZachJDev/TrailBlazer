@@ -25,10 +25,11 @@
 
 .review .review_edit-icon {
     position: static;
-    padding-left: 1rem;
+    padding: 0 1rem;
+
 }
 
-.review_edit-icon:hover {
+.review_icon:hover {
     cursor: pointer;
 }
 

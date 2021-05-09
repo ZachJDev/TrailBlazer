@@ -53,8 +53,10 @@ exports.update = (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     const trailId = req.params.trailId;
+    console.log('deleting Trail:', trailId)
     try {
-        const deleteRes = await db.delete({where: {trailId}});
+        const deleteRes = await db.Trail.destroy({where: {trailId}});
+        console.log('deleted', deleteRes)
         if(deleteRes === 0) {
             res.status(400).json({success: false, errors: ['trail does not exist.']})
         } else {

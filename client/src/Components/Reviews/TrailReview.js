@@ -1,12 +1,13 @@
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';
-import {faEdit, faMountain, faParking, faPaw, faUsers, faWheelchair} from '@fortawesome/free-solid-svg-icons';
+import {faEdit, faMountain, faParking, faPaw, faTrash, faUsers, faWheelchair} from '@fortawesome/free-solid-svg-icons';
 import TrailAccessibilityIcon from '../AccessibilityComponents/TrailAccessibilityIcon';
 import './TrailReview.css';
 import ReviewComments from '../ReviewComments/ReviewComments';
 import withHeader from '../../HigherOrderComponents/withHeader';
 import {ReviewProvider} from '../../contexts/ReviewContext';
+import useDeleteReview from '../../hooks/Reviews/useDeleteReview';
 
 let ratingIcons = {
     difficulty: faMountain,
@@ -31,7 +32,19 @@ export default function TrailReview({
                                         showTrail = false,
                                         park = {},
                                         trail = {},
+                                        refreshReviews
                                     }) {
+const sendDelete = useDeleteReview(reviewId);
+const handleDelete =  async () => {
+    const check = window.confirm('Warning: Deleting a review is a permanent procedure. Continue?');
+    if(check) {
+        const deleteRes = await sendDelete()
+        if(deleteRes.success) {
+            refreshReviews();
+        }
+    }
+
+}
     return (
         <ReviewProvider id={reviewId}>
             <div className="review">
@@ -54,9 +67,14 @@ export default function TrailReview({
                     <h3 className="review-user">
                         Review by: <Link to={`/user/${userId}`}> {username}{' '}</Link>
                         {isEditable && (
-                            <span className="review_edit-icon">
-              <FontAwesomeIcon icon={faEdit} onClick={handleEdit}/>
-            </span>
+                            <React.Fragment>
+                            <span className="review_edit-icon review_icon">
+                                <FontAwesomeIcon icon={faEdit} onClick={handleEdit}/>
+                            </span>
+                            <span className={"review_delete-button  review_icon"}>
+                                <FontAwesomeIcon icon={faTrash} onClick={handleDelete}/>
+                            </span>
+                            </React.Fragment>
                         )}
                     </h3>
                 </div>
