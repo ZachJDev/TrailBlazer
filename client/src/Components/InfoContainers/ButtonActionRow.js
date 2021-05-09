@@ -11,7 +11,7 @@ export default function ButtonActionRow({
                                             handleEdit,
                                             hasReviewed,
                                             handleDelete,
-                                            showReview
+                                            showReview = true,
                                         }) {
 
     const {user} = useContext(UserContext);
@@ -28,8 +28,7 @@ export default function ButtonActionRow({
                 showReview &&
                     <Col>
                         <Button
-                            onClick={user.isLoggedIn ? handleReview : () => alert('Please Log In')}
-                        >
+                            onClick={user.isLoggedIn ? handleReview : () => alert('Please Log In')}>
                             {user && hasReviewed ? 'Edit Review' : 'Add Review'}
                         </Button>
                     </Col>
