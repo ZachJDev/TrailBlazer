@@ -17,11 +17,11 @@ import useInputState from '../../hooks/useInputState';
 import useBool from '../../hooks/useBool';
 import useAddComment from '../../hooks/comments/useAddComment';
 import useEditComment from '../../hooks/comments/useEditComment';
+import useDeleteComment from '../../hooks/comments/useDeleteComment';
 
 // Style
 import './UserComment.css';
 import './Comment.css';
-import useDeleteComment from '../../hooks/comments/useDeleteComment';
 
 export default function UserComment({comment, depth}) {
     const [text, setText] = useInputState(comment.text);
