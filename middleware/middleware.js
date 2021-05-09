@@ -33,12 +33,10 @@ module.exports.userMatches = (req, res, next) => {
 
 module.exports.userIsAdmin = (req, res, next) => {
   if (!req.user?.isAdmin) {
-    res
-      .status(401)
-      .json({
-        success: false,
-        error: "You are not authorized to perform that action.",
-      });
+    res.status(401).json({
+      success: false,
+      error: "You are not authorized to perform that action.",
+    });
   } else {
     next();
   }
@@ -48,11 +46,9 @@ module.exports.authDelete = (req, res, next) => {
   if (req.user.isAdmin || req.user.userId === req.body.userId) {
     next();
   } else {
-    res
-      .status(401)
-      .json({
-        success: false,
-        errors: ["User is not authorized to make that request."],
-      });
+    res.status(401).json({
+      success: false,
+      errors: ["User is not authorized to make that request."],
+    });
   }
 };

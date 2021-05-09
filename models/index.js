@@ -1,4 +1,4 @@
-const { Sequelize} = require("./sequelizeGeometryHack");
+const { Sequelize } = require("./sequelizeGeometryHack");
 const { dbname, user, pw, host, port } = require("../configs/dbConfig");
 
 const sequelize = new Sequelize(dbname, user, pw, {
@@ -32,25 +32,23 @@ db.User.hasMany(db.Review, { foreignKey: "userId" });
 db.Review.belongsTo(db.User, { foreignKey: "userId" });
 
 // Park has many Trails
-db.Park.hasMany(db.Trail, {foreignKey: 'parkId'});
-db.Trail.belongsTo(db.Park, {foreignKey: 'parkId'});
+db.Park.hasMany(db.Trail, { foreignKey: "parkId" });
+db.Trail.belongsTo(db.Park, { foreignKey: "parkId" });
 
 // Trail has many Reviews
-db.Trail.hasMany(db.Review, {foreignKey: 'trailId'});
-db.Review.belongsTo(db.Trail, {foreignKey: 'trailId'});
+db.Trail.hasMany(db.Review, { foreignKey: "trailId" });
+db.Review.belongsTo(db.Trail, { foreignKey: "trailId" });
 
 // Review has many Comments
-db.Review.hasMany(db.Comment, {foreignKey: 'reviewId'});
-db.Comment.belongsTo(db.Review, {foreignKey: 'reviewId'});
-
+db.Review.hasMany(db.Comment, { foreignKey: "reviewId" });
+db.Comment.belongsTo(db.Review, { foreignKey: "reviewId" });
 
 // Trail Ratings have many users
-db.TrailRating.hasMany(db.User, {foreignKey: 'userId'})
-db.User.belongsTo(db.TrailRating, {foreignKey: 'userId'})
+db.TrailRating.hasMany(db.User, { foreignKey: "userId" });
+db.User.belongsTo(db.TrailRating, { foreignKey: "userId" });
 
 // Trail Ratings have many trails
-db.TrailRating.hasMany(db.Trail, {foreignKey: 'trailId'})
-db.Trail.belongsTo(db.TrailRating, {foreignKey: 'trailId'})
-
+db.TrailRating.hasMany(db.Trail, { foreignKey: "trailId" });
+db.Trail.belongsTo(db.TrailRating, { foreignKey: "trailId" });
 
 module.exports = db;

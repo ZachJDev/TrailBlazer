@@ -39,7 +39,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 // app.use(methodOverride("_method")); I don't think I need this anymore...
 
-
 // For serving the build.
 // app.use(express.static(path.join(__dirname, '/client/build')))
 
@@ -55,7 +54,7 @@ const trailRoutes = require("./routes/trailRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const ratingRoutes = require("./routes/ratingRoutes");
 const commentRoutes = require("./routes/commentRoutes");
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require("./routes/userRoutes");
 app.use("/park", parkRoutes);
 app.use("/search", searchRoutes);
 app.use("/auth", authRoutes);
@@ -63,8 +62,7 @@ app.use("/trail", trailRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/ratings", ratingRoutes);
 app.use("/comments", commentRoutes);
-app.use('/user', userRoutes)
-
+app.use("/user", userRoutes);
 
 db.sequelize
   .sync()
