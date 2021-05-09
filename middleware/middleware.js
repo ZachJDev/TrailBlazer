@@ -38,3 +38,8 @@ module.exports.userIsAdmin = (req, res, next) => {
         next();
     }
 };
+
+module.exports.authDelete = (req, res, next) => {
+    if(req.user.isAdmin ||req.user.userId === req.body.userId) {next()}
+    else {res.status(401).json({success: false, errors: ['User is not authorized to make that request.']})}
+}
