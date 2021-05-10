@@ -11,6 +11,7 @@ export default function ButtonActionRow({
   handleEdit,
   hasReviewed,
   handleDelete,
+  showMap = false,
   showReview = true,
 }) {
   const { user } = useContext(UserContext);
@@ -35,9 +36,11 @@ export default function ButtonActionRow({
         </Col>
       )}
 
-      <Col>
-        <Button onClick={handleMap}>Map</Button>
-      </Col>
+      {showMap && (
+        <Col>
+          <Button onClick={handleMap}>Map</Button>
+        </Col>
+      )}
       {user.isAdmin && (
         <React.Fragment>
           <Col>
