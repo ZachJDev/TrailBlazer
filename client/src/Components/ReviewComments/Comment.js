@@ -41,11 +41,13 @@ export default function Comment({ comment, depth }) {
       ) : (
         <React.Fragment>
           <p className={"text"}>{commentText}</p>
-          <FlexWrapper className={"non-user-comment-actions"}>
-            <span onClick={flipIsReplying}>
-              <FontAwesomeIcon icon={faReply} /> Reply
-            </span>
-          </FlexWrapper>
+          {user.isLoggedIn && (
+            <FlexWrapper className={"non-user-comment-actions"}>
+              <span onClick={flipIsReplying}>
+                <FontAwesomeIcon icon={faReply} /> Reply
+              </span>
+            </FlexWrapper>
+          )}
         </React.Fragment>
       )}
     </div>
