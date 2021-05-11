@@ -19,8 +19,9 @@ function Login({ history }) {
   };
 
   useEffect(() => {
-    if (user.status === 200) history.push("/home");
+    if (user.status === 200) history.goBack();
   }, [errors]);
+
   return (
     <div
       style={{
@@ -29,11 +30,11 @@ function Login({ history }) {
       }}
     >
       <h1>Login</h1>
-      {errors.errorMessage ? (
+      {errors.errorMessage && (
         <div>
           <h3>{errors.errorMessage}</h3>
         </div>
-      ) : null}
+      )}
       <Form onSubmit={handleSubmit}>
         <FormInputText
           value={username}
