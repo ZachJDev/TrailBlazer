@@ -48,7 +48,6 @@ export const validateNewParkForm = (
     validateFormEntry(description, "PARK_DESC", isNotEmpty);
     validateFormEntry(address, "PARK_ADDRESS", isNotEmpty);
     validateFormEntry(city, "PARK_ CITY", isNotEmpty);
-    validateFormEntry(country, "PARK_COUNTRY", isNotEmpty);
     validateFormEntry(state, "PARK_ST", (val) => val.length === 2);
     validateFormEntry(zipCode, "PARK_ZIP", (val) => val.length === 5);
     return true;
