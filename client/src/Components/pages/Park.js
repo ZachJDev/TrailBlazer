@@ -67,6 +67,7 @@ function Park({ match, history }) {
                 handleMap={flipShowMap}
                 handleEdit={AdminEdit}
                 handleDelete={handleDelete}
+                showMap={true}
               />
             </MainInfo>
             <Map
