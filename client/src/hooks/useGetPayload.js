@@ -5,7 +5,6 @@
  */
 export default function useGetPayload(endpoint) {
   const get = async function () {
-    // console.log('fetching GET from: ', endpoint)
     let status;
     const res = await fetch(endpoint);
     status = res.status;

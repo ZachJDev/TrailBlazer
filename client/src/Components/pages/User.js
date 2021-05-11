@@ -33,7 +33,8 @@ export default function User({ match, history }) {
     if (deleteRes.success) {
       history.push("/");
     } else {
-      console.log(deleteRes.errors[0]);
+      // TODO: handle User Delete Error
+      alert("Something went wrong. Please try again later.");
     }
   };
 

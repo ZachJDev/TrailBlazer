@@ -14,7 +14,8 @@ export default function ReviewPage({ match, history }) {
         setReview(reviewRes.review);
         setTitle(` Review For: ${reviewRes.review.trail.name}`);
       } else {
-        console.log(reviewRes.error);
+        // TODO: Handle Errors better
+          alert('Something went wrong. Please try again later.')
       }
     });
   }, []);

@@ -11,7 +11,6 @@ export function ReviewProvider({ children, id }) {
 
   const refreshComments = async () => {
     const commentRes = await getComments();
-    console.log(commentRes.comments);
     setComments(commentRes.comments);
     setTotal(commentRes.total);
   };

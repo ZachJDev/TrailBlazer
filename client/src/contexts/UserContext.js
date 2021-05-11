@@ -26,7 +26,6 @@ export function UserProvider({ children }) {
   const clearUser = () => setUser({});
 
   useEffect(() => {
-    console.log("attempting to grab user info");
     // Check if the user object is empty
     if (Object.keys(user).length === 0 && user.constructor === Object) {
       pl().then((user) => {

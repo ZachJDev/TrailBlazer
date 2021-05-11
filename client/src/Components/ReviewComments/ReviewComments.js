@@ -25,7 +25,6 @@ export default function ReviewComments() {
   const [newCommentText, setNewCommentText] = useState("");
 
   useEffect(() => {
-    console.log("DISPLAY COMMENTS: ", comments);
     setDisplayComments(comments);
   }, [comments]);
 

@@ -42,7 +42,6 @@ function EditPark({ match, history }) {
   }, []);
 
   const handleSubmit = (formBody) => {
-    console.log("submitting...");
     if (validateNewParkForm(formBody, addError)) {
       setParkFormBody(formBody).then((res) => {
         if (res.success) {

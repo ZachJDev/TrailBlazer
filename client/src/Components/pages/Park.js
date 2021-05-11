@@ -42,14 +42,11 @@ function Park({ match, history }) {
   useEffect(() => {
     getParkInfo()
       .then((info) => {
-        if (!info.success) {
-        }
         setParkInfo(info);
         setTitle(info.name);
-        console.log(info.name);
       })
       .catch((e) => {
-        console.log(e);
+        alert("Something went wrong. Please try again later");
       });
   }, []);
   return (
