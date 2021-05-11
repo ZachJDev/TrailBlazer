@@ -53,17 +53,18 @@ export default function ReviewComments() {
 
   return (
     <React.Fragment>
-      {!isAdding ? (
-        <Button onClick={flipAdding}>Add new Comment</Button>
-      ) : (
-        <CommentEditMode
-          className={"new-comment-editing"}
-          text={newCommentText}
-          cancelOnClick={handleCancelNewComment}
-          submitOnClick={handlePostNewComment}
-          handleText={handleNewCommentText}
-        />
-      )}
+      {user.isLoggedIn &&
+        (!isAdding ? (
+          <Button onClick={flipAdding}>Add new Comment</Button>
+        ) : (
+          <CommentEditMode
+            className={"new-comment-editing"}
+            text={newCommentText}
+            cancelOnClick={handleCancelNewComment}
+            submitOnClick={handlePostNewComment}
+            handleText={handleNewCommentText}
+          />
+        ))}
 
       {displayComments.length > 0 ? (
         <CommentTree
