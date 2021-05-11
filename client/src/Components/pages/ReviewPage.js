@@ -15,7 +15,7 @@ export default function ReviewPage({ match, history }) {
         setTitle(` Review For: ${reviewRes.review.trail.name}`);
       } else {
         // TODO: Handle Errors better
-          alert('Something went wrong. Please try again later.')
+        alert("Something went wrong. Please try again later.");
       }
     });
   }, []);
