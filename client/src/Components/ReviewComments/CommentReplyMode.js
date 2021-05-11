@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import FlexWrapper from "../Wrappers/FlexWrap";
+import FlexWrapper from "../Wrappers/FlexWrapper";
 import Button from "react-bootstrap/Button";
 import { ReviewContext } from "../../contexts/ReviewContext";
 

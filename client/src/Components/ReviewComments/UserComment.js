@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 // Components
 import CommentHeader from "./CommentHeader";
 import CommentEditMode from "./CommentEditMode";
-import FlexWrapper from "../Wrappers/FlexWrap";
+import FlexWrapper from "../Wrappers/FlexWrapper";
 import CommentReplyMode from "./CommentReplyMode";
 import { faEdit, faReply, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

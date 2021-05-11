@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import ProfileUsername from "./ProfileUsername";
 import "./ProfileHeader.css";
-import FlexWrapper from "../Wrappers/FlexWrap";
+import FlexWrapper from "../Wrappers/FlexWrapper";
 import { Button } from "react-bootstrap";
 import { UserContext } from "../../contexts/UserContext";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import FlexWrapper from "../Wrappers/FlexWrap";
+import FlexWrapper from "../Wrappers/FlexWrapper";
 
 import "./CommentHeader.css";
 

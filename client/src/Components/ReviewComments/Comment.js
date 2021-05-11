@@ -3,7 +3,7 @@ import "./Comment.css";
 
 import CommentHeader from "./CommentHeader";
 import CommentReplyMode from "./CommentReplyMode";
-import FlexWrapper from "../Wrappers/FlexWrap";
+import FlexWrapper from "../Wrappers/FlexWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import useBool from "../../hooks/useBool";
