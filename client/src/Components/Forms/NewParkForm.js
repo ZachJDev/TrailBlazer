@@ -1,41 +1,44 @@
-import React from "react";
+import React, { useReducer } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 
 import FormInputText from "../FormInputs/FormInputText";
 import FormInputTextArea from "../FormInputs/FormInputTextArea";
-import useInputState from "../../hooks/useInputState";
+
+import "./NewParkForm.css";
 
 export default function NewParkForm({
+  history,
   handleSubmit,
   missing = [],
   defaultValues,
-  isEdit = false,
 }) {
-  const [name, setParkName] = useInputState(defaultValues?.name || "");
-  const [address, setParkAddress] = useInputState(defaultValues?.address || "");
-  const [country, setParkCountry] = useInputState(defaultValues?.country || "");
-  const [state, setParkState] = useInputState(defaultValues?.state || "");
-  const [zipCode, setParkZipCode] = useInputState(
-    defaultValues?.zipCode.toString() || ""
+  const initialValues = {
+    name: defaultValues?.name || "",
+    address: defaultValues?.address || "",
+    country: defaultValues?.country || "",
+    state: defaultValues?.state || "",
+    zipCode: defaultValues?.zipCode.toString() || "",
+    city: defaultValues?.city || "",
+    description: defaultValues?.description || "",
+  };
+
+  const [formValues, setFormValues] = useReducer(
+    (curVals, newVals) => ({ ...curVals, ...newVals }),
+    initialValues
   );
-  const [city, setParkCity] = useInputState(defaultValues?.city || "");
-  const [description, setParkDescription] = useInputState(
-    defaultValues?.description || ""
-  );
+
+  const { name, address, state, zipCode, city, description } = formValues;
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ [name]: value });
+  };
 
   const startSubmit = (event) => {
     event.preventDefault();
-    handleSubmit({
-      name,
-      description,
-      address,
-      city,
-      state,
-      zipCode,
-      country,
-    });
+    handleSubmit(formValues);
   };
 
   // I REALLY dislike hardcoding the input name in the hasError prop, like below.
@@ -43,17 +46,12 @@ export default function NewParkForm({
   return (
     <div>
       <section>
-        <Form
-          onSubmit={startSubmit}
-          style={{
-            margin: "0 20%",
-          }}
-        >
+        <Form className={" new-park-form"} onSubmit={startSubmit}>
           <FormInputText
             name="name"
             label="Name:"
             value={name}
-            handleChange={setParkName}
+            handleChange={handleFormChange}
             cssClass="new-park-name"
             hasError={missing.includes("name")}
           />
@@ -61,7 +59,7 @@ export default function NewParkForm({
             name="description"
             label="Description:"
             value={description}
-            handleChange={setParkDescription}
+            handleChange={handleFormChange}
             cssClass="new-park-description"
             hasError={missing.includes("description")}
           />
@@ -70,7 +68,7 @@ export default function NewParkForm({
             cssClass="new-park-loc"
             label="Address:"
             value={address}
-            handleChange={setParkAddress}
+            handleChange={handleFormChange}
             hasError={missing.includes("address")}
           />
           <InputGroup>
@@ -79,7 +77,7 @@ export default function NewParkForm({
               cssClass="new-park-city"
               label="City:"
               value={city}
-              handleChange={setParkCity}
+              handleChange={handleFormChange}
               hasError={missing.includes("city")}
             />
             <FormInputText
@@ -87,29 +85,28 @@ export default function NewParkForm({
               cssClass="new-park-state"
               label="State:"
               value={state}
-              handleChange={setParkState}
+              handleChange={handleFormChange}
               hasError={missing.includes("state")}
-            />
-          </InputGroup>
-          <InputGroup>
-            <FormInputText
-              name="country"
-              cssClass="new-park-country"
-              label="Country:"
-              value={country}
-              handleChange={setParkCountry}
-              hasError={missing.includes("country")}
             />
             <FormInputText
               name="zipCode"
               cssClass="new-park-zip-code"
               label="Zip Code:"
               value={zipCode}
-              handleChange={setParkZipCode}
+              handleChange={handleFormChange}
               hasError={missing.includes("zipCode")}
             />
           </InputGroup>
-          <Button type="submit">{isEdit ? "Edit" : "Add new"} Park</Button>
+          <Button
+            className={"button cancel"}
+            variant="warning"
+            onClick={() => history.goBack()}
+          >
+            Cancel
+          </Button>
+          <Button className={"button submit"} type="submit">
+            Submit
+          </Button>
         </Form>
       </section>
     </div>
