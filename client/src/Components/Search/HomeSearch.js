@@ -9,7 +9,7 @@ export default function HomeSearch({ history }) {
   const [searchState, setSearchState] = useInputState("");
   const handleSearch = (e) => {
     e.preventDefault();
-    history.push(`/search?term=${searchState}`);
+    history.push(`/search?term=${searchState}&type=Trail`);
   };
   return (
     <div>
