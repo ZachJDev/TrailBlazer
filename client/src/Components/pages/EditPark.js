@@ -65,6 +65,7 @@ function EditPark({ match, history }) {
               handleSubmit={handleSubmit}
               defaultValues={currentPark}
               isEdit={true}
+              history={history}
             />
           </FormWrapper>
         </React.Fragment>

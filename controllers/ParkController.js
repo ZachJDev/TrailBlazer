@@ -21,15 +21,7 @@ exports.getOne = (req, res, next) => {
 
 exports.add = (req, res, next) => {
   let status = 200;
-  const {
-    name,
-    address,
-    country,
-    state,
-    zipCode,
-    city,
-    description,
-  } = req.body;
+  const { name, address, state, zipCode, city, description } = req.body;
   // 1. confirm that all the required information is present
   let body = { foo: "bar" };
   body.errors = getEmptyProps(req.body);
