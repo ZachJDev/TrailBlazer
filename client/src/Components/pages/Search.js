@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import {useLocation} from "react-router-dom"
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -11,14 +10,17 @@ import TrailCard from "../Cards/TrailCard";
 import FormInputText from "../FormInputs/FormInputText";
 
 import useInputState from "../../hooks/useInputState";
-import { Helmet } from "react-helmet";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
 
-function Search({ location }) {
-  const [searchType, setSearchType] = useState("Park");
-  const [searchTerm, setSearchTerm] = useInputState(
-    new URLSearchParams(location.search).get("term") || ""
-  );
+function Search({ location, history }) {
+  const params = new URLSearchParams(location.search);
+  let initSearchType = params.get("type");
+  if (!(initSearchType === "Park" || initSearchType === "Trail")) {
+    initSearchType = "Park";
+  }
+
+  const [searchType, setSearchType] = useState(initSearchType);
+  const [searchTerm, setSearchTerm] = useInputState(params.get("term") || "");
   let [searchResults, setSearchResults] = useState([]);
   let [resultsList, setResultsList] = useState([]);
 
@@ -29,6 +31,9 @@ function Search({ location }) {
         return res.json();
       })
       .then((results) => {
+        params.set("type", searchType);
+        params.set("term", searchTerm);
+        history.replace({ search: params.toString() });
         setSearchResults(results);
       });
   };
@@ -67,7 +72,7 @@ function Search({ location }) {
         );
       }
     }
-  }, [searchResults]);
+  }, [searchResults, history]);
 
   useEffect(() => {
     if (searchTerm !== "") {
@@ -76,7 +81,8 @@ function Search({ location }) {
   }, []);
 
   return (
-    <div>
+    <div className={"search-page"}>
+      <h1 className={"header"}> Find your Trail:</h1>
       <Form
         style={{
           width: "25%",
@@ -120,4 +126,4 @@ function Search({ location }) {
   );
 }
 
-export default withHelmet({title: 'Find Your Trail'})(Search);
+export default withHelmet({ title: "Find Your Trail" })(Search);
