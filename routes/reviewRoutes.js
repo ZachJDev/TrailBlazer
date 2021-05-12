@@ -1,7 +1,11 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 
-const { getUser, userMatches } = require("../middleware/middleware");
+const {
+  getUser,
+  userMatches,
+  authDelete,
+} = require("../middleware/middleware");
 const reviewController = require("../controllers/reviewController");
 const { userIsAdmin } = require("../middleware/middleware");
 
@@ -22,19 +26,12 @@ router.post("/new", getUser, userMatches, reviewController.postNewTrailReview);
 // Update
 router.put("/edit", getUser, reviewController.updateReview);
 
-// TODO: Destroy
-
-router.delete(
-  "/Admin/delete/:reviewId",
-  getUser,
-  userIsAdmin,
-  reviewController.delete
-);
+// Destroy
 
 router.delete(
   "/delete/:reviewId",
   getUser,
-  userMatches,
+  authDelete,
   reviewController.delete
 );
 
