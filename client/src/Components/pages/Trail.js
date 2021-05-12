@@ -32,13 +32,12 @@ export default function Trail({ match, history }) {
       refetchOnReconnect: "always",
       staleTime: 1,
       onSuccess: (info) => {
-        console.log("scuccess");
         setTrailReviews(info.reviews);
         setHasReviewed(info.userHasReviewed);
       },
     }
   );
-  
+
   const refreshReviews = async () => {
     await queryClient.refetchQueries(["reviews"]);
   };
