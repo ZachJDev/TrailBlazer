@@ -4,7 +4,7 @@ import { PARK_PREFIX } from "../../config/APIRoutes";
 export default function editPark(parkId, body) {
   return async () => {
     const response = await fetch(`${PARK_PREFIX}/${parkId}/edit`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
