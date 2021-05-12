@@ -17,8 +17,8 @@ export default function Trail({ match, history }) {
   const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
   const [trailInfo, setTrailInfo] = useState({});
   const [hasReviewed, setHasReviewed] = useState(true);
-  const [getTrailInfo] = useGetPayload(`/trail/${trailId}`);
-  const [getReviewPayload] = useGetPayload(`/reviews/trails/${trailId}`);
+  const [getTrailInfo] = useGetPayload(`/api/trail/${trailId}`);
+  const [getReviewPayload] = useGetPayload(`/api/reviews/trails/${trailId}`);
   const sendDelete = useDeleteTrail(trailInfo.trailId);
 
   const refreshReviews = async () => {

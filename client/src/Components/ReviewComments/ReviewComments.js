@@ -20,7 +20,7 @@ export default function ReviewComments() {
   const { user } = useContext(UserContext);
   const [displayComments, setDisplayComments] = useState([]);
   const [shown, setShown] = useState(DEFAULT_SHOWN);
-  const [postNewComment] = usePostBody("/comments/add");
+  const [postNewComment] = usePostBody("/api/comments/add");
   const [isAdding, flipAdding] = useBool(false);
   const [newCommentText, setNewCommentText] = useState("");
 

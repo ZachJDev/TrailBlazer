@@ -8,8 +8,8 @@ export const UserContext = createContext(null); // not sure  if I should pass nu
 export function UserProvider({ children }) {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({});
-  const [postLogin] = usePostBody("/auth/login");
-  const [pl] = useGetPayload("/auth/userData");
+  const [postLogin] = usePostBody("/api/auth/login");
+  const [pl] = useGetPayload("/api/auth/userData");
 
   const updateUser = (form) => {
     postLogin(form).then((payload) => {

@@ -18,7 +18,7 @@ export default function User({ match, history }) {
   const [userInfo, setUserInfo] = useState(null);
   const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
   const [isLoaded, flipIsloaded] = useBool(false);
-  const [getUserInfo] = useGetPayload(`/user/${match.params.userId}`);
+  const [getUserInfo] = useGetPayload(`/api/user/${match.params.userId}`);
   const sendDelete = useDeleteUser(userInfo?.userId);
 
   useEffect(() => {

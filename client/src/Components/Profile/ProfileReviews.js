@@ -6,7 +6,7 @@ import "./ProfileReviews.css";
 
 export default function ProfileReviews({ userId, username = "" }) {
   const [reviews, setReviews] = useState(null);
-  const [reviewsRes] = useGetPayload(`/reviews/search/userId=${userId}`);
+  const [reviewsRes] = useGetPayload(`/api/reviews/search/userId=${userId}`);
 
   useEffect(() => {
     reviewsRes().then((res) => {

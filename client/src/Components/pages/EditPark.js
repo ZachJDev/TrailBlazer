@@ -21,9 +21,9 @@ function EditPark({ match, history }) {
 
   const [hasLoaded, flipHasLoaded] = useBool(false);
   const [errors, addError] = useSetAsArray();
-  const [setParkFormBody] = usePutBody(`/park/${params.parkId}/edit`);
+  const [setParkFormBody] = usePutBody(`/api/park/${params.parkId}/edit`);
   const [currentPark, setCurrentPark] = useState({});
-  const [currentParkRes] = useGetPayload(`/park/${params.parkId}`);
+  const [currentParkRes] = useGetPayload(`/api/park/${params.parkId}`);
 
   let AwaitingInfoNotice = () => {
     if (hasLoaded && !user.isAdmin) {

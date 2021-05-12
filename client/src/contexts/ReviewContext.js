@@ -7,7 +7,7 @@ export function ReviewProvider({ children, id }) {
   const [reviewId] = useState(id);
   const [comments, setComments] = useState([]);
   const [totalComments, setTotal] = useState(0);
-  const [getComments] = useGetPayload(`/comments/byReviewId/${id}`);
+  const [getComments] = useGetPayload(`/api/comments/byReviewId/${id}`);
 
   const refreshComments = async () => {
     const commentRes = await getComments();

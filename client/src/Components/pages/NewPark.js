@@ -10,7 +10,7 @@ import withHelmet from "../../HigherOrderComponents/withHelmet";
 
 function NewPark({ history }) {
   const [formErrors, setFormErrors] = useState([]);
-  const [setBody] = usePostBody("/park/new");
+  const [setBody] = usePostBody("/api/park/new");
   const [errors, addError] = useSetAsArray();
 
   const handleFormSubmit = (form) => {

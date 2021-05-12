@@ -15,7 +15,7 @@ import useGetPayload from "../../hooks/useGetPayload";
 // Not in love with the '=== "true"' stuff in the actual display. I may play around with that later.
 const DEFAULT_STATE = { name: "NER", freq: 0, numRatings: 0 };
 export default function TrailAccessibility({ trailId }) {
-  const [getRatings] = useGetPayload(`/ratings/trail/${trailId}`);
+  const [getRatings] = useGetPayload(`/api/ratings/trail/${trailId}`);
   const [ratingsLoaded, updateLoaded] = useBool(false);
   const [difficultyMode, setDifficultyMode] = useState(DEFAULT_STATE);
   const [parkingMode, setParkingMode] = useState(DEFAULT_STATE);

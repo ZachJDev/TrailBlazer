@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const path = require('path') Only needed for build
+// const path = require('path') // Only needed for build
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -37,7 +37,6 @@ app.use(
 // Express Config
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(methodOverride("_method")); I don't think I need this anymore...
 
 // For serving the build.
 // app.use(express.static(path.join(__dirname, '/client/build')))
@@ -47,22 +46,8 @@ app.use(bodyParser.json());
 // })
 
 //Routes
-const parkRoutes = require("./routes/parkRoutes");
-const searchRoutes = require("./routes/searchRoutes");
-const authRoutes = require("./routes/authRoutes");
-const trailRoutes = require("./routes/trailRoutes");
-const reviewRoutes = require("./routes/reviewRoutes");
-const ratingRoutes = require("./routes/ratingRoutes");
-const commentRoutes = require("./routes/commentRoutes");
-const userRoutes = require("./routes/userRoutes");
-app.use("/park", parkRoutes);
-app.use("/search", searchRoutes);
-app.use("/auth", authRoutes);
-app.use("/trail", trailRoutes);
-app.use("/reviews", reviewRoutes);
-app.use("/ratings", ratingRoutes);
-app.use("/comments", commentRoutes);
-app.use("/user", userRoutes);
+const Routes = require("./configs/routeConfig");
+app.use(Routes.API_PREFIX, require("./routes/api"));
 
 db.sequelize
   .sync()

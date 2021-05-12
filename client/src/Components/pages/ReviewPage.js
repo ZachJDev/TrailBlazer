@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 export default function ReviewPage({ match, history }) {
   const [review, setReview] = useState(null);
   const [title, setTitle] = useState("TrailBlazer | Hike your Way");
-  const [getReview] = useGetPayload(`/reviews/${match.params.reviewId}`);
+  const [getReview] = useGetPayload(`/api/reviews/${match.params.reviewId}`);
 
   useEffect(() => {
     getReview().then((reviewRes) => {

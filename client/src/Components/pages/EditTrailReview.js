@@ -21,10 +21,12 @@ function EditTrailReview({ match, history }) {
 
   const [hasLoaded, flipHasLoaded] = useBool(false);
   const [errors, addError] = useSetAsArray();
-  const [setReviewBody] = usePutBody(`/reviews/edit?trailId=${params.trailId}`);
+  const [setReviewBody] = usePutBody(
+    `/api/reviews/edit?trailId=${params.trailId}`
+  );
   const [currentReview, setCurrentReview] = useState({});
   const [currentReviewRes] = useGetPayload(
-    `/reviews/user/${user.userId}?trailId=${params.trailId}`
+    `/api/reviews/user/${user.userId}?trailId=${params.trailId}`
   );
 
   useEffect(() => {

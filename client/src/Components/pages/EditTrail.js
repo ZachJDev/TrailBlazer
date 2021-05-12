@@ -19,8 +19,10 @@ function NewTrail({ history, match }) {
   const [errors, addError] = useSetAsArray();
   const [formErrors, setFormErrors] = useState([]);
   const [currentTrail, setCurrentTrail] = useState({});
-  const [setBodyAndPost] = usePutBody(`/trail/${currentTrail.trailId}/edit`);
-  const [currentTrailRes] = useGetPayload(`/trail/${match.params.trailId}`);
+  const [setBodyAndPost] = usePutBody(
+    `/api/trail/${currentTrail.trailId}/edit`
+  );
+  const [currentTrailRes] = useGetPayload(`/api/trail/${match.params.trailId}`);
 
   const mounted = () => {
     currentTrailRes().then((res) => {
@@ -72,4 +74,4 @@ function NewTrail({ history, match }) {
   );
 }
 
-export default withHelmet({title: 'Edit Trail'})(NewTrail);
+export default withHelmet({ title: "Edit Trail" })(NewTrail);

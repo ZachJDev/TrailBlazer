@@ -9,7 +9,7 @@ function Logout() {
 
   useEffect(() => {
     async function logUserOut() {
-      const res = await fetch("/auth/logout", {
+      const res = await fetch("/api/auth/logout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

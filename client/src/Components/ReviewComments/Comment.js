@@ -13,7 +13,7 @@ import { UserContext } from "../../contexts/UserContext";
 
 export default function Comment({ comment, depth }) {
   const [isReplying, flipIsReplying] = useBool(false);
-  const [postReply] = usePostBody("/comments/add");
+  const [postReply] = usePostBody("/api/comments/add");
   const { reviewId } = useContext(ReviewContext);
   const { user } = useContext(UserContext);
 

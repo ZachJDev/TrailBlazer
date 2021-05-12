@@ -26,7 +26,7 @@ function Search({ location, history }) {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetch(`/search/${searchType}?q=${searchTerm}`)
+    fetch(`/api/search/${searchType}?q=${searchTerm}`)
       .then((res) => {
         return res.json();
       })

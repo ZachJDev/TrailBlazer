@@ -14,18 +14,17 @@ export default function CommentTree({
 }) {
   const [depth, setDepth] = useState(maxDepth);
   const [shown, setShown] = useState(numShown);
-  const showMoreReplies =
-    comments.length > 0 && depth === 0 ? (
-      <div>
-        <Button
-          variant={"info"}
-          className={`more-replies`}
-          onClick={() => setDepth(depth + 1)}
-        >
-          Show Replies
-        </Button>
-      </div>
-    ) : null;
+  const showMoreReplies = comments.length > 0 && depth === 0 && (
+    <div>
+      <Button
+        variant={"info"}
+        className={`more-replies`}
+        onClick={() => setDepth(depth + 1)}
+      >
+        Show Replies
+      </Button>
+    </div>
+  );
 
   const showMoreComments =
     comments.length > shown ? (

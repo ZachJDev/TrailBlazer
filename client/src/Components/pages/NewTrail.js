@@ -22,7 +22,7 @@ function NewTrail({ location, history }) {
 
   const [errors, addError] = useSetAsArray();
   const [formErrors, setFormErrors] = useState([]);
-  const [setBodyAndPost] = usePostBody("/trail/new?_method=POST");
+  const [setBodyAndPost] = usePostBody("/api/trail/new?_method=POST");
 
   const handleFormSubmit = (form) => {
     if (validateNewTrailForm(form, addError)) {

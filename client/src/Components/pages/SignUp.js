@@ -9,7 +9,7 @@ import withHelmet from "../../HigherOrderComponents/withHelmet";
 
 function SignUp({ history }) {
   const [errors, addError] = useSetAsArray();
-  const [setBodyAndPost] = usePostBody("/auth/signup");
+  const [setBodyAndPost] = usePostBody("/api/auth/signup");
 
   // unneeded async
   const handleSubmit = async function (obj) {
