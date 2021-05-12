@@ -23,7 +23,7 @@ router.post(
 );
 
 router.put(
-  "/update",
+  "/edit",
   middleware.getUser,
   middleware.userMatches,
   commentController.updateComment
