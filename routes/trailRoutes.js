@@ -17,7 +17,6 @@ router.get(`/:id([0-9]+$)`, trailController.getOne);
 router.post("/new", trailController.new);
 
 // Destroy
-
 router.delete("/delete/:trailId", getUser, authDelete, trailController.delete);
 
 module.exports = router;

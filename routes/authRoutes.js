@@ -20,6 +20,4 @@ router.get("/UserData", authController.getUserData);
 // Logout
 router.post("/logout", authController.logout);
 
-//  Delete User
-
 module.exports = router;
