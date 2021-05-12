@@ -14,7 +14,9 @@ export default function NewTrailReview({ match, history }) {
   const { params } = match;
 
   const [errors, addError] = useSetAsArray();
-  const [setReviewBody] = usePostBody(`/reviews/new?trailId=${params.trailId}`);
+  const [setReviewBody] = usePostBody(
+    `/api/review/new?trailId=${params.trailId}`
+  );
 
   const handleSubmit = (formBody) => {
     if (validateTrailReviewForm(formBody, addError)) {

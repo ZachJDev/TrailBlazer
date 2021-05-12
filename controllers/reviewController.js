@@ -50,7 +50,6 @@ exports.getTrailReviews = (req, res) => {
       });
       res.json({
         reviews: fetchedReviews.map((rev) => {
-          console.log(rev);
           return {
             reviewId: rev.ReviewId,
             title: rev.title,

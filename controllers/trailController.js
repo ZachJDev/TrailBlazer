@@ -26,8 +26,8 @@ exports.getOne = (req, res, next) => {
   let trailId = req.params.id;
   db.Trail.findOne({ where: { trailId: trailId }, include: [db.Park] }).then(
     (trail) => {
-      if (trail) res.status(200).send(trail);
-      else res.status(404).send(trail);
+      if (trail) res.status(200).json(trail);
+      else res.status(404).json({ status: 404, ...trail });
     }
   );
 };

@@ -1,5 +1,5 @@
 import useDeleteBody from "../useDeleteBody";
 
 export default function useDeleteReview(ReviewId) {
-  return useDeleteBody(`/api/Reviews/delete/${ReviewId}`)[0];
+  return useDeleteBody(`/api/Review/delete/${ReviewId}`)[0];
 }

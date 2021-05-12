@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import useGetPayload from "../../hooks/useGetPayload";
 import { UserContext } from "../../contexts/UserContext";
 import InfoContainer from "../InfoContainers/InfoContainer";
 import MainInfoTrail from "../InfoContainers/MainInfoTrail";
@@ -8,45 +7,53 @@ import Description from "../InfoContainers/Description";
 import TrailReview from "../Reviews/TrailReview";
 import TrailAccessibility from "../AccessibilityComponents/TrailAccessibility";
 import { Helmet } from "react-helmet";
-import useDeleteTrail from "../../hooks/Trails/useDeleteTrail";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import getTrail from "../../API/Trails/getTrail";
+import getReviewsForTrail from "../../API/Reviews/getReviewsForTrail";
+import deleteTrail from "../../API/Trails/deleteTrail";
 
 export default function Trail({ match, history }) {
+  const queryClient = useQueryClient();
   const { trailId } = match.params;
   const { user } = useContext(UserContext);
   const [trailReviews, setTrailReviews] = useState([]);
-  const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
-  const [trailInfo, setTrailInfo] = useState({});
   const [hasReviewed, setHasReviewed] = useState(true);
-  const [getTrailInfo] = useGetPayload(`/api/trail/${trailId}`);
-  const [getReviewPayload] = useGetPayload(`/api/reviews/trails/${trailId}`);
-  const sendDelete = useDeleteTrail(trailInfo.trailId);
+  const mutation = useMutation((trailId) => deleteTrail(trailId)());
 
+  const { isLoading: trailIsLoading, data: trailInfo } = useQuery(
+    [{ id: trailId }],
+    getTrail(trailId)
+  );
+  const { isLoading: reviewsIsLoading } = useQuery(
+    ["reviews"],
+    getReviewsForTrail(trailId),
+    {
+      refetchOnMount: "always",
+      refetchOnReconnect: "always",
+      staleTime: 1,
+      onSuccess: (info) => {
+        console.log("scuccess");
+        setTrailReviews(info.reviews);
+        setHasReviewed(info.userHasReviewed);
+      },
+    }
+  );
+  
   const refreshReviews = async () => {
-    const reviewsRes = await getReviewPayload();
-    setHasReviewed(reviewsRes.userHasReviewed);
-    setTrailReviews(reviewsRes.reviews);
+    await queryClient.refetchQueries(["reviews"]);
   };
-
-  useEffect(() => {
-    getTrailInfo().then((trail) => {
-      setTrailInfo(trail);
-      setTitle(trail.name);
-    });
-    getReviewPayload().then((reviewsRes) => {
-      setHasReviewed(reviewsRes.userHasReviewed);
-      setTrailReviews(reviewsRes.reviews);
-    });
-  }, []);
 
   const handleDelete = async () => {
     const check = window.confirm(
       "Warning: Deleting this trail is a permanent action! Continue?"
     );
     if (check) {
-      const deleteRes = await sendDelete({});
-      if (deleteRes.success) {
-        history.push("/");
-      }
+      await mutation.mutate(trailId, {
+        onSuccess: (info) => {
+          console.log(info);
+          history.push("/");
+        },
+      });
     }
   };
 
@@ -58,12 +65,16 @@ export default function Trail({ match, history }) {
   };
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
+
+  if (trailIsLoading || reviewsIsLoading) return <h1>Loading</h1>;
+  if (trailInfo.status === 404) return <h1>Oops! we can't find that trail</h1>;
   const { length, name, description } = trailInfo;
+
   //I'll need to handle any 404 errors here, I think.
   return (
     <React.Fragment>
       <Helmet>
-        <title>{title}</title>
+        <title>{name}</title>
       </Helmet>
       <div>
         {trailInfo.park ? (
@@ -85,17 +96,19 @@ export default function Trail({ match, history }) {
             </MainInfoTrail>
             <Description name={name} description={description} />
             <section>
-              <section className="reviews">
-                {trailReviews.map((review) => (
-                  <React.Fragment key={review.reviewId}>
-                    <TrailReview
-                      {...review}
-                      refreshReviews={refreshReviews}
-                      handleEdit={handleReviewRedirect}
-                    />
-                  </React.Fragment>
-                ))}
-              </section>
+              {!reviewsIsLoading && (
+                <section className="reviews">
+                  {trailReviews.map((review) => (
+                    <React.Fragment key={review.reviewId}>
+                      <TrailReview
+                        {...review}
+                        refreshReviews={refreshReviews}
+                        handleEdit={handleReviewRedirect}
+                      />
+                    </React.Fragment>
+                  ))}
+                </section>
+              )}
             </section>
           </InfoContainer>
         ) : (
