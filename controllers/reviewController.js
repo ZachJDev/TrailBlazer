@@ -200,7 +200,7 @@ exports.getById = (req, res) => {
         throw new Error("cannot find review");
       }
       const isEditable = req.user && req.user.userId === review.user.userId;
-      const reply = {
+      const response = {
         text: review.text,
         title: review.title,
         trail: review.trail,
@@ -210,7 +210,7 @@ exports.getById = (req, res) => {
         reviewId: review.ReviewId,
         isEditable,
       };
-      res.status(200).json({ success: true, review: reply });
+      res.status(200).json({ success: true, review: response });
     })
     .catch((e) => {
       res.status(404).json({ success: false, error: e.message });
