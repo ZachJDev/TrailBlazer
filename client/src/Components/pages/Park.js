@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import useGetPayload from "../../hooks/useGetPayload";
+import { useQuery } from "react-query";
+
 import Description from "../InfoContainers/Description";
 import InfoContainer from "../InfoContainers/InfoContainer";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
@@ -13,13 +14,17 @@ import useBool from "../../hooks/useBool";
 import { Helmet } from "react-helmet";
 import useDeletePark from "../../hooks/Parks/useDeletePark";
 
+import getPark from "../../API/Parks/getPark";
+
 function Park({ match, history }) {
   const alertComingSoon = () => alert("Functionality Coming Soon!");
-  const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
-  const [parkInfo, setParkInfo] = useState({});
-  const [getParkInfo] = useGetPayload(`/park/${match.params.parkId}`);
+  const { isLoading, data: parkInfo } = useQuery(
+    [{ id: match.params.parkId }],
+    getPark(match.params.parkId)
+  );
   const [showMap, flipShowMap] = useBool(false);
-  const deletePark = useDeletePark(parkInfo.parkId);
+  const deletePark = useDeletePark(parkInfo?.parkId);
+
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
 
@@ -39,20 +44,14 @@ function Park({ match, history }) {
     history.push(`/park/${match.params.parkId}/edit`);
   };
 
-  useEffect(() => {
-    getParkInfo()
-      .then((info) => {
-        setParkInfo(info);
-        setTitle(info.name);
-      })
-      .catch((e) => {
-        alert("Something went wrong. Please try again later");
-      });
-  }, []);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <React.Fragment>
       <Helmet>
-        <title>{title}</title>
+        <title>{parkInfo.name}</title>
       </Helmet>
       <div className="park-info">
         {parkInfo.status === 200 ? (
@@ -78,10 +77,8 @@ function Park({ match, history }) {
             />
             <ParkTrails {...match.params.parkId} {...parkInfo} />
           </InfoContainer>
-        ) : parkInfo.status === 404 ? (
-          <h1>Oops! We can't find that park.</h1>
         ) : (
-          <h1>Loading</h1>
+          <h1>Oops! We can't find that park.</h1>
         )}
       </div>
     </React.Fragment>

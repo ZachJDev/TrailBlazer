@@ -8,9 +8,9 @@ exports.getOne = (req, res, next) => {
   db.Park.findOne({ where: { parkId: parkId }, include: [db.Trail] })
     .then((park) => {
       if (park !== null) {
-        res.json(park.dataValues);
+        res.json({ ...park.dataValues, success: true, status: 200 });
       } else {
-        res.status(404).send({ success: false, errors: ["Park Not Found"] });
+        res.status(404).json({ success: false, errors: ["Park Not Found"] });
         console.log(`Could not find Park with id ${parkId}`);
       }
     })
