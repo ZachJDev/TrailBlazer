@@ -30,7 +30,7 @@ export default function Trail({ match, history }) {
     {
       refetchOnMount: "always",
       refetchOnReconnect: "always",
-      staleTime: 1,
+      staleTime: 0,
       onSuccess: (info) => {
         setTrailReviews(info.reviews);
         setHasReviewed(info.userHasReviewed);
@@ -59,6 +59,7 @@ export default function Trail({ match, history }) {
   const handleReviewRedirect = () => {
     history.push(`/trail/${trailId}/reviews/${hasReviewed ? "edit" : "new"}`);
   };
+
   const AdminEdit = () => {
     history.push(`/trail/${match.params.trailId}/edit`);
   };
@@ -69,7 +70,6 @@ export default function Trail({ match, history }) {
   if (trailInfo.status === 404) return <h1>Oops! we can't find that trail</h1>;
   const { length, name, description } = trailInfo;
 
-  //I'll need to handle any 404 errors here, I think.
   return (
     <React.Fragment>
       <Helmet>
