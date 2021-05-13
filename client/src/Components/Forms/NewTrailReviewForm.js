@@ -1,59 +1,51 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 
 import { UserContext } from "../../contexts/UserContext";
-import useInputState from "../../hooks/useInputState";
-import useBool from "../../hooks/useBool";
 
 import FormInputText from "../FormInputs/FormInputText";
 import FormInputTextArea from "../FormInputs/FormInputTextArea";
 import FormInputSelect from "../FormInputs/FormInputSelect";
 
-export default function NewTrailReviewForm({
-  submitForm,
-  defaultValues,
-  isEdit = false,
-}) {
-  const [reviewText, setReviewText] = useInputState("");
-  const [reviewTitle, setReviewTitle] = useInputState("");
-  const [isSet, flipIsSet] = useBool(false);
+export default function NewTrailReviewForm({ submitForm, defaultValues = {} }) {
+  const [formValues, setFormValues] = useReducer(
+    (curVals, newVals) => ({ ...curVals, ...newVals }),
+    {
+      reviewTitle: defaultValues.title || "",
+      reviewText: defaultValues.text || "",
+      parking: defaultValues.parking || "On Trailhead",
+      petFriendly: defaultValues.petFriendly ? "Yes" : "No",
+      goodForGroups: defaultValues.goodForGroups ? "Yes" : "No",
+      wheelchairAcc: defaultValues.wheelchairAcc ? "Yes" : "No",
+      difficulty: defaultValues.difficulty || "Easy",
+    }
+  );
 
-  const [parking, setParking] = useInputState("On Trailhead");
-  const [petFriendly, setPets] = useInputState("Yes");
-  const [goodForGroups, setGroups] = useInputState("Yes");
-  const [difficulty, setDifficulty] = useInputState("Easy");
-  const [wheelchairAcc, setWCAcc] = useInputState("Yes");
+  const {
+    reviewTitle,
+    reviewText,
+    parking,
+    petFriendly,
+    goodForGroups,
+    wheelchairAcc,
+    difficulty,
+  } = formValues;
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ [name]: value });
+  };
 
   const { user } = useContext(UserContext);
   const username = user.username;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    submitForm({
-      reviewTitle,
-      reviewText,
-      parking,
-      username,
-      petFriendly,
-      goodForGroups,
-      difficulty,
-      wheelchairAcc,
-    });
+    submitForm({ username, ...formValues });
   };
 
-  if (isEdit && !isSet && Object.keys(defaultValues).length > 0) {
-    // might be a more elegant way of checking this...
-    setReviewText(defaultValues.text);
-    setReviewTitle(defaultValues.title);
-    setParking(defaultValues?.parking || "Close");
-    setPets(defaultValues?.petFriendly ? "Yes" : "No"); // And of setting some of these values
-    setGroups(defaultValues?.goodForGroups ? "Yes" : "No");
-    setDifficulty(defaultValues?.difficulty || "Medium");
-    setWCAcc(defaultValues?.wheelchairAcc ? "Yes" : "No");
-    flipIsSet();
-  }
   return (
     <section className="review-form">
       <Form
@@ -65,36 +57,41 @@ export default function NewTrailReviewForm({
         <FormInputText
           name="reviewTitle"
           value={reviewTitle}
-          handleChange={setReviewTitle}
+          handleChange={handleFormChange}
           label="Title..."
         />
         <InputGroup className="select-group">
           <FormInputSelect
-            handleChange={setParking}
+            name={"parking"}
+            handleChange={handleFormChange}
             value={parking}
             options={["On Trailhead", "Close", "Far", "No Marked Parking"]}
             label="Where is the Parking?"
           />
           <FormInputSelect
-            handleChange={setPets}
+            handleChange={handleFormChange}
+            name={"petFriendly"}
             value={petFriendly}
             options={["Yes", "No"]}
             label="Is This Trail Pet Friendly?"
           />
           <FormInputSelect
-            handleChange={setGroups}
+            handleChange={handleFormChange}
             value={goodForGroups}
+            name={"goodForGroups"}
             options={["Yes", "No"]}
             label="Is This Trail Good for Group Hikes?"
           />
           <FormInputSelect
-            handleChange={setDifficulty}
+            handleChange={handleFormChange}
+            name={"difficulty"}
             value={difficulty}
             options={["Easy", "Medium", "Difficult", "Strenuous"]}
             label="How Difficult was This Trail to Hike?"
           />
           <FormInputSelect
-            handleChange={setWCAcc}
+            handleChange={handleFormChange}
+            name={"wheelchairAcc"}
             value={wheelchairAcc}
             options={["Yes", "No"]}
             label="Is This Trail Wheelchair Accessible?"
@@ -103,7 +100,7 @@ export default function NewTrailReviewForm({
         <FormInputTextArea
           name="reviewText"
           value={reviewText}
-          handleChange={setReviewText}
+          handleChange={handleFormChange}
           label="add your review..."
         />
         <Button type="submit"> Submit</Button>

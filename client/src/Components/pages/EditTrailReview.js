@@ -26,7 +26,7 @@ function EditTrailReview({ match, history }) {
   );
   const [currentReview, setCurrentReview] = useState({});
   const [currentReviewRes] = useGetPayload(
-    `/api/reviews/user/${user.userId}?trailId=${params.trailId}`
+    `/api/review/user/${user.userId}?trailId=${params.trailId}`
   );
 
   useEffect(() => {
