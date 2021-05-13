@@ -6,27 +6,29 @@ import NewTrailReviewForm from "./NewTrailReviewForm";
 import FormWrapper from "./FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
-import usePostBody from "../../hooks/usePostBody";
-
 import { validateTrailReviewForm } from "../../functions/formValidation";
+import { useMutation } from "react-query";
+import { postNewReview } from "../../API/API";
 
 export default function NewTrailReview({ match, history }) {
   const { params } = match;
-
   const [errors, addError] = useSetAsArray();
-  const [setReviewBody] = usePostBody(
-    `/api/review/new?trailId=${params.trailId}`
-  );
+  const submit = useMutation((options) => postNewReview(options)());
 
   const handleSubmit = (formBody) => {
     if (validateTrailReviewForm(formBody, addError)) {
-      setReviewBody(formBody).then((res) => {
-        if (res.success) {
-          history.push(`/trail/${params.trailId}`);
-        } else {
-          addError(res.errorMessage);
+      submit.mutate(
+        { body: formBody, trailId: params.trailId },
+        {
+          onSuccess: (res) => {
+            if (res.success) {
+              history.push(`/trail/${params.trailId}`);
+            } else {
+              addError(res.errorMessage);
+            }
+          },
         }
-      });
+      );
     }
   };
 
