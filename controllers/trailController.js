@@ -14,7 +14,7 @@ exports.new = (req, res, next) => {
         // This automatically handles converting between miles and Km, and we will only store the length in miles.
         length: Number(lengthUnit === "m" ? length : length / 1.609344),
       }).then((createdTrail) => {
-        res.status(200).json(createdTrail);
+        res.status(200).json({ ...createdTrail.dataValues, status: 200 });
       });
     })
     .catch((e) => {

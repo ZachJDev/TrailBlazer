@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import NewTrailForm from "../Forms/NewTrailForm";
 import FormWrapper from "../Forms/FormWrapper";
 
-import usePostBody from "../../hooks/usePostBody";
 import useSetAsArray from "../../hooks/useSetAsArray";
-
+import { useMutation } from "react-query";
 import { validateNewTrailForm } from "../../functions/formValidation";
+
+import { postNewTrail } from "../../API/API";
+
 import withHelmet from "../../HigherOrderComponents/withHelmet";
 
 function NewTrail({ location, history }) {
@@ -16,22 +18,21 @@ function NewTrail({ location, history }) {
     parkId: keyPairs[0][1],
     parkName: keyPairs[1][1],
   };
-
-  // Lots of side effects here and pretty cluttered -- def in need
-  // of some refactoring TLC
-
   const [errors, addError] = useSetAsArray();
   const [formErrors, setFormErrors] = useState([]);
-  const [setBodyAndPost] = usePostBody("/api/trail/new?_method=POST");
+
+  const submit = useMutation(["newTrail"], (obj) => postNewTrail(obj)(), {
+    onSuccess: (res) => {
+      if (res.status !== 200) setFormErrors(res.errors);
+      else {
+        history.push(`/trail/${res.trailId}`);
+      }
+    },
+  });
 
   const handleFormSubmit = (form) => {
     if (validateNewTrailForm(form, addError)) {
-      setBodyAndPost(form).then((payload) => {
-        if (payload.status !== 200) setFormErrors(payload.errors);
-        else {
-          history.push(`/trail/${payload.trailId}`);
-        }
-      });
+      submit.mutate(form);
     }
   };
 
