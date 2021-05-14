@@ -1,62 +1,57 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import NewTrailForm from "../Forms/NewTrailForm";
 import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
 
 import { validateNewTrailForm } from "../../functions/formValidation";
-import usePutBody from "../../hooks/usePutBody";
-import useGetPayload from "../../hooks/useGetPayload";
-import useBool from "../../hooks/useBool";
 import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation, useQuery } from "react-query";
+import { editTrail, getTrail } from "../../API/API";
 
 function NewTrail({ history, match }) {
   const { user } = useContext(UserContext);
-  // Lots of side effects here and pretty cluttered -- def in need
-  // of some refactoring TLC
-  const [hasLoaded, flipHasLoaded] = useBool(false);
+  const { trailId } = match.params;
+
   const [errors, addError] = useSetAsArray();
   const [formErrors, setFormErrors] = useState([]);
   const [currentTrail, setCurrentTrail] = useState({});
-  const [setBodyAndPost] = usePutBody(
-    `/api/trail/${currentTrail.trailId}/edit`
-  );
-  const [currentTrailRes] = useGetPayload(`/api/trail/${match.params.trailId}`);
 
-  const mounted = () => {
-    currentTrailRes().then((res) => {
+  const { isLoading } = useQuery(["getTrail", trailId], getTrail(trailId), {
+    onSuccess: (res) => {
       setCurrentTrail(res);
-      flipHasLoaded();
-    });
-  };
+    },
+  });
 
-  let AwaitingInfoNotice = () => {
-    if (hasLoaded && !user.isAdmin) {
-      return "Forbidden Action Performed.";
-    }
-    if (!hasLoaded) {
-      return "Loading Form...";
-    }
-  };
-
-  useEffect(mounted, []);
-
-  const handleFormSubmit = (form) => {
-    if (validateNewTrailForm(form, addError)) {
-      setBodyAndPost(form).then((payload) => {
-        if (payload.status === 401) {
+  const submit = useMutation(
+    ["editTrail", trailId],
+    (obj) => editTrail(obj)(),
+    {
+      onSuccess: (res) => {
+        console.log(res);
+        if (res.status === 401) {
           alert("You are not authorized to do that action.");
-        }
-        if (payload.status !== 200) setFormErrors(payload.errors);
+        } else if (res.status !== 200) setFormErrors(res.errors);
         else {
           history.push(`/trail/${match.params.trailId}`);
         }
-      });
+      },
+    }
+  );
+
+  const handleFormSubmit = (body) => {
+    if (validateNewTrailForm(body, addError)) {
+      submit.mutate({ body, trailId });
     }
   };
 
-  return hasLoaded && user.isAdmin ? (
+  if (!isLoading && !user.isAdmin) {
+    history.goBack();
+  }
+  if (isLoading) return <h2>Loading...</h2>;
+
+  return (
     <div>
       <h1>Edit Trail for {currentTrail.park.name} </h1>
       <FormWrapper errors={errors}>
@@ -69,8 +64,6 @@ function NewTrail({ history, match }) {
         />
       </FormWrapper>
     </div>
-  ) : (
-    <h2>{AwaitingInfoNotice()}</h2>
   );
 }
 

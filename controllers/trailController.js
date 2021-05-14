@@ -36,10 +36,12 @@ exports.update = (req, res, next) => {
   try {
     db.Trail.update({ ...req.body }, { where: { trailId } }).then((trail) => {
       console.log(trail);
-      res.status(200).json({ success: true, trailId: trail.trailId });
+      res
+        .status(200)
+        .json({ success: true, trailId: trail.trailId, status: 200 });
     });
   } catch (e) {
-    res.status(400).json({ success: false, errors: [e.message] });
+    res.status(400).json({ success: false, errors: [e.message], status: 400 });
   }
 };
 
