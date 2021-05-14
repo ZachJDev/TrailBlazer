@@ -8,6 +8,7 @@ import postNewReview from "./Reviews/postNewReview";
 import editPark from "./Parks/editPark";
 import getPark from "./Parks/getPark";
 import postNewPark from "./Parks/postNewPark";
+import deletePark from "./Parks/deletePark";
 
 import logout from "./Auth/logout";
 
@@ -21,4 +22,5 @@ export {
   getPark,
   editPark,
   postNewPark,
+  deletePark,
 };

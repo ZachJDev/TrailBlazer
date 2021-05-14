@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React from "react";
+import { useMutation, useQuery } from "react-query";
+import { Helmet } from "react-helmet";
+import { getPark, deletePark } from "../../API/API";
 
 import Description from "../InfoContainers/Description";
 import InfoContainer from "../InfoContainers/InfoContainer";
@@ -9,21 +11,28 @@ import Map from "../Map/Map";
 
 import ParkTrails from "../InfoContainers/ParkTrails";
 
-import "./Park.css";
 import useBool from "../../hooks/useBool";
-import { Helmet } from "react-helmet";
-import useDeletePark from "../../hooks/Parks/useDeletePark";
 
-import getPark from "../../API/Parks/getPark";
+import "./Park.css";
 
 function Park({ match, history }) {
   const alertComingSoon = () => alert("Functionality Coming Soon!");
-  const { isLoading, data: parkInfo } = useQuery(
-    [{ id: match.params.parkId }],
-    getPark(match.params.parkId)
-  );
+  const { parkId } = match.params;
   const [showMap, flipShowMap] = useBool(false);
-  const deletePark = useDeletePark(parkInfo?.parkId);
+
+  // Requests
+  const { isLoading, data: parkInfo } = useQuery(
+    [{ id: parkId }],
+    getPark(parkId)
+  );
+
+  const submit = useMutation(["delete", parkId], (id) => deletePark(id)(), {
+    onSuccess: (res) => {
+      if (res.success) {
+        history.push("/");
+      }
+    },
+  });
 
   // ParkInfo has the following, which are deconstructed in the InfoContainer Component:
   // {name, description, address, city, state}
@@ -33,15 +42,12 @@ function Park({ match, history }) {
       "Warning: Deleting this park is a permanent action! Continue?"
     );
     if (check) {
-      const deleteRes = await deletePark({});
-      if (deleteRes.success) {
-        history.push("/");
-      }
+      submit.mutate(parkId);
     }
   };
 
   const AdminEdit = () => {
-    history.push(`/park/${match.params.parkId}/edit`);
+    history.push(`/park/${parkId}/edit`);
   };
 
   if (isLoading) {
@@ -75,7 +81,7 @@ function Park({ match, history }) {
               description={parkInfo.description}
               name={parkInfo.name}
             />
-            <ParkTrails {...match.params.parkId} {...parkInfo} />
+            <ParkTrails {...parkId} {...parkInfo} />
           </InfoContainer>
         ) : (
           <h1>Oops! We can't find that park.</h1>
