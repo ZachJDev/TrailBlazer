@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext } from "react";
 
 import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
