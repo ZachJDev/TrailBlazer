@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "../Forms/TrailReviewForm.css";
 
 import { validateNewParkForm } from "../../functions/formValidation";
@@ -6,24 +6,46 @@ import { validateNewParkForm } from "../../functions/formValidation";
 import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
-import usePutBody from "../../hooks/usePutBody";
-import useGetPayload from "../../hooks/useGetPayload";
 import useBool from "../../hooks/useBool";
 
 import { UserContext } from "../../contexts/UserContext";
 import NewParkForm from "../Forms/NewParkForm";
 
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { editPark, getPark } from "../../API/API";
+import { useMutation, useQuery } from "react-query";
 
 function EditPark({ match, history }) {
   const { params } = match;
   const { user } = useContext(UserContext);
+  const { parkId } = params;
 
   const [hasLoaded, flipHasLoaded] = useBool(false);
   const [errors, addError] = useSetAsArray();
-  const [setParkFormBody] = usePutBody(`/api/park/${params.parkId}/edit`);
   const [currentPark, setCurrentPark] = useState({});
-  const [currentParkRes] = useGetPayload(`/api/park/${params.parkId}`);
+
+  useQuery(["getPark", parkId], getPark(parkId), {
+    onSuccess: (res) => {
+      setCurrentPark(res);
+      flipHasLoaded();
+    },
+  });
+
+  const submit = useMutation(
+    `editPark - ${params.parkId}`,
+    (obj) => editPark(obj)(),
+    {
+      onSuccess: (res) => {
+        if (res.success) {
+          history.push(`/park/${params.parkId}`);
+        } else if (res.status === 401) {
+          alert("You are not authorized to perform that action.");
+        } else {
+          addError(res.errorMessage);
+        }
+      },
+    }
+  );
 
   let AwaitingInfoNotice = () => {
     if (hasLoaded && !user.isAdmin) {
@@ -34,24 +56,9 @@ function EditPark({ match, history }) {
     }
   };
 
-  useEffect(() => {
-    currentParkRes().then((res) => {
-      setCurrentPark(res);
-      flipHasLoaded();
-    });
-  }, []);
-
   const handleSubmit = (formBody) => {
     if (validateNewParkForm(formBody, addError)) {
-      setParkFormBody(formBody).then((res) => {
-        if (res.success) {
-          history.push(`/park/${params.parkId}`);
-        } else if (res.status === 401) {
-          alert("You are not authorized to perform that action.");
-        } else {
-          addError(res.errorMessage);
-        }
-      });
+      submit.mutate({ parkId, body: formBody });
     }
   };
 

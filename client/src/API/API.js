@@ -5,6 +5,9 @@ import getTrail from "./Trails/getTrail";
 
 import postNewReview from "./Reviews/postNewReview";
 
+import editPark from "./Parks/editPark";
+import getPark from "./Parks/getPark";
+
 import logout from "./Auth/logout";
 
 export {
@@ -14,4 +17,6 @@ export {
   getTrail,
   postNewReview,
   logout,
+  getPark,
+  editPark,
 };
