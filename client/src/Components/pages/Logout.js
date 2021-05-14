@@ -1,18 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext} from "react";
 
 import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "../../API/API";
 
-function Logout({ history }) {
+function Logout() {
   const { clearUser, userExists } = useContext(UserContext);
   const queryClient = useQueryClient();
   const submit = useMutation("logout", () => logout()(), {
     onSuccess: (res) => {
       if (res.success) {
         clearUser(null);
-        history.replace("/");
       }
     },
   });
@@ -20,7 +19,7 @@ function Logout({ history }) {
   if (queryClient.isMutating() === 0 && userExists) {
     submit.mutate(null, {});
   }
-  if (!userExists) history.goBack();
+  if (!userExists) return <h1>You are successfully Logged Out</h1>;
 
   return (
     <div>
