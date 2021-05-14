@@ -79,7 +79,12 @@ exports.update = (req, res, next) => {
         res.status(200).json({ success: true });
       })
       .catch((err) => {
-        console.log(err);
+        if (err.parent.errno === 1062) {
+          // Duplicate Entry
+          res
+            .status(500)
+            .json({ success: false, errorMessage: "Park Already Exists" });
+        }
       });
   } else {
     res.status(500).json({ success: false, error: "NOT_ADMIN" });
