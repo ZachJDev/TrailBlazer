@@ -4,10 +4,9 @@ import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
 import { useMutation, useQueryClient } from "react-query";
 import { logout } from "../../API/API";
-import useBool from "../../hooks/useBool";
 
 function Logout({ history }) {
-  const { clearUser } = useContext(UserContext);
+  const { clearUser, userExists } = useContext(UserContext);
   const queryClient = useQueryClient();
   const submit = useMutation("logout", () => logout()(), {
     onSuccess: (res) => {
@@ -18,9 +17,10 @@ function Logout({ history }) {
     },
   });
 
-  if (queryClient.isMutating() === 0) {
+  if (queryClient.isMutating() === 0 && userExists) {
     submit.mutate(null, {});
   }
+  if (!userExists) history.goBack();
 
   return (
     <div>

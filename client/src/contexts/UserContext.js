@@ -21,8 +21,8 @@ export function UserProvider({ children }) {
       }
     });
   };
-  const userExists = () =>
-    !(Object.keys(user).length === 0 && user.constructor === Object);
+  const userExists = (() =>
+    !(Object.keys(user).length === 0 && user.constructor === Object))();
   const clearUser = () => setUser({});
 
   useEffect(() => {
