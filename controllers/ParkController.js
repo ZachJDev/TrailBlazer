@@ -42,9 +42,9 @@ exports.add = (req, res, next) => {
         return db.Park.create({
           name,
           address,
-          country,
           state,
           city,
+          country: "USA",
           zipCode,
           description,
           location: {
@@ -56,17 +56,17 @@ exports.add = (req, res, next) => {
       .then((park) => {
         // console.log(park);
         console.log("Park Added", park.parkId);
-        res.status(200).json({ parkId: park.parkId });
+        res.status(200).json({ parkId: park.parkId, status });
       })
       .catch((e) => {
         console.log(e.message);
         body.errors.push(e.message);
-        res.status(400).json(body);
+        res.status(400).json({ ...body, status });
       });
   } catch (e) {
     console.log(body);
     console.log(e.message);
-    res.status(status).json(body);
+    res.status(status).json({ ...body, status });
   }
 };
 

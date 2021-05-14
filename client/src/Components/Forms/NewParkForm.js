@@ -17,7 +17,6 @@ export default function NewParkForm({
   const initialValues = {
     name: defaultValues?.name || "",
     address: defaultValues?.address || "",
-    country: defaultValues?.country || "",
     state: defaultValues?.state || "",
     zipCode: defaultValues?.zipCode.toString() || "",
     city: defaultValues?.city || "",

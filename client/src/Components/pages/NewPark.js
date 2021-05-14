@@ -1,29 +1,34 @@
 import React, { useState } from "react";
 import NewParkForm from "../Forms/NewParkForm";
-import usePostBody from "../../hooks/usePostBody";
 import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
 
 import { validateNewParkForm } from "../../functions/formValidation";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation } from "react-query";
+import { postNewPark } from "../../API/API";
 
 function NewPark({ history }) {
   const [formErrors, setFormErrors] = useState([]);
-  const [setBody] = usePostBody("/api/park/new");
   const [errors, addError] = useSetAsArray();
+
+  const submit = useMutation(["newPark"], (obj) => postNewPark(obj)(), {
+    onSuccess: (res) => {
+      setFormErrors(res.errors);
+      if (res.status === 401) {
+        // Not Authorized
+        history.push("/home");
+      } else if (res.status === 200) {
+        history.push(`/park/${res.parkId}`);
+      }
+    },
+  });
 
   const handleFormSubmit = (form) => {
     if (validateNewParkForm(form, addError)) {
-      setBody(form).then((payload) => {
-        setFormErrors(payload.errors);
-        if (payload.status === 401) {
-          // Not Authorized
-          history.push("/home");
-        } else if (payload.status === 200) {
-          history.push(`/park/${payload.parkId}`);
-        }
-      });
+      // this pattern isn't clear -- the validate form function has the side effect of adding errors to the page, but returns a boolean. may want a refactor.
+      submit.mutate(form);
     }
   };
 
