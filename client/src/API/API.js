@@ -5,4 +5,13 @@ import getTrail from "./Trails/getTrail";
 
 import postNewReview from "./Reviews/postNewReview";
 
-export { postNewTrail, deleteTrail, editTrail, getTrail, postNewReview };
+import logout from "./Auth/logout";
+
+export {
+  postNewTrail,
+  deleteTrail,
+  editTrail,
+  getTrail,
+  postNewReview,
+  logout,
+};

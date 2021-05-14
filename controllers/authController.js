@@ -110,7 +110,7 @@ exports.signUp = (req, res, next) => {
 
 exports.logout = (req, res, next) => {
   req.session.destroy((err, ses) => {
-    console.log(err);
+    console.log("logging out...");
     res.status(200).json({ success: true });
   });
 };
@@ -135,5 +135,3 @@ exports.getUserData = (req, res, next) => {
       });
   }
 };
-
-

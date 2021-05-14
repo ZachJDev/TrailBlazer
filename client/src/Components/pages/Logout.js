@@ -2,37 +2,29 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation, useQueryClient } from "react-query";
+import { logout } from "../../API/API";
+import useBool from "../../hooks/useBool";
 
-function Logout() {
-  const [payload, setPayload] = useState({});
+function Logout({ history }) {
   const { clearUser } = useContext(UserContext);
-
-  useEffect(() => {
-    async function logUserOut() {
-      const res = await fetch("/api/auth/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({}),
-      });
-      const ret = await res.json();
-      setPayload({ ...ret });
-      if (ret.success) {
+  const queryClient = useQueryClient();
+  const submit = useMutation("logout", () => logout()(), {
+    onSuccess: (res) => {
+      if (res.success) {
         clearUser(null);
+        history.replace("/");
       }
-    }
+    },
+  });
 
-    logUserOut().then((r) => {});
-  }, []);
+  if (queryClient.isMutating() === 0) {
+    submit.mutate(null, {});
+  }
 
   return (
     <div>
-      {payload.success ? (
-        <h2>Successfully Logged out.</h2>
-      ) : (
-        <h2>Logging you out...</h2>
-      )}
+      <h2>Logging you out...</h2>
     </div>
   );
 }
