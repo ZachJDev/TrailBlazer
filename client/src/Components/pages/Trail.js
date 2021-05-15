@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import React, { useState } from "react";
+
 import InfoContainer from "../InfoContainers/InfoContainer";
 import MainInfoTrail from "../InfoContainers/MainInfoTrail";
 import ButtonActionRow from "../InfoContainers/ButtonActionRow";
@@ -15,7 +15,6 @@ import deleteTrail from "../../API/Trails/deleteTrail";
 export default function Trail({ match, history }) {
   const queryClient = useQueryClient();
   const { trailId } = match.params;
-  const { user } = useContext(UserContext);
   const [trailReviews, setTrailReviews] = useState([]);
   const [hasReviewed, setHasReviewed] = useState(true);
   const mutation = useMutation((trailId) => deleteTrail(trailId)());

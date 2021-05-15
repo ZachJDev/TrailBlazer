@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import "../Forms/TrailReviewForm.css";
 
@@ -6,53 +6,56 @@ import NewTrailReviewForm from "../Forms/NewTrailReviewForm";
 import FormWrapper from "../Forms/FormWrapper";
 
 import useSetAsArray from "../../hooks/useSetAsArray";
-import usePutBody from "../../hooks/usePutBody";
-import useGetPayload from "../../hooks/useGetPayload";
-import useBool from "../../hooks/useBool";
-
 import { UserContext } from "../../contexts/UserContext";
 
 import { validateTrailReviewForm } from "../../functions/formValidation";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation, useQuery } from "react-query";
+import { editReview, getReviewByUserTrail } from "../../API/API";
 
 function EditTrailReview({ match, history }) {
   const { params } = match;
+  const { trailId } = params;
   const { user } = useContext(UserContext);
+  const { userId } = user;
 
-  const [hasLoaded, flipHasLoaded] = useBool(false);
   const [errors, addError] = useSetAsArray();
-  const [setReviewBody] = usePutBody(
-    `/api/review/edit?trailId=${params.trailId}`
-  );
   const [currentReview, setCurrentReview] = useState({});
-  const [currentReviewRes] = useGetPayload(
-    `/api/review/user/${user.userId}?trailId=${params.trailId}`
-  );
 
-  useEffect(() => {
-    if (user.isLoggedIn) {
-      currentReviewRes().then((res) => {
+  const { isLoading } = useQuery(
+    ["trailReview", user.userId, trailId],
+    getReviewByUserTrail({ userId, trailId }),
+    {
+      onSuccess: (res) => {
         setCurrentReview(res);
-        flipHasLoaded();
-      });
+      },
     }
-  }, [user]);
+  );
+  const submit = useMutation(["editTrailReview"], (obj) => editReview(obj)(), {
+    onSuccess: (res) => {
+      if (res.success) {
+        history.push(`/trail/${params.trailId}`);
+      } else {
+        addError(res.errorMessage);
+      }
+    },
+  });
+
+  if (!user.isLoggedIn) {
+    return <h1>Forbidden Action</h1>;
+  }
 
   const handleSubmit = (formBody) => {
     if (validateTrailReviewForm(formBody, addError)) {
-      setReviewBody(formBody).then((res) => {
-        if (res.success) {
-          history.push(`/trail/${params.trailId}`);
-        } else {
-          addError(res.errorMessage);
-        }
-      });
+      submit.mutate({ body: formBody, trailId });
+    } else {
+      console.log("sajhdk");
     }
   };
 
   return (
     <section className="add-review">
-      {hasLoaded ? (
+      {!isLoading ? (
         <React.Fragment>
           <h1>Edit Review</h1>
           <FormWrapper errors={errors}>
