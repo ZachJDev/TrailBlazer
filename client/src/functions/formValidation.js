@@ -78,7 +78,7 @@ export const validateSignUpForm = (
 ) => {
   try {
     validateFormEntry(username, "INVALID_USERNAME", isNotEmpty);
-    validateFormEntry(password, "INVALID_PASSWORD", (val) => val.length > 3);
+    validateFormEntry(password, "INVALID_PASSWORD", (val) => val.length >= 3);
     validateFormEntry(emailAddress, "INVALID_EMAIL", (val) =>
       emailRegex.test(val)
     );

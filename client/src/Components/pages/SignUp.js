@@ -1,25 +1,28 @@
 import React from "react";
-import usePostBody from "../../hooks/usePostBody";
 import SignUpForm from "../Forms/SignUpForm";
 import FormWrapper from "../Forms/FormWrapper";
 import useSetAsArray from "../../hooks/useSetAsArray";
 
 import { validateSignUpForm } from "../../functions/formValidation";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation } from "react-query";
+import { signUp } from "../../API/API";
 
 function SignUp({ history }) {
   const [errors, addError] = useSetAsArray();
-  const [setBodyAndPost] = usePostBody("/api/auth/signup");
+  const submitSignup = useMutation(["signup"], (obj) => signUp(obj)(), {
+    onSuccess: (postResponse) => {
+      if (postResponse.success) history.push("/Login");
+      else if (postResponse.errorMessage) {
+        addError(postResponse.errorMessage);
+      }
+    },
+  });
 
   // unneeded async
   const handleSubmit = async function (obj) {
     if (validateSignUpForm(obj, addError)) {
-      setBodyAndPost(obj).then((postResponse) => {
-        if (postResponse.status === 200) history.push("/Login");
-        else if (postResponse.errorMessage) {
-          addError(postResponse.errorMessage);
-        }
-      });
+      submitSignup.mutate(obj);
     }
   };
 

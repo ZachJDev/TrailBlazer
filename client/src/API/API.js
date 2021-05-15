@@ -14,6 +14,7 @@ import postNewPark from "./Parks/postNewPark";
 import deletePark from "./Parks/deletePark";
 
 import logout from "./Auth/logout";
+import signUp from "./Auth/signUp";
 
 import searchReq from "./Search/searchReq";
 
@@ -32,4 +33,5 @@ export {
   getReviewById,
   editReview,
   searchReq,
+  signUp,
 };
