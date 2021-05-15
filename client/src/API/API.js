@@ -6,6 +6,7 @@ import getTrail from "./Trails/getTrail";
 import postNewReview from "./Reviews/postNewReview";
 import getReviewByUserTrail from "./Reviews/getReviewByUserTrail";
 import editReview from "./Reviews/editReview";
+import getReviewById from "./Reviews/getReviewById";
 
 import editPark from "./Parks/editPark";
 import getPark from "./Parks/getPark";
@@ -26,5 +27,6 @@ export {
   postNewPark,
   deletePark,
   getReviewByUserTrail,
+  getReviewById,
   editReview,
 };
