@@ -11,42 +11,50 @@ import FormInputText from "../FormInputs/FormInputText";
 
 import useInputState from "../../hooks/useInputState";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
+import { useMutation } from "react-query";
+import { searchReq } from "../../API/API";
 
 function Search({ location, history }) {
   const params = new URLSearchParams(location.search);
   let initSearchType = params.get("type");
   if (!(initSearchType === "Park" || initSearchType === "Trail")) {
+    // stop any errors with manually setting the URL
     initSearchType = "Park";
   }
 
   const [searchType, setSearchType] = useState(initSearchType);
   const [searchTerm, setSearchTerm] = useInputState(params.get("term") || "");
-  let [searchResults, setSearchResults] = useState([]);
+  let [searchResults, setSearchResults] = useState({});
   let [resultsList, setResultsList] = useState([]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    fetch(`/api/search/${searchType}?q=${searchTerm}`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((results) => {
+  const searchSubmit = useMutation(
+    ["search", searchTerm, searchType],
+    ({ searchType, searchTerm }) => searchReq({ searchType, searchTerm })(),
+    {
+      onSuccess: (results) => {
         params.set("type", searchType);
         params.set("term", searchTerm);
         history.replace({ search: params.toString() });
         setSearchResults(results);
-      });
+      },
+    }
+  );
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    searchSubmit.mutate({ searchType, searchTerm });
   };
   const handleDropdown = (type) => {
     setSearchType(type);
   };
   useEffect(() => {
-    if (searchResults.length > 0) {
-      if (searchType === "Trail") {
+    const { results, type } = searchResults;
+    if (results?.length > 0) {
+      if (type === "trail") {
         setResultsList(
-          searchResults.map((trail) => (
+          results.map((trail) => (
             <TrailCard
-              key={trail.trailId}
+              key={`trail-${trail.trailId}`}
               park={trail.park}
               trailId={trail.trailId}
               name={trail.name}
@@ -55,12 +63,12 @@ function Search({ location, history }) {
             />
           ))
         );
-      } else if (searchType === "Park") {
+      } else if (type === "park") {
         setResultsList(
-          searchResults.map((park) => {
+          results.map((park) => {
             return (
               <SearchResultContainer
-                key={park.parkId}
+                key={`park-${park.parkId}`}
                 name={park.name}
                 city={park.city}
                 state={park.state}
@@ -76,9 +84,9 @@ function Search({ location, history }) {
 
   useEffect(() => {
     if (searchTerm !== "") {
-      handleSearch(new Event("submit")); // Dummy event to make sure an error isn't thrown when handleSearch expects one.
+      searchSubmit.mutate({ searchType, searchTerm });
     }
-  }, []);
+  }, []); // I'm going to leave this emptyDeps warning for now...
 
   return (
     <div className={"search-page"}>
@@ -120,7 +128,9 @@ function Search({ location, history }) {
         />
       </Form>
       <section className="results">
-        {searchResults.length > 0 ? resultsList : "There's nothing to show!"}
+        {searchResults.results?.length > 0
+          ? resultsList
+          : "There's nothing to show!"}
       </section>
     </div>
   );

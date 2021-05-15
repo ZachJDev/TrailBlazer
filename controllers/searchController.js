@@ -8,7 +8,7 @@ exports.search = (req, res) => {
   if (type === "Park") {
     db.Park.findAll({ where: { name: { [Op.like]: `%${query}%` } } }).then(
       (results) => {
-        res.json(results);
+        res.json({ results, type: "park" });
       }
     );
   }
@@ -45,7 +45,10 @@ exports.search = (req, res) => {
             trailRating.dataValues
           );
         });
-        res.json(Object.keys(trails).map((tr) => trails[tr])); // The Search component only works with arrays
+        res.json({
+          type: "trail",
+          results: Object.keys(trails).map((tr) => trails[tr]),
+        }); // The Search component only works with arrays
       });
   }
 };

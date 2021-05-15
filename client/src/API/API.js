@@ -15,6 +15,8 @@ import deletePark from "./Parks/deletePark";
 
 import logout from "./Auth/logout";
 
+import searchReq from "./Search/searchReq";
+
 export {
   postNewTrail,
   deleteTrail,
@@ -29,4 +31,5 @@ export {
   getReviewByUserTrail,
   getReviewById,
   editReview,
+  searchReq,
 };
