@@ -8,6 +8,7 @@ import getReviewByUserTrail from "./Reviews/getReviewByUserTrail";
 import editReview from "./Reviews/editReview";
 import getReviewById from "./Reviews/getReviewById";
 import getReviewsByUserId from "./Reviews/getReviewsByUserId";
+import deleteReview from "./Reviews/deleteReview";
 
 import editPark from "./Parks/editPark";
 import getPark from "./Parks/getPark";
@@ -50,4 +51,5 @@ export {
   getUserData,
   deleteUser,
   getReviewsByUserId,
+  deleteReview,
 };

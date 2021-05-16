@@ -15,7 +15,8 @@ import "./TrailReview.css";
 import ReviewComments from "../ReviewComments/ReviewComments";
 import withHeader from "../../HigherOrderComponents/withHeader";
 import { ReviewProvider } from "../../contexts/ReviewContext";
-import useDeleteReview from "../../hooks/Reviews/useDeleteReview";
+import { useMutation } from "react-query";
+import { deleteReview } from "../../API/API";
 
 let ratingIcons = {
   difficulty: faMountain,
@@ -42,16 +43,23 @@ export default function TrailReview({
   trail = {},
   refreshReviews,
 }) {
-  const sendDelete = useDeleteReview(reviewId);
+  const submitDeleteReview = useMutation(
+    ["deleteReview", reviewId],
+    (reviewId) => deleteReview(reviewId)(),
+    {
+      onSuccess: (deleteRes) => {
+        if (deleteRes.success) {
+          refreshReviews();
+        }
+      },
+    }
+  );
   const handleDelete = async () => {
     const check = window.confirm(
       "Warning: Deleting a review is a permanent procedure. Continue?"
     );
     if (check) {
-      const deleteRes = await sendDelete();
-      if (deleteRes.success) {
-        refreshReviews();
-      }
+      await submitDeleteReview.mutate(reviewId);
     }
   };
   return (
