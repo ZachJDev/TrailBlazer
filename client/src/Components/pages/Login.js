@@ -8,7 +8,7 @@ import FormInputPassword from "../FormInputs/FormInputPassword";
 import { UserContext } from "../../contexts/UserContext";
 import withHelmet from "../../HigherOrderComponents/withHelmet";
 
-function Login({ history }) {
+function Login({ history, location }) {
   const [username, setUsername] = useInputState("");
   const [password, setPassword] = useInputState("");
   const { user, updateUser, errors } = useContext(UserContext);
@@ -19,8 +19,10 @@ function Login({ history }) {
   };
 
   useEffect(() => {
-    if (user.status === 200) history.goBack();
-  }, [errors]);
+    if (user.status === 200) {
+      history.goBack();
+    }
+  }, [errors, history, user]);
 
   return (
     <div
