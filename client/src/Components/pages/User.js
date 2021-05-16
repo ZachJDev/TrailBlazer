@@ -1,41 +1,48 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Button } from "react-bootstrap";
-import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
 
-import { UserContext } from "../../contexts/UserContext";
-import useGetPayload from "../../hooks/useGetPayload";
 import ProfileHeader from "../Profile/ProfileHeader";
-import useBool from "../../hooks/useBool";
+
 import ProfileReviews from "../Profile/ProfileReviews";
 import ProfileBio from "../Profile/ProfileBio";
 import Col from "react-bootstrap/Col";
 import withHeader from "../../HigherOrderComponents/withHeader";
 
-import useDeleteUser from "../../hooks/Users/useDeleteUser";
+import { useMutation, useQuery } from "react-query";
+import { deleteUser, getUserData } from "../../API/API";
 
 export default function User({ match, history }) {
   const [userInfo, setUserInfo] = useState(null);
   const [title, setTitle] = useState("TrailBlazer | Hike Your Way");
-  const [isLoaded, flipIsloaded] = useBool(false);
-  const [getUserInfo] = useGetPayload(`/api/user/${match.params.userId}`);
-  const sendDelete = useDeleteUser(userInfo?.userId);
+  const { userId } = match.params;
 
-  useEffect(() => {
-    getUserInfo().then((info) => {
-      setUserInfo(info);
-      setTitle(info.username);
-    });
-  }, []);
-
-  const handleDelete = async () => {
-    const deleteRes = await sendDelete();
-    if (deleteRes.success) {
-      history.push("/");
-    } else {
-      // TODO: handle User Delete Error
-      alert("Something went wrong. Please try again later.");
+  const submitDelete = useMutation(
+    ["deleteUser", userId],
+    () => deleteUser(userId)(),
+    {
+      onSuccess: (deleteRes) => {
+        if (deleteRes.success) {
+          history.push("/");
+        } else {
+          // TODO: handle User Delete Error
+          alert("Something went wrong. Please try again later.");
+        }
+      },
     }
+  );
+
+  const { isLoading, isError } = useQuery(
+    ["getUserData", userId],
+    getUserData(userId),
+    {
+      onSuccess: (info) => {
+        setUserInfo(info);
+        setTitle(info.username);
+      },
+    }
+  );
+  const handleDelete = async () => {
+    submitDelete.mutate(userId);
   };
 
   return (

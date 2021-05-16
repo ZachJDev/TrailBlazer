@@ -16,6 +16,9 @@ import deletePark from "./Parks/deletePark";
 import logout from "./Auth/logout";
 import signUp from "./Auth/signUp";
 
+import getUserData from "./Users/getUserData";
+import deleteUser from "./Users/deleteUser";
+
 import searchReq from "./Search/searchReq";
 
 export {
@@ -34,4 +37,6 @@ export {
   editReview,
   searchReq,
   signUp,
+  getUserData,
+  deleteUser,
 };

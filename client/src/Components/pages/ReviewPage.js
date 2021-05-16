@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useGetPayload from "../../hooks/useGetPayload";
 import TrailReview from "../Reviews/TrailReview";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
