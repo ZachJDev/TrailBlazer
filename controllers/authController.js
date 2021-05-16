@@ -122,6 +122,7 @@ exports.getUserData = (req, res, next) => {
     db.User.findOne({ where: { userId: req.session.userId } })
       .then((user) => {
         res.status(200).json({
+          status: 200,
           username: user.username,
           userId: user.userId,
           lengthMeasurement: user.lengthMeasurement,

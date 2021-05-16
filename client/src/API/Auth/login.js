@@ -10,6 +10,8 @@ export default function login(body) {
       },
       body: JSON.stringify(body),
     });
-    return response.json();
+    const status = response.status;
+    const resBody = await response.json();
+    return { ...resBody, status };
   };
 }

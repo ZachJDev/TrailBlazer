@@ -1,9 +1,9 @@
 import fetch from "node-fetch";
-import { USER_PREFIX } from "../../config/APIRoutes";
+import { AUTH_PREFIX } from "../../config/APIRoutes";
 
-export default function getUserDataAuth(userId) {
+export default function getUserDataAuth() {
   return async () => {
-    const response = await fetch(`${USER_PREFIX}/${userId}`);
+    const response = await fetch(`${AUTH_PREFIX}/userData`);
     return response.json();
   };
 }

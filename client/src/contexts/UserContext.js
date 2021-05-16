@@ -1,6 +1,6 @@
-import React, { createContext, useEffect, useState } from "react";
-import usePostBody from "../hooks/usePostBody";
-import useGetPayload from "../hooks/useGetPayload";
+import React, { createContext, useState } from "react";
+import { getUserDataAuth, login } from "../API/API";
+import { useMutation, useQuery } from "react-query";
 
 export const UserContext = createContext(null); // not sure  if I should pass null here, but I don't
 // plan on using the default value.
@@ -8,31 +8,31 @@ export const UserContext = createContext(null); // not sure  if I should pass nu
 export function UserProvider({ children }) {
   const [user, setUser] = useState({});
   const [errors, setErrors] = useState({});
-  const [postLogin] = usePostBody("/api/auth/login");
-  const [pl] = useGetPayload("/api/auth/userData");
 
-  const updateUser = (form) => {
-    postLogin(form).then((payload) => {
+  const submitLogin = useMutation(["login"], (body) => login(body)(), {
+    onSuccess: (payload) => {
       if (payload.status === 200) {
         setUser(payload);
         setErrors({});
       } else {
         setErrors(payload);
       }
-    });
-  };
+    },
+  });
+
   const userExists = (() =>
     !(Object.keys(user).length === 0 && user.constructor === Object))();
   const clearUser = () => setUser({});
 
-  useEffect(() => {
-    // Check if the user object is empty
-    if (Object.keys(user).length === 0 && user.constructor === Object) {
-      pl().then((user) => {
-        setUser(user);
-      });
-    }
-  }, []);
+  useQuery(["getUserData"], getUserDataAuth(), {
+    onSuccess: (res) => {
+      setUser(res);
+    },
+  });
+
+  const updateUser = (form) => {
+    submitLogin.mutate(form);
+  };
 
   return (
     <UserContext.Provider

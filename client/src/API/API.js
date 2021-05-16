@@ -20,8 +20,10 @@ import deleteComment from "./Comments/deleteComment";
 import editComment from "./Comments/editComment";
 import getAllCommentsForReview from "./Comments/getAllCommentsForReview";
 
+import login from "./Auth/login";
 import logout from "./Auth/logout";
 import signUp from "./Auth/signUp";
+import getUserDataAuth from "./Auth/getUserDataAuth";
 
 import getUserData from "./Users/getUserData";
 import deleteUser from "./Users/deleteUser";
@@ -52,4 +54,6 @@ export {
   deleteUser,
   getReviewsByUserId,
   deleteReview,
+  getUserDataAuth,
+  login,
 };
