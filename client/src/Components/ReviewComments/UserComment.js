@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useMutation } from "react-query";
 
 // Components
 import CommentHeader from "./CommentHeader";
@@ -15,13 +16,13 @@ import { UserContext } from "../../contexts/UserContext";
 // Hooks
 import useInputState from "../../hooks/useInputState";
 import useBool from "../../hooks/useBool";
-import useAddComment from "../../hooks/comments/useAddComment";
-import useEditComment from "../../hooks/comments/useEditComment";
-import useDeleteComment from "../../hooks/comments/useDeleteComment";
 
 // Style
 import "./UserComment.css";
 import "./Comment.css";
+
+// Routes
+import { deleteComment, editComment, postNewComment } from "../../API/API";
 
 export default function UserComment({ comment, depth }) {
   const [text, setText] = useInputState(comment.text);
@@ -29,30 +30,63 @@ export default function UserComment({ comment, depth }) {
   const [isReplying, flipIsReplying] = useBool(false);
   const { reviewId, refreshComments } = useContext(ReviewContext);
   const { user } = useContext(UserContext);
-  const sendEdit = useEditComment();
-  const sendReply = useAddComment();
-  const sendDelete = useDeleteComment();
 
+  const submitReply = useMutation(
+    ["replyTo", comment.commentId],
+    (body) => postNewComment(body)(),
+    {
+      onSuccess: (res) => {
+        refreshComments();
+      },
+      onError: (res) => {
+        alert("Something went wrong. Please try again later.");
+      },
+    }
+  );
   const resetText = () => {
     setText(comment.text);
     flipIsEditing();
   };
 
+  const submitEdit = useMutation(
+    ["replyTo", comment.commentId],
+    (body) => editComment(body)(),
+    {
+      onSuccess: (res) => {
+        if (res.success) {
+          flipIsEditing();
+        }
+      },
+      onError: (res) => {
+        alert("Something went wrong. Please try again later.");
+      },
+    }
+  );
+
+  const submitDelete = useMutation(
+    ["replyTo", comment.commentId],
+    (body) => deleteComment(body)(),
+    {
+      onSuccess: (res) => {
+        refreshComments();
+      },
+      onError: (res) => {
+        alert("Something went wrong. Please try again later.");
+      },
+    }
+  );
+
   const handleEdit = async () => {
-    const editRequest = await sendEdit({
+    await submitEdit.mutate({
       text,
       commentId: comment.commentId,
       userId: comment.user.userId,
       reviewId,
     });
-    if (editRequest.success) {
-      // refreshCommentSection()
-      flipIsEditing();
-    }
   };
 
   const handleReply = async (replyText) => {
-    await sendReply({
+    await submitReply.mutate({
       text: replyText,
       parentId: comment.commentId,
       userId: user.userId,
@@ -61,11 +95,10 @@ export default function UserComment({ comment, depth }) {
   };
 
   const handleDelete = async () => {
-    await sendDelete({
+    await submitDelete.mutate({
       commentId: comment.commentId,
       userId: comment.user.userId,
     });
-    await refreshComments();
   };
 
   let commentComponent;

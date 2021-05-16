@@ -3,12 +3,13 @@ import CommentTree from "./CommentTree";
 
 import "./ReviewComments.css";
 import Button from "react-bootstrap/Button";
-import usePostBody from "../../hooks/usePostBody";
 import useBool from "../../hooks/useBool";
 import CommentEditMode from "./CommentEditMode";
 
 import { ReviewContext } from "../../contexts/ReviewContext";
 import { UserContext } from "../../contexts/UserContext";
+import { useMutation } from "react-query";
+import { postNewComment } from "../../API/API";
 
 const DEFAULT_DEPTH = 3;
 const DEFAULT_SHOWN = 2;
@@ -20,24 +21,35 @@ export default function ReviewComments() {
   const { user } = useContext(UserContext);
   const [displayComments, setDisplayComments] = useState([]);
   const [shown, setShown] = useState(DEFAULT_SHOWN);
-  const [postNewComment] = usePostBody("/api/comments/add");
   const [isAdding, flipAdding] = useBool(false);
   const [newCommentText, setNewCommentText] = useState("");
 
+  const submitNewComment = useMutation(
+    ["newComment"],
+    (body) => postNewComment(body)(),
+    {
+      onSuccess: async (res) => {
+        await refreshComments();
+        setShown(totalComments);
+        flipAdding();
+        setNewCommentText("");
+      },
+      onError: (res) => {
+        alert("something went wrong, try again later.");
+      },
+    }
+  );
   useEffect(() => {
     setDisplayComments(comments);
   }, [comments]);
 
   const handlePostNewComment = async () => {
-    await postNewComment({
+    await submitNewComment.mutate({
       text: newCommentText,
       parentId: null,
       reviewId,
       userId: user.userId,
     });
-    await refreshComments();
-    setShown(totalComments);
-    flipAdding();
   };
 
   const handleCancelNewComment = () => {

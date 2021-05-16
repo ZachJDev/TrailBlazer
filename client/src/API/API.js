@@ -14,6 +14,11 @@ import getPark from "./Parks/getPark";
 import postNewPark from "./Parks/postNewPark";
 import deletePark from "./Parks/deletePark";
 
+import postNewComment from "./Comments/postNewComment";
+import deleteComment from "./Comments/deleteComment";
+import editComment from "./Comments/editComment";
+import getAllCommentsForReview from "./Comments/getAllCommentsForReview";
+
 import logout from "./Auth/logout";
 import signUp from "./Auth/signUp";
 
@@ -23,6 +28,10 @@ import deleteUser from "./Users/deleteUser";
 import searchReq from "./Search/searchReq";
 
 export {
+  postNewComment,
+  deleteComment,
+  editComment,
+  getAllCommentsForReview,
   postNewTrail,
   deleteTrail,
   editTrail,

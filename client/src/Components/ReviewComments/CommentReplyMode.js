@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import FlexWrapper from "../Wrappers/FlexWrapper";
 import Button from "react-bootstrap/Button";
-import { ReviewContext } from "../../contexts/ReviewContext";
 
 export default function CommentEditMode({
   text = "",
@@ -10,11 +9,9 @@ export default function CommentEditMode({
   submitOnClick,
 }) {
   const [replyText, setReplyText] = useState("");
-  const { refreshComments } = useContext(ReviewContext);
 
   const handleSubmit = async () => {
     await submitOnClick(replyText);
-    await refreshComments();
     cancelReply();
   };
 

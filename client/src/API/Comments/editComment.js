@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { COMMENT_PREFIX } from "../../config/APIRoutes";
 
-export default function editComment(commentId, body = {}) {
+export default function editComment(body = {}) {
   return async () => {
     const response = await fetch(`${COMMENT_PREFIX}/edit`, {
       method: "PUT",

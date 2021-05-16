@@ -7,21 +7,34 @@ import FlexWrapper from "../Wrappers/FlexWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import useBool from "../../hooks/useBool";
-import usePostBody from "../../hooks/usePostBody";
 import { ReviewContext } from "../../contexts/ReviewContext";
 import { UserContext } from "../../contexts/UserContext";
+import { useMutation } from "react-query";
+import { postNewComment } from "../../API/API";
 
 export default function Comment({ comment, depth }) {
   const [isReplying, flipIsReplying] = useBool(false);
-  const [postReply] = usePostBody("/api/comments/add");
-  const { reviewId } = useContext(ReviewContext);
+  const { reviewId, refreshComments } = useContext(ReviewContext);
   const { user } = useContext(UserContext);
 
   const commentAuthor = comment.user.username;
   const commentText = comment.text;
 
+  const submitReply = useMutation(
+    ["replyTo", comment.commentId],
+    (body) => postNewComment(body)(),
+    {
+      onSuccess: (res) => {
+        refreshComments();
+      },
+      onError: (res) => {
+        alert("Something went wrong. Please try again later.");
+      },
+    }
+  );
+
   const handleReply = async (replyText) => {
-    await postReply({
+    await submitReply.mutate({
       text: replyText,
       parentId: comment.commentId,
       userId: user.userId,

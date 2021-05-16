@@ -3,7 +3,7 @@ import { COMMENT_PREFIX } from "../../config/APIRoutes";
 
 export default function postNewComment(body) {
   return async () => {
-    const response = await fetch(`${COMMENT_PREFIX}/new`, {
+    const response = await fetch(`${COMMENT_PREFIX}/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
