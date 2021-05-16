@@ -7,6 +7,7 @@ import postNewReview from "./Reviews/postNewReview";
 import getReviewByUserTrail from "./Reviews/getReviewByUserTrail";
 import editReview from "./Reviews/editReview";
 import getReviewById from "./Reviews/getReviewById";
+import getReviewsByUserId from "./Reviews/getReviewsByUserId";
 
 import editPark from "./Parks/editPark";
 import getPark from "./Parks/getPark";
@@ -39,4 +40,5 @@ export {
   signUp,
   getUserData,
   deleteUser,
+  getReviewsByUserId,
 };

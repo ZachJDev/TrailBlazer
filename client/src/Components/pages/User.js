@@ -45,6 +45,13 @@ export default function User({ match, history }) {
     submitDelete.mutate(userId);
   };
 
+  if (isLoading) {
+    return <h2>Loading</h2>;
+  }
+  if (isError) {
+    return <h2>Something went wrong.. Please try again later</h2>;
+  }
+
   return (
     <React.Fragment>
       <Helmet>

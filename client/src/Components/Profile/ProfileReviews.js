@@ -1,18 +1,29 @@
-import React, { useEffect, useState } from "react";
-import useGetPayload from "../../hooks/useGetPayload";
+import React, { useState } from "react";
 import TrailReview from "../Reviews/TrailReview";
 
 import "./ProfileReviews.css";
+import { useQuery } from "react-query";
+import { getReviewsByUserId } from "../../API/API";
 
 export default function ProfileReviews({ userId, username = "" }) {
   const [reviews, setReviews] = useState(null);
-  const [reviewsRes] = useGetPayload(`/api/reviews/search/userId=${userId}`);
+  const { isLoading, isError } = useQuery(
+    ["getReviews", userId],
+    getReviewsByUserId(userId),
+    {
+      onSuccess: (res) => {
+        setReviews(res.reviews);
+      },
+    }
+  );
 
-  useEffect(() => {
-    reviewsRes().then((res) => {
-      setReviews(res.reviews);
-    });
-  }, []);
+  if (isLoading) {
+    return <h2>Loading</h2>;
+  }
+  if (isError) {
+    return <h2>Something went wrong.. Please try again later</h2>;
+  }
+
   return (
     <div className={"profile-reviews"}>
       {reviews?.length > 0 ? (
@@ -20,6 +31,7 @@ export default function ProfileReviews({ userId, username = "" }) {
           return (
             <TrailReview
               {...review}
+              key={review.ReviewId}
               reviewId={review.ReviewId}
               username={username}
               useComments={false}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import TrailReview from "../Reviews/TrailReview";
 import { Helmet } from "react-helmet";
 import { useQuery } from "react-query";
@@ -19,20 +19,19 @@ export default function ReviewPage({ match, history }) {
           setReview(reviewRes.review);
           setTitle(` Review For: ${reviewRes.review.trail.name}`);
         } else {
-          // TODO: Handle Errors better
           alert("Something went wrong. Please try again later.");
         }
       },
     }
   );
 
-  // useEffect(() => {
-  //   getReview().then((reviewRes) => {});
-  // }, []);
-
   const handleReviewRedirect = () => {
     history.push(`/trail/${review.trailId}/reviews/edit`);
   };
+
+  if (isError) {
+    return <h2> Something Went Wrong. Please try again later</h2>;
+  }
 
   return (
     !isLoading && (
