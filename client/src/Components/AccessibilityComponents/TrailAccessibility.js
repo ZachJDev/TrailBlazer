@@ -29,6 +29,7 @@ export default function TrailAccessibility({ trailId }) {
   );
   const { isLoading } = useQuery(["ratings", trailId], getRatings(trailId), {
     refetchOnWindowFocus: false,
+    retry: false,
     onSuccess: (ratings) => {
       if (ratings.success) {
         setState({

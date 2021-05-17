@@ -20,7 +20,7 @@ function Login({ history, location }) {
 
   useEffect(() => {
     if (user.status === 200) {
-      history.goBack();
+      history.replace(`/user/${user.userId}`);
     }
   }, [errors, history, user]);
 
