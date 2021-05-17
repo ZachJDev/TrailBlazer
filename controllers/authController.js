@@ -69,6 +69,7 @@ exports.signUp = (req, res, next) => {
     emailAddress,
     measure,
     isAdmin,
+    bio,
   } = req.body;
   db.User.findOne({
     where: { [Op.or]: [{ email: emailAddress }, { username }] },
@@ -94,6 +95,7 @@ exports.signUp = (req, res, next) => {
         email: emailAddress,
         lengthMeasurement: measure,
         isAdmin,
+        bio,
       });
     })
     .then((user) => {

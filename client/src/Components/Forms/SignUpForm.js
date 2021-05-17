@@ -8,12 +8,14 @@ import useBool from "../../hooks/useBool";
 import FormInputText from "../FormInputs/FormInputText";
 import FormInputPassword from "../FormInputs/FormInputPassword";
 import FormInputSelect from "../FormInputs/FormInputSelect";
+import FormInputTextArea from "../FormInputs/FormInputTextArea";
 
 export default function SignUpForm({ handleSubmit }) {
   const [username, setUsername] = useInputState("");
   const [password, setPassword] = useInputState("");
   const [confirmPassword, setConfirmPassword] = useInputState("");
   const [emailAddress, setEmailAddress] = useInputState("");
+  const [bio, setBio] = useInputState("");
   const [measure, setMeasure] = useInputState("Miles");
   const [isAdmin, switchAdmin] = useBool(false);
 
@@ -26,6 +28,7 @@ export default function SignUpForm({ handleSubmit }) {
       emailAddress,
       measure,
       isAdmin,
+      bio,
     });
   };
 
@@ -65,6 +68,12 @@ export default function SignUpForm({ handleSubmit }) {
         label="Preferred Length Measurement:"
         name="length"
         handleChange={setMeasure}
+      />
+      <FormInputTextArea
+        value={bio}
+        handleChange={setBio}
+        name={"bio"}
+        label={"Tell us about yourself:"}
       />
       <Form.Check
         id={"AdminCheck"}
