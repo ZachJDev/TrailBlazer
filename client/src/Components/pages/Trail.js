@@ -65,17 +65,16 @@ export default function Trail({ match, history }) {
 
   const alertComingSoon = () => alert("Functionality Coming Soon!");
 
-  if (trailIsLoading || reviewsIsLoading) return <h1>Loading</h1>;
-  if (trailInfo.status === 404) return <h1>Oops! we can't find that trail</h1>;
+  if (trailIsLoading || reviewsIsLoading) return <h1>...Loading</h1>;
   const { length, name, description } = trailInfo;
 
   return (
     <React.Fragment>
       <Helmet>
-        <title>{name}</title>
+        <title>{name || "TrailBlazer | Hike Your Way"}</title>
       </Helmet>
       <div>
-        {trailInfo.park ? (
+        {trailInfo?.park ? (
           <InfoContainer>
             <MainInfoTrail
               name={name}
@@ -110,7 +109,7 @@ export default function Trail({ match, history }) {
             </section>
           </InfoContainer>
         ) : (
-          <h1>Loading...</h1>
+          <h1>Oops! we can't find that trail</h1>
         )}
       </div>
     </React.Fragment>

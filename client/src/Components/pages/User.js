@@ -55,7 +55,7 @@ export default function User({ match, history }) {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{`${title}'s Page`}</title>
+        <title>{`${title}'s Page` || "TrailBlazer | Hike Your Way"}</title>
       </Helmet>
       {userInfo !== null ? (
         <Col>

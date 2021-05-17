@@ -57,7 +57,7 @@ function Park({ match, history }) {
   return (
     <React.Fragment>
       <Helmet>
-        <title>{parkInfo.name}</title>
+        <title>{parkInfo.name || "TrailBlazer | Hike Your Way"}</title>
       </Helmet>
       <div className="park-info">
         {parkInfo.status === 200 ? (
