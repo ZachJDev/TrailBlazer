@@ -19,11 +19,11 @@ import { useMutation } from "react-query";
 import { deleteReview } from "../../API/API";
 
 let ratingIcons = {
-  difficulty: faMountain,
-  goodForGroups: faUsers,
-  parking: faParking,
-  petFriendly: faPaw,
-  wheelchairAcc: faWheelchair,
+  difficulty: { name: "Difficulty", icon: faMountain },
+  goodForGroups: { name: "Good For Groups?", icon: faUsers },
+  parking: { name: "Parking", icon: faParking },
+  petFriendly: { name: "Pet Friendly?", icon: faPaw },
+  wheelchairAcc: { name: "Wheelchair Accessible?", icon: faWheelchair },
 };
 
 export default function TrailReview({
@@ -107,7 +107,8 @@ export default function TrailReview({
               return (
                 <TrailAccessibilityIcon
                   key={rating}
-                  icon={ratingIcons[rating]}
+                  icon={ratingIcons[rating].icon}
+                  titleName={ratingIcons[rating].name}
                   name={rating}
                   rating={ratings[rating]}
                 />

@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const path = require('path') // Only needed for build
+const path = require("path"); // Only needed for build
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,11 +39,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // For serving the build.
-// app.use(express.static(path.join(__dirname, '/client/build')))
+app.use(express.static(path.join(__dirname, "/client/build")));
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/client/build', 'index.html'))
-// })
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build", "index.html"));
+});
 
 //Routes
 const Routes = require("./configs/routeConfig");

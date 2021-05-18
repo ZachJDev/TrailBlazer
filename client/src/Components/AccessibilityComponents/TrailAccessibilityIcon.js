@@ -15,11 +15,11 @@ const MINIMUM_RATINGS = 1;
 export default function TrailAccessibilityIcon({
   icon = "",
   name,
+  titleName,
   rating,
   freq,
   numRatings = Infinity, // Kind of a hack default to keep css classes correct for reviews.
 }) {
-  let [tooltipClass, setTooltipClass] = useState("icon-tooltip");
   let cssClass;
   // What a MESS!! there has to be a better way to do this...
   if (
@@ -48,35 +48,12 @@ export default function TrailAccessibilityIcon({
         : `${rating}`;
   }
 
-  const handleMouseOver = (e) => setTooltipClass("icon-tooltip show");
-  const handleMouseLeave = (e) => setTooltipClass("icon-tooltip");
-
   return (
-    <div
-      role={"img text"}
-      aria-label={"rating"}
-      title={`${freq} out of ${numRatings} people thought this trail ${
-        name === "Parking" ? "had parking" : "was"
-      } ${caption.toLowerCase()}`}
-      className="icon-block"
-    >
-      <div
-        onMouseLeave={handleMouseLeave}
-        onMouseOver={handleMouseOver}
-        className="mouseCapture"
-      >
-        <span className={`rating-icon ${cssClass}`}>
-          <FontAwesomeIcon alt={"asdsa"} icon={icon} />
-        </span>
-        <p className={"caption"}>{caption}</p>
-        {numRatings < Infinity && numRatings >= MINIMUM_RATINGS && (
-          <div className={tooltipClass}>
-            <p>{`${freq} out of ${numRatings} people thought this trail ${
-              name === "Parking" ? "had parking" : "was"
-            } ${caption.toLowerCase()}`}</p>
-          </div>
-        )}
-      </div>
+    <div aria-label={"rating"} title={titleName || name} className="icon-block">
+      <span className={`rating-icon ${cssClass}`}>
+        <FontAwesomeIcon alt={name} icon={icon} />
+      </span>
+      <p className={"caption"}>{caption}</p>
     </div>
   );
 }
