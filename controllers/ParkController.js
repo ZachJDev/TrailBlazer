@@ -1,4 +1,4 @@
-// const {AuthenticationError} = require('../classes/Errors');
+const {getRandomPic} = require('../configs/getRandomConfig')
 const db = require("../models/index");
 
 const getGeocodeAsync = require("../functions/getGeocodeAsync");
@@ -15,11 +15,13 @@ exports.getOne = (req, res, next) => {
       }
     })
     .catch((e) => {
+        console.log(e)
       console.log("Error When Looking for Park");
     });
 };
 
-exports.add = (req, res, next) => {
+exports.add =  async (req, res, next) => {
+    const picUrl =  await getRandomPic();
   let status = 200;
   const { name, address, state, zipCode, city, description } = req.body;
   // 1. confirm that all the required information is present
@@ -36,10 +38,13 @@ exports.add = (req, res, next) => {
     const geocodeParams = {
       address: `${address}, ${city} ${state}, ${zipCode}`,
     };
+    console.log(geocodeParams)
     getGeocodeAsync(geocodeParams)
       .then((res) => {
+          console.log(res)
         const locGeo = res.results[0].geometry;
         return db.Park.create({
+            picUrl,
           name,
           address,
           state,

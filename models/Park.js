@@ -37,6 +37,9 @@ module.exports = (sequelize) => {
       location: {
         type: DataTypes.GEOMETRY("POINT"),
       },
+        picUrl: {
+            type: DataTypes.STRING
+        }
     },
     {
       uniqueKeys: {
