@@ -16,7 +16,23 @@ module.exports = (sequelize) => {
             allowNull: false,
             autoIncrement: true,
         },
+        trailUserPairId: {
+            type: DataTypes.UUID,
+            unique: true
+        }
     });
+
+    Review.addOrUpdate = async ({trailId, userId, title, text}) => {
+        const TrailUserPair = Review.associations.trailUserPair.target;
+        const trailPair = await TrailUserPair.findOrCreate({
+            where: {trailId, userId},
+            defaults: {trailId, userId},
+        });
+        const trailUserPairId = trailPair[0].dataValues.trailUserPairId;
+        const [{reviewId}] = await Review.upsert({trailUserPairId, title, text});
+        console.log(reviewId)
+        return {reviewId};
+    };
 
     Review.getAttributes = () => {
         const attributes = [];

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
+const {Review} = require('../models/index')
 
 const {
   getUser,
@@ -34,5 +35,9 @@ router.delete(
   authDelete,
   reviewController.delete
 );
+
+// Testing Routes:
+
+router.post('/test/review', reviewController.postNewReview)
 
 module.exports = router;

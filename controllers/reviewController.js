@@ -64,6 +64,7 @@ exports.getTrailReviews = (req, res) => {
       });
     });
 };
+
 exports.checkUserForReview = (req, res, next) => {
   db.Review.count({
     where: { userId: req.session.userId || "", trailId: req.params.id }, // empty string if user is not authenticated
@@ -113,6 +114,16 @@ exports.getSingleReview = (req, res, next) => {
     res.status(400).json({ errorMessage: e.message });
   }
 };
+
+exports.postNewReview = async (req, res, next) => {
+    try {
+        const {title, userId, trailId, text} = req.body
+        const payload = await db.Review.addOrUpdate({title,  userId, trailId, text});
+        res.json({success: true, payload})
+    } catch(e) {
+        console.log(e.message);
+    }
+}
 
 exports.postNewTrailReview = (req, res, next) => {
   // with the addition of the userMatches middleware, no longer need to ensure they are logged in here.
