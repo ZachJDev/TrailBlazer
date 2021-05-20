@@ -1,6 +1,8 @@
 const { DataTypes } = require("sequelize");
 const { Op } = require("sequelize");
 
+// Helper Functions
+
 const buildCommentTree = (comments, LoggedInUser) => {
   // used to count actual length of comment section for front-end. (a reply will have a higher key than a sibling)
   let key = 0;
@@ -27,6 +29,8 @@ const countComments = (comments) => {
     return prev + 1 + countComments(cur.childComments);
   }, 0);
 };
+
+// Model Export
 
 module.exports = (sequelize) => {
   // noinspection JSUnresolvedVariable

@@ -3,16 +3,6 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   // noinspection JSUnresolvedVariable,JSUnresolvedFunction
   const TrailRating = sequelize.define("trailRating", {
-    userId: {
-      type: DataTypes.UUID,
-      allowNull: false,
-      primaryKey: true,
-    },
-    trailId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-    },
     starRating: {
       type: DataTypes.INTEGER(1),
     },

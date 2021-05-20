@@ -19,36 +19,39 @@ db.Park = require("./Park")(sequelize, Sequelize);
 db.Trail = require("./Trails")(sequelize, Sequelize);
 db.Review = require("./Reviews")(sequelize, Sequelize);
 db.TrailRating = require("./TrailRatings")(sequelize, Sequelize);
+db.TrailUserPair = require("./TrailUser")(sequelize, Sequelize)
 
-// Before 11/24, I had onl had FKs fon the 'hasMany' relationship, which seems okay from the Sequelize Docs
-// However, that didn't seem to work correctly with trails/Parks, so I just added them all to both.
-
-// User has Many Comments
+// A User has Many Comments
 db.User.hasMany(db.Comment, { foreignKey: "userId" });
 db.Comment.belongsTo(db.User, { foreignKey: "userId" });
 
-// User has many reviews
-db.User.hasMany(db.Review, { foreignKey: "userId" });
-db.Review.belongsTo(db.User, { foreignKey: "userId" });
-
-// Park has many Trails
+//  A Park has many Trails
 db.Park.hasMany(db.Trail, { foreignKey: "parkId" });
 db.Trail.belongsTo(db.Park, { foreignKey: "parkId" });
 
-// Trail has many Reviews
-db.Trail.hasMany(db.Review, { foreignKey: "trailId" });
-db.Review.belongsTo(db.Trail, { foreignKey: "trailId" });
-
-// Review has many Comments
+// A Review has many Comments
 db.Review.hasMany(db.Comment, { foreignKey: "reviewId" });
 db.Comment.belongsTo(db.Review, { foreignKey: "reviewId" });
 
-// Trail Ratings have many users
-db.TrailRating.hasMany(db.User, { foreignKey: "userId" });
-db.User.belongsTo(db.TrailRating, { foreignKey: "userId" });
+// A User has many TrailUserPairs
+db.User.hasMany(db.TrailUserPair, { foreignKey: "userId" });
+db.TrailUserPair.belongsTo(db.User, { foreignKey: "userId" });
 
-// Trail Ratings have many trails
-db.TrailRating.hasMany(db.Trail, { foreignKey: "trailId" });
-db.Trail.belongsTo(db.TrailRating, { foreignKey: "trailId" });
+// A Trail has many TrailUserPairs
+db.Trail.hasMany(db.TrailUserPair, { foreignKey: "trailId" });
+db.TrailUserPair.belongsTo(db.Trail, { foreignKey: "trailId" });
+
+// A TrailUserPair has one Review
+db.TrailUserPair.hasOne(db.Review , { foreignKey: "trailUserPairId" });
+db.Review.belongsTo(db.TrailUserPair, { foreignKey: "trailUserPairId" });
+
+// A TrailUserPair has one TrailRating
+db.TrailUserPair.hasOne(db.TrailRating, { foreignKey: "trailUserPairId" });
+db.TrailRating.belongsTo(db.TrailUserPair, { foreignKey: "trailUserPairId" });
+
+// A Review has one TrailRating
+db.Review.hasOne(db.TrailRating, { foreignKey: "reviewId" } )
+db.TrailRating.belongsTo(db.Review, { foreignKey: "reviewId" })
+
 
 module.exports = db;

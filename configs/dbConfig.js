@@ -1,5 +1,5 @@
 module.exports = {
-  user: process.env.MYSQL_USER
+  user: process.env.MYSQL_USER,
   host: "localhost",
   dbname: 'TrailBlazer_Dev',
   pw: process.env.MYSQL_PASSWORD,
