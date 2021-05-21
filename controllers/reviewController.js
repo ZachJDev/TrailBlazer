@@ -115,7 +115,7 @@ exports.getSingleReview = (req, res, next) => {
   }
 };
 
-exports.postNewReview = async (req, res, next) => {
+exports.AddOrUpdateReview = async (req, res, next) => {
     try {
         const {title, userId, trailId, text} = req.body
         const payload = await db.Review.addOrUpdate({title,  userId, trailId, text});
@@ -238,15 +238,15 @@ exports.getReviews = async (req, res, next) => {
 };
 
 exports.delete = async (req, res, next) => {
-  const ReviewId = req.params.reviewId; // capitalization needs to be fixed in db, and then propagated to all sorts of different places...
+  const reviewId = req.params.reviewId;
   try {
-    const deleteRes = await db.Review.destroy({ where: { ReviewId } });
+    const deleteRes = await db.Review.destroy({ where: { reviewId } });
     if (deleteRes !== 1) {
       res
         .status(400)
         .json({ success: false, errors: ["Review does not Exist"] });
     } else {
-      await db.Comment.destroy({ where: { reviewId: ReviewId } });
+      await db.Comment.destroy({ where: { reviewId} });
       res.status(200).json({ success: true });
     }
   } catch (e) {

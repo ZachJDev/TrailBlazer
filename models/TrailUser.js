@@ -1,6 +1,7 @@
 const {Op} = require('sequelize');
 const {DataTypes} = require('sequelize');
 
+
 module.exports = (sequelize) => {
     // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const TrailUserPair = sequelize.define('trailUserPair', {
@@ -30,9 +31,21 @@ module.exports = (sequelize) => {
         },
     );
 
-    TrailUserPair.getReviewsByTrail = async (trailId, userId = null) => {
-        const Reviews = TrailUserPair.associations.review
-        return await TrailUserPair.findAll({where: {[Op.or]: [{trailId}, {userId}]}, include: [Reviews]})
+    TrailUserPair.getReviewsBase = async (trailOrUser, id) => {
+        const Reviews = TrailUserPair.associations.review;
+        const pairs = await TrailUserPair.findAll({
+            where: {[trailOrUser]: id},
+            attributes: [],
+            include: [{association: Reviews, attributes: ['title', 'text', 'reviewId', 'updatedAt']}],
+        });
+        return pairs.map(stuff => stuff.review);
+    };
+
+    TrailUserPair.getReviewsByTrail = async (trailId) => {
+        return await TrailUserPair.getReviewsBase('trailId', trailId);
+    };
+    TrailUserPair.getReviewsByUserId = async (userId) => {
+        return await TrailUserPair.getReviewsBase('userId', userId);
     }
     TrailUserPair.sync();
     return TrailUserPair;

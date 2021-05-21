@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
-const {Review} = require('../models/index')
+const {TrailUserPair} = require('../models/index')
 
 const {
   getUser,
@@ -8,7 +8,6 @@ const {
   authDelete,
 } = require("../middleware/middleware");
 const reviewController = require("../controllers/reviewController");
-const { userIsAdmin } = require("../middleware/middleware");
 
 // Read
 router.get(
@@ -38,6 +37,9 @@ router.delete(
 
 // Testing Routes:
 
-router.post('/test/review', reviewController.postNewReview)
+router.post('/test/review', reviewController.AddOrUpdateReview)
+
+// router.get('/test/trailId',)
+
 
 module.exports = router;

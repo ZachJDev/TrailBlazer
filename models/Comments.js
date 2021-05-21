@@ -1,10 +1,15 @@
 const { DataTypes } = require("sequelize");
 const { Op } = require("sequelize");
+const {commentCols, reviewCols, userCols} = require('./ColumnNameConfig');
+
+const {COMMENT_ID, TEXT, PARENT_ID} = commentCols;
+const {REVIEW_ID} = reviewCols;
+const {USER_ID} = userCols;
 
 // Helper Functions
 
 const buildCommentTree = (comments, LoggedInUser) => {
-  // used to count actual length of comment section for front-end. (a reply will have a higher key than a sibling)
+  // used to count actual length of commentCols section for front-end. (a reply will have a higher key than a sibling)
   let key = 0;
   const recursiveBuild = (parent) => {
     return comments
@@ -35,25 +40,25 @@ const countComments = (comments) => {
 module.exports = (sequelize) => {
   // noinspection JSUnresolvedVariable
   const Comment = sequelize.define("comment", {
-    userId: {
+    [USER_ID]: {
       type: DataTypes.UUID,
       allowNull: false,
     },
-    text: {
+    [TEXT]: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    commentId: {
+    [COMMENT_ID]: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },
-    parentId: {
+    [PARENT_ID]: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    reviewId: {
+    [REVIEW_ID]: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

@@ -1,50 +1,54 @@
 const {DataTypes} = require('sequelize');
 
+const {parkCols, miscCols} = require('./ColumnNameConfig')
+const {PARK_ID, DESCRIPTION, ADDRESS, NAME, ZIP_CODE, CITY, LOCATION, STATE} = parkCols;
+
+
 module.exports = (sequelize) => {
     // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const Park = sequelize.define(
         'park',
         {
-            parkId: {
+            [PARK_ID]: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
             },
-            name: {
+            [NAME]: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 unique: 'stateUnique',
             },
-            address: {
+            [ADDRESS]: {
                 type: DataTypes.STRING,
             },
-            zipCode: {
+            [ZIP_CODE]: {
                 type: DataTypes.STRING(5),
             },
-            city: {
+            [CITY]: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            state: {
+            [STATE]: {
                 type: DataTypes.STRING(2),
                 allowNull: false,
                 unique: 'stateUnique',
             },
-            description: {
+            [DESCRIPTION]: {
                 type: DataTypes.TEXT('long'),
             },
-            location: {
+            [LOCATION]: {
                 type: DataTypes.GEOMETRY('POINT'),
             },
-            picUrl: {
+            [miscCols.PIC_URL]: {
                 type: DataTypes.STRING,
             },
         },
-        {
+            {
             uniqueKeys: {
                 stateUnique: {
-                    fields: ['state', 'name'],
+                    fields: [STATE, NAME],
                 },
             },
         },

@@ -31,8 +31,8 @@ export default function ProfileReviews({ userId, username = "" }) {
           return (
             <TrailReview
               {...review}
-              key={review.ReviewId}
-              reviewId={review.ReviewId}
+              key={review.reviewId}
+              reviewId={review.reviewId}
               username={username}
               useComments={false}
               showTrail={true}

@@ -1,24 +1,25 @@
 const { DataTypes } = require("sequelize");
+const {STAR_RATING, DIFFICULTY, GROUPS, PARKING, PET_FRIENDLY, WHEELCHAIR_ACC} = require('./ColumnNameConfig').TrailRatingCols
 
 module.exports = (sequelize) => {
   // noinspection JSUnresolvedVariable,JSUnresolvedFunction
   const TrailRating = sequelize.define("trailRating", {
-    starRating: {
+    [STAR_RATING]: {
       type: DataTypes.INTEGER(1),
     },
-    petFriendly: {
+    [PET_FRIENDLY]: {
       type: DataTypes.BOOLEAN,
     },
-    parking: {
+    [PARKING]: {
       type: DataTypes.ENUM("On Trailhead", "Close", "Far", "No Marked Parking"),
     },
-    wheelchairAcc: {
+    [WHEELCHAIR_ACC]: {
       type: DataTypes.BOOLEAN,
     },
-    difficulty: {
+    [DIFFICULTY]: {
       type: DataTypes.ENUM("Easy", "Medium", "Difficult", "Strenuous"),
     },
-    goodForGroups: {
+    [GROUPS]: {
       type: DataTypes.BOOLEAN,
     },
   });

@@ -5,11 +5,11 @@ export default function ProfileReviewContainer({
   trailId,
   title,
   text,
-  ReviewId,
+  reviewId,
 }) {
   return (
     <div>
-      <Link to={`/review/${ReviewId}`}>
+      <Link to={`/review/${reviewId}`}>
         <h3>{title}</h3>
       </Link>
       <p>{text}</p>

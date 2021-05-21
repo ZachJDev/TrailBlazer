@@ -1,22 +1,24 @@
 const {DataTypes} = require('sequelize');
+const {reviewCols, trailUserPairCols} = require('./ColumnNameConfig')
+const {TEXT , REVIEW_ID, TITLE} = reviewCols
 
 module.exports = (sequelize) => {
     // noinspection JSUnresolvedVariable
     const Review = sequelize.define('review', {
-        title: {
+        [TITLE]: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        text: {
+        [TEXT]: {
             type: DataTypes.TEXT,
         },
-        reviewId: {
+        [REVIEW_ID]: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true,
         },
-        trailUserPairId: {
+        [trailUserPairCols.TRAIL_USER_PAIR_ID]: {
             type: DataTypes.UUID,
             unique: true
         }
