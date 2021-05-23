@@ -93,7 +93,7 @@ module.exports = (sequelize) => {
 
     Comment.addComment = async ({reviewId, parentId, userId, text}) => {
         const comment = await Comment.create({userId, parentId, reviewId, text});
-        return {success: true, comment: {[COMMENT_ID]: comment[COMMENT_ID]}};
+        return {[COMMENT_ID]: comment[COMMENT_ID]};
     };
 
     Comment.updateComment = async (commentId, text, userId) => {
@@ -101,15 +101,14 @@ module.exports = (sequelize) => {
             {[TEXT]: text},
             {where: {[COMMENT_ID]: commentId, [USER_ID]: userId}},
         ); // This should stop unauthorized access to other users' comments.
-        return {success: true, comment: {[COMMENT_ID]: comment[COMMENT_ID]}};
+        return {[COMMENT_ID]: comment[COMMENT_ID]};
     };
 
     Comment.deleteComment = async (commentId, userId) => {
-        // Deletes all children as well.
         const comment = await Comment.update({[TEXT]: 'Deleted', [USER_ID]: null}, {
             where: {commentId, userId},
         });
-        return {success: true, [COMMENT_ID]: comment[COMMENT_ID]};
+        return {[COMMENT_ID]: comment[COMMENT_ID]};
     };
     return Comment;
 }

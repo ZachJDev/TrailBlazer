@@ -1,54 +1,69 @@
-const db = require("../models/index");
+const db = require('../models/index');
 
-exports.getByReviewId = (req, res, next) => {
-  db.Comment.findByReviewId(req.params.reviewId, req.user).then((comments) => {
+exports.getByReviewId = async (req, res, next) => {
+    try {
+        const comments = await db.Comment.findByReviewId(req.params.reviewId, req.user);
+        res.json({comments, success: true});
+    } catch (e) {
+        res.json({success: false});
+    }
+
+};
+
+exports.getMultipleReviews = async (req, res, next) => {
+    const reviewIds = req.query.ids.split(',').map((id) => parseInt(id));
+    const comments = await db.Comment.findByMultipleReviewIds(reviewIds, req.user);
     res.json(comments);
-  });
+
 };
 
-exports.getMultipleReviews = (req, res, next) => {
-  const reviewIds = req.query.ids.split(",").map((id) => parseInt(id));
-  db.Comment.findByMultipleReviewIds(reviewIds, req.user).then((comments) => {
-    res.json(comments);
-  });
+exports.postNewComment = async (req, res, next) => {
+    const {text, parentId, reviewId} = req.body;
+    try {
+        if (req.user.matchesRequest) {
+            const commentRes = await db.Comment.addComment({
+                text,
+                parentId,
+                userId: req.user.userId,
+                reviewId,
+            });
+            res.json({success: true, comment: commentRes});
+        } else {
+            res.json({success: false, errors: ['User is not correctly authenticated on server.']});
+        }
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({success: false, errors: ['Something went Wrong.']});
+    }
 };
 
-exports.postNewComment = (req, res, next) => {
-  const { text, parentId, reviewId } = req.body;
-  console.log(text, parentId, reviewId);
-  if (req.user.matchesRequest) {
-    db.Comment.addComment({
-      text,
-      parentId,
-      userId: req.user.userId,
-      reviewId,
-    }).then((commentRes) => {
-      res.json(commentRes);
-    });
-  } else {
-    res.json({
-      success: false,
-      errors: [
-        "User is not correctly authenticated on server. Please log in again and try again",
-      ],
-    });
-  }
-};
+exports.updateComment = async (req, res, next) => {
+    try {
+        const {commentId, text} = req.body;
+        const comment = await db.Comment.updateComment(
+            commentId,
+            text,
+            req.user.userId,
+        );
+        res.json({comment, success: true});
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({success: false});
+    }
 
-exports.updateComment = (req, res, next) => {
-  db.Comment.updateComment(
-    req.body.commentId,
-    req.body.text,
-    req.user.userId
-  ).then((comment) => {
-    res.json(comment);
-  });
+
 };
 
 exports.deleteComment = async (req, res, next) => {
-  const deleteRes = await db.Comment.deleteComment(
-    req.body.commentId,
-    req.body.userId
-  );
-  res.json(deleteRes);
+    try {
+        const deleteRes = await db.Comment.deleteComment(
+            req.body.commentId,
+            req.body.userId,
+        );
+        res.json({success: true, comment: deleteRes});
+    } catch (e) {
+        console.log(e)
+        res.status(500).json({success: false})
+    }
 };
