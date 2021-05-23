@@ -1,22 +1,25 @@
 const {Op} = require('sequelize');
 const {DataTypes} = require('sequelize');
+const {trailCols, trailUserPairCols, userCols, reviewCols} = require('./ColumnNameConfig')
+const {TRAIL_USER_PAIR_ID} = trailUserPairCols
+const {TEXT,TITLE, REVIEW_ID} = reviewCols
 
 
 module.exports = (sequelize) => {
     // noinspection JSUnresolvedVariable,JSUnresolvedFunction
     const TrailUserPair = sequelize.define('trailUserPair', {
-            trailUserPairId: {
+            [TRAIL_USER_PAIR_ID]: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 primaryKey: true,
                 defaultValue: DataTypes.UUIDV4,
             },
-            userId: {
+            [userCols.USER_ID]: {
                 type: DataTypes.UUID,
                 allowNull: false,
                 unique: 'trailUserPair',
             },
-            trailId: {
+            [trailCols.TRAIL_ID]: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
                 unique: 'trailUserPair',
@@ -25,7 +28,7 @@ module.exports = (sequelize) => {
         {
             uniqueKeys: {
                 trailUserPair: {
-                    fields: ['trailId', 'userId'],
+                    fields: [trailCols.TRAIL_ID, userCols.USER_ID],
                 },
             },
         },
@@ -36,16 +39,16 @@ module.exports = (sequelize) => {
         const pairs = await TrailUserPair.findAll({
             where: {[trailOrUser]: id},
             attributes: [],
-            include: [{association: Reviews, attributes: ['title', 'text', 'reviewId', 'updatedAt']}],
+            include: [{association: Reviews, attributes: [TEXT, TITLE, REVIEW_ID, 'updatedAt']}],
         });
-        return pairs.map(stuff => stuff.review);
+        return pairs.map(pair => pair.review);
     };
 
     TrailUserPair.getReviewsByTrail = async (trailId) => {
-        return await TrailUserPair.getReviewsBase('trailId', trailId);
+        return await TrailUserPair.getReviewsBase(trailCols.TRAIL_ID, trailId);
     };
     TrailUserPair.getReviewsByUserId = async (userId) => {
-        return await TrailUserPair.getReviewsBase('userId', userId);
+        return await TrailUserPair.getReviewsBase(userCols.USER_ID, userId);
     }
     TrailUserPair.sync();
     return TrailUserPair;
