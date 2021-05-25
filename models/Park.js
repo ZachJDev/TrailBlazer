@@ -1,8 +1,8 @@
+const {NotFoundError} = require('../classes/Errors');
 const {DataTypes} = require('sequelize');
 
-const {parkCols, miscCols} = require('./ColumnNameConfig')
+const {parkCols, miscCols} = require('./ColumnNameConfig');
 const {PARK_ID, DESCRIPTION, ADDRESS, NAME, ZIP_CODE, CITY, LOCATION, STATE} = parkCols;
-
 
 module.exports = (sequelize) => {
     // noinspection JSUnresolvedVariable,JSUnresolvedFunction
@@ -45,7 +45,7 @@ module.exports = (sequelize) => {
                 type: DataTypes.STRING,
             },
         },
-            {
+        {
             uniqueKeys: {
                 stateUnique: {
                     fields: [STATE, NAME],
@@ -53,6 +53,13 @@ module.exports = (sequelize) => {
             },
         },
     );
+    Park.getById = async (parkId) => {
+        const foundPark = await Park.findByPk(parkId, {include: [Park.associations.trails]});
+        console.log(foundPark)
+        if(!foundPark) throw new NotFoundError('Cannot find Park with that ID')
+        return foundPark.dataValues
+    };
+
     Park.sync({alter: true});
     return Park;
 };
