@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize');
-const {userCols} = require('./ColumnNameConfig');
+const {userCols} = require('../configs/ColumnNameConfig');
 const {USER_ID, BIO, EMAIL, IS_ADMIN, LENGTH_MEASURE, PASSWORD, USERNAME} = userCols;
 
 module.exports = (sequelize) => {

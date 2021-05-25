@@ -1,7 +1,7 @@
 const {NotFoundError} = require('../classes/Errors');
 const {DataTypes} = require('sequelize');
 
-const {parkCols, miscCols} = require('./ColumnNameConfig');
+const {parkCols, miscCols} = require('../configs/ColumnNameConfig');
 const {PARK_ID, DESCRIPTION, ADDRESS, NAME, ZIP_CODE, CITY, LOCATION, STATE} = parkCols;
 
 module.exports = (sequelize) => {

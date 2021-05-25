@@ -1,6 +1,6 @@
 const {Sequelize} = require('./sequelizeGeometryHack');
 const {dbname, user, pw, host, port} = require('../configs/dbConfig');
-const {reviewCols, trailCols, parkCols, userCols, trailUserPairCols} = require('./ColumnNameConfig');
+const {reviewCols, trailCols, parkCols, userCols, trailUserPairCols} = require('../configs/ColumnNameConfig');
 
 const sequelize = new Sequelize(dbname, user, pw, {
     host,

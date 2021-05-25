@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize');
-const {trailCols, miscCols, parkCols} = require('./ColumnNameConfig')
+const {trailCols, miscCols, parkCols} = require('../configs/ColumnNameConfig')
 const {TRAIL_ID, DESCRIPTION, NAME, LENGTH} = trailCols
 
 module.exports = (sequelize) => {

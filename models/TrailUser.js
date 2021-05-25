@@ -1,6 +1,6 @@
 const {Op} = require('sequelize');
 const {DataTypes} = require('sequelize');
-const {trailCols, trailUserPairCols, userCols, reviewCols} = require('./ColumnNameConfig')
+const {trailCols, trailUserPairCols, userCols, reviewCols} = require('../configs/ColumnNameConfig')
 const {TRAIL_USER_PAIR_ID} = trailUserPairCols
 const {TEXT,TITLE, REVIEW_ID} = reviewCols
 

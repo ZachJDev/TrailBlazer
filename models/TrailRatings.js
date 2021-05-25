@@ -1,5 +1,5 @@
 const { DataTypes } = require("sequelize");
-const {STAR_RATING, DIFFICULTY, GROUPS, PARKING, PET_FRIENDLY, WHEELCHAIR_ACC} = require('./ColumnNameConfig').TrailRatingCols
+const {STAR_RATING, DIFFICULTY, GROUPS, PARKING, PET_FRIENDLY, WHEELCHAIR_ACC} = require('../configs/ColumnNameConfig').TrailRatingCols
 
 module.exports = (sequelize) => {
   // noinspection JSUnresolvedVariable,JSUnresolvedFunction

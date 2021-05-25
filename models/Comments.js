@@ -1,6 +1,6 @@
 const {DataTypes} = require('sequelize');
 const {Op} = require('sequelize');
-const {commentCols, reviewCols, userCols} = require('./ColumnNameConfig');
+const {commentCols, reviewCols, userCols} = require('../configs/ColumnNameConfig');
 
 const {COMMENT_ID, TEXT, PARENT_ID} = commentCols;
 const {REVIEW_ID} = reviewCols;

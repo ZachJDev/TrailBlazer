@@ -1,5 +1,5 @@
 const {DataTypes} = require('sequelize');
-const {reviewCols, trailUserPairCols} = require('./ColumnNameConfig')
+const {reviewCols, trailUserPairCols} = require('../configs/ColumnNameConfig')
 const {TEXT , REVIEW_ID, TITLE} = reviewCols
 
 module.exports = (sequelize) => {
