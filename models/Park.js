@@ -1,3 +1,5 @@
+const {getRandomPic} = require('../configs/getRandomConfig');
+const getGeocodeAsync = require('../functions/getGeocodeAsync');
 const {NotFoundError} = require('../classes/Errors');
 const {DataTypes} = require('sequelize');
 
@@ -53,12 +55,43 @@ module.exports = (sequelize) => {
             },
         },
     );
+
+    Park.afterDestroy(async (park) => {
+        const Trail = Park.associations.trails.source
+        await Trail.destroy(({where: {[PARK_ID]: park[PARK_ID]}, individualHooks: true}))
+    })
     Park.getById = async (parkId) => {
         const foundPark = await Park.findByPk(parkId, {include: [Park.associations.trails]});
-        console.log(foundPark)
-        if(!foundPark) throw new NotFoundError('Cannot find Park with that ID')
-        return foundPark.dataValues
+        if (!foundPark) throw new NotFoundError('Cannot find Park with that ID');
+        return foundPark;
     };
+
+    Park.add = async ({name, address, state, zipCode, city, description}) => {
+        const picUrl = await getRandomPic();
+        const geoCodeData = await getGeocodeAsync({address: `${address}, ${city} ${state}, ${zipCode}`});
+        const locGeo = geoCodeData.results[0].geometry;
+        const park = await Park.create({
+            [miscCols.PIC_URL]: picUrl,
+            [NAME]: name,
+            [ADDRESS]: address,
+            [STATE]: state,
+            [CITY]: city,
+            [ZIP_CODE]: zipCode,
+            [DESCRIPTION]: description,
+            [LOCATION]: {
+                type: 'Point',
+                coordinates: [locGeo.location.lat, locGeo.location.lng],
+            },
+        });
+        if (!park) throw new Error('Something went Wrong');
+        return park;
+    };
+
+    Park.destroyPark = async (parkId) => {
+        const deleteRes = await Park.destroy({where: {[PARK_ID]: parkId}, individualHooks: true});
+        if(deleteRes !== 1) throw new NotFoundError('Cannot find park to Delete')
+        return deleteRes;
+    }
 
     Park.sync({alter: true});
     return Park;
