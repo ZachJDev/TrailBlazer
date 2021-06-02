@@ -1,3 +1,4 @@
+const {Op} = require('sequelize');
 const {DataTypes} = require('sequelize');
 const {trailCols, miscCols, parkCols} = require('../configs/ColumnNameConfig')
 const {TRAIL_ID, DESCRIPTION, NAME, LENGTH} = trailCols
@@ -32,5 +33,15 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
         },
     });
+
+    Trail.search = async (searchQuery) => {
+        const {trailUserPairs, park } = Trail.associations
+        console.log(Trail.associations)
+        const trails = await Trail.findAll({
+            where: { name: { [Op.like]: `%${searchQuery}%` } },
+            include: [park, {association: trailUserPairs, attributes: ['userId'], include: [trailUserPairs.target.associations.trailRating]}],
+        })
+        return trails
+    }
     return Trail;
 };
