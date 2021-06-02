@@ -7,10 +7,11 @@ module.exports.getUser = (req, res, next) => {
     db.User.findOne({where: {userId: req.session.userId}})
         .then((user) => {
             req.user = user;
+            req.user.matchesRequest = req.user.userId === req.body.userId; // The userId in the body should always be pointing to the author of the requested resource (comment, review, etc)
             next();
         })
         .catch((e) => {
-            console.log(e)
+            console.log(e);
             console.log('user Not Found');
             next();
         });
@@ -18,12 +19,11 @@ module.exports.getUser = (req, res, next) => {
 
 module.exports.userMatches = (req, res, next) => {
     try {
-        // console.log(req.user.userId, req.body.userId);
-        req.user.matchesRequest = req.user.userId === req.body.userId;
-        // req.body.userID should always be that of the user who created the resource.
-        //  Which should hopefully match the user who is logged in.
-        console.log('user Matches: ', req.user.matchesRequest);
-        next();
+        if (req.user.matchesRequest) {
+            next();
+        } else {
+            res.status(403).json({success: false, errors: ['Forbidden Action']});
+        }
     } catch (e) {
         /* Catching non-authenticated users here (instead of in the getUser middleware) because
             I can imagine some scenarios where I may want (but not require) a user,
@@ -78,7 +78,7 @@ module.exports.validateReq = ({body, query, params}) => (req, res, next) => {
         }
         next();
     } catch (e) {
-        console.log(e)
+        console.log(e);
         res.status(400).json({success: false, errors: ['missing required information']});
     }
 };
