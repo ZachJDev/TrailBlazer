@@ -56,10 +56,6 @@ module.exports = (sequelize) => {
         },
     );
 
-    Park.afterDestroy(async (park) => {
-        const Trail = Park.associations.trails.source
-        await Trail.destroy(({where: {[PARK_ID]: park[PARK_ID]}, individualHooks: true}))
-    })
     Park.getById = async (parkId) => {
         const foundPark = await Park.findByPk(parkId, {include: [Park.associations.trails]});
         if (!foundPark) throw new NotFoundError('Cannot find Park with that ID');
