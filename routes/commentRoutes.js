@@ -1,38 +1,38 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const commentController = require("../controllers/commentController");
-const middleware = require("../middleware/middleware");
+const {getUser, userMatches} = require("../middleware/middleware");
 
 router.get(
   "/byReviewId/:reviewId",
-  middleware.getUser,
+  getUser,
   commentController.getByReviewId
 );
 
-router.get(
-  "/MultipleReviews",
-  middleware.getUser,
-  commentController.getMultipleReviews
-);
+// router.get(
+//   "/MultipleReviews",
+//   getUser,
+//   commentController.getMultipleReviews
+// );
 
 router.post(
   "/add",
-  middleware.getUser,
-  middleware.userMatches,
+  getUser,
+  userMatches,
   commentController.postNewComment
 );
 
 router.put(
   "/edit",
-  middleware.getUser,
-  middleware.userMatches,
+  getUser,
+  userMatches,
   commentController.updateComment
 );
 
 router.delete(
   "/delete",
-  middleware.getUser,
-  middleware.userMatches,
+  getUser,
+  userMatches,
   commentController.deleteComment
 );
 
