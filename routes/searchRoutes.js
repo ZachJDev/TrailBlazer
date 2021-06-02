@@ -3,6 +3,6 @@ const router = express.Router({ mergeParams: true });
 
 const searchController = require("../controllers/searchController");
 
-router.get("/:type", searchController.search);
+router.get("/", searchController.search);
 
 module.exports = router;
